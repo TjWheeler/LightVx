@@ -4,6 +4,7 @@ It's intended to help validating user input in apps, or service requests in Web 
 
 ## Author
 Tim Wheeler - http://blog.timwheeler.io/
+Contact - http://timwheeler.io/#contact
 
 ## Download
 [Source](https://github.com/TjWheeler/LightVx) on GitHub 
