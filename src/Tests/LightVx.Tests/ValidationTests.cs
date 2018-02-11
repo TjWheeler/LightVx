@@ -1,74 +1,84 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
+using LightVx;
+using LightVx.Validators;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Validation.LightVx.Tests
 {
     [TestClass]
     public class ValidationTests
     {
-
         private void Example2()
         {
-            string input = "123ABC";
-            IInputValidator validator = new NumericValidator();
-            string userErrorMessage;
+            var input = "123ABC";
+            IValidator validator = new NumericValidator();
             validator.Validate(input);
-            if (!validator.IsValid)
-            {
-                Console.WriteLine(validator.ErrorMessage);
-            }
-
+            if (!validator.IsValid) Console.WriteLine(validator.ErrorMessage);
         }
-    
+
         private void Example2Compressed()
         {
-            string input = "123ABC";
-            IInputValidator validator = new NumericValidator();
+            var input = "123ABC";
+            IValidator validator = new NumericValidator();
             string userErrorMessage;
-            if(!validator.Validate(input,"First Name", out userErrorMessage))
+            if (!validator.Validate(input, "First Name", out userErrorMessage))
                 Console.WriteLine(userErrorMessage);
         }
+        [TestMethod]
+        public void Example3FluentApi()
+        {
+            var input = "Joe";
+             Validator.Eval(input, "Customer First Name")
+                 .Required()
+                 .IsAlphaText()
+                 .HasLength(2,null)
+                 .Fail((errors, validators) =>
+                 {
+                     Console.WriteLine(string.Join(",",errors));
+                     // Validation failed, put your failure logic here
+                 });
 
-        
-        
-        
-        private void TestValidatorForSuccess(IInputValidator validator, object input)
+        }
+        private void TestValidatorForSuccess(IValidator validator, object input)
         {
             validator.Validate(input);
-            if(!validator.IsValid)
+            if (!validator.IsValid)
                 Console.WriteLine("Input: " + input + " return error (" + validator.ErrorMessage + ")");
             EvaluateTruePart(validator);
             string errorMessage;
             Assert.IsTrue(validator.Validate(input, "Input Field", out errorMessage));
         }
 
-        private static void EvaluateTruePart(IInputValidator validator)
+        private static void EvaluateTruePart(IValidator validator)
         {
             Assert.IsTrue(validator.IsValid,
-                          "Validator " + validator.GetType().Name +
-                          " returned IsValid = false, but should have been true.");
+                "Validator " + validator.GetType().Name +
+                " returned IsValid = false, but should have been true.");
             Assert.IsTrue(validator.ErrorMessage == string.Empty, "Error Message was not empty");
         }
 
-        private void TestValidatorForFailure(IInputValidator validator, object input)
+        private void TestValidatorForFailure(IValidator validator, object input)
         {
             validator.Validate(input);
-            if(validator.IsValid)
-                Console.WriteLine(validator.GetType().Name + " failed to identify a validation issue with (" + input + ")");
+            if (validator.IsValid)
+                Console.WriteLine(validator.GetType().Name + " failed to identify a validation issue with (" + input +
+                                  ")");
             Assert.IsFalse(validator.IsValid,
-                           "Validator " + validator.GetType().Name +
-                           " returned IsValid = true, but should have been false.");
+                "Validator " + validator.GetType().Name +
+                " returned IsValid = true, but should have been false.");
             Assert.IsFalse(validator.ErrorMessage == string.Empty, "Error Message was empty");
             string errorMessage;
             validator.Validate(input, "Input Field", out errorMessage);
             Console.WriteLine("Expected Error: " + validator.GetType().Name + " : " + errorMessage);
             Assert.IsFalse(validator.Validate(input, "Input Field", out errorMessage));
         }
+
         [TestMethod]
         public void ABNTest()
         {
-            string input = "29002589460";
-            ABNValidator validator = new ABNValidator();
+            var input = "29002589460";
+            var validator = new AbnValidator();
             TestValidatorForSuccess(validator, input);
             TestValidatorForFailure(validator, null);
             TestValidatorForFailure(validator, "3004085616");
@@ -76,11 +86,22 @@ namespace Validation.LightVx.Tests
             TestValidatorForFailure(validator, null);
             TestValidatorForFailure(validator, "23005085616");
         }
+        [TestMethod]
+        public void HexColorTest()
+        {
+            
+            var validator = new HexColorValidator();
+            TestValidatorForSuccess(validator, "#ffffff");
+            TestValidatorForSuccess(validator, "#fff");
+            TestValidatorForSuccess(validator, null);
+            TestValidatorForFailure(validator, "3004085616");
+            TestValidatorForFailure(validator, "");
+        }
 
         [TestMethod]
         public void AlphaTextValidator()
         {
-            string data = "abc";
+            var data = "abc";
             TestValidatorForSuccess(new AlphaTextValidator(), data);
 
             data = "abc1";
@@ -103,7 +124,7 @@ namespace Validation.LightVx.Tests
         [TestMethod]
         public void LengthValidator()
         {
-            string data = "123abc";
+            var data = "123abc";
             TestValidatorForSuccess(new LengthValidator(3, 6), data);
             TestValidatorForSuccess(new LengthValidator(6, 6), data);
             TestValidatorForFailure(new LengthValidator(3, 5), data);
@@ -121,7 +142,7 @@ namespace Validation.LightVx.Tests
         [TestMethod]
         public void PhoneValidationGood()
         {
-            string data = "04 976 1234";
+            var data = "04 976 1234";
             TestValidatorForSuccess(new PhoneNumberValidator(), data);
             data = null;
             TestValidatorForSuccess(new PhoneNumberValidator(), data);
@@ -132,26 +153,25 @@ namespace Validation.LightVx.Tests
         [TestMethod]
         public void PhoneValidationBad()
         {
-            string data = "a04 9b76 1c234";
+            var data = "a04 9b76 1c234";
             TestValidatorForFailure(new PhoneNumberValidator(), data);
-            PhoneNumberValidator phone = new PhoneNumberValidator();
+            var phone = new PhoneNumberValidator();
             string error;
             phone.Validate(data, "My Test Field", out error);
             Console.WriteLine("Received Error (expected): " + error);
-            
         }
 
         [TestMethod]
         public void PhoneValidationAlternateChar()
         {
-            string data = "(04) 976-1234";
+            var data = "(04) 976-1234";
             TestValidatorForSuccess(new PhoneNumberValidator(), data);
         }
 
         [TestMethod]
         public void PhoneAndLengthAggregateValidator()
         {
-            string data = "(04) 976 1234";
+            var data = "(04) 976 1234";
             TestValidatorForSuccess(new PhoneAndLengthValidator(3, 13), data);
             TestValidatorForFailure(new PhoneAndLengthValidator(3, 12), data);
 
@@ -166,7 +186,7 @@ namespace Validation.LightVx.Tests
         [TestMethod]
         public void EmailValidatorTests()
         {
-            EmailValidator validator = new EmailValidator();
+            var validator = new EmailValidator();
             TestValidatorForSuccess(validator, "abc@def.com");
             TestValidatorForSuccess(validator, "abc@def.co.nz");
             TestValidatorForSuccess(validator, "abc@def.net.au");
@@ -183,7 +203,7 @@ namespace Validation.LightVx.Tests
         [TestMethod]
         public void UrlValidatorTests()
         {
-            UrlValidator validator = new UrlValidator();
+            var validator = new UrlValidator();
             TestValidatorForSuccess(validator, "http://www.purecoding.net");
             TestValidatorForSuccess(validator, "http://www.abc.co.nz/about/default.aspx");
             TestValidatorForSuccess(validator, "http://www.abc.net.au");
@@ -196,13 +216,13 @@ namespace Validation.LightVx.Tests
         }
 
         /// <summary>
-        /// Credit card validator is not currently working.
+        ///     Credit card validator is not currently working.
         /// </summary>
         //[TestMethod]
         public void CreditCardValidatorTests()
         {
             //This tests dont' work.  need to check CC formats.
-            CreditCardValidator validator = new CreditCardValidator();
+            var validator = new CreditCardValidator();
             TestValidatorForSuccess(validator, "1234 5789 3214 4567");
             TestValidatorForSuccess(validator, "1234-5789-3214-4567");
             TestValidatorForSuccess(validator, "1234578932144567");
@@ -210,8 +230,8 @@ namespace Validation.LightVx.Tests
             TestValidatorForFailure(validator, "1234578932144567234324");
             TestValidatorForSuccess(validator, null);
             TestValidatorForSuccess(validator, "");
-            
         }
+
         [TestMethod]
         public void DecimalValidatorTests()
         {
@@ -220,21 +240,22 @@ namespace Validation.LightVx.Tests
             TestValidatorForSuccess(new DecimalValidator(), 4100M);
             TestValidatorForFailure(new DecimalValidator(), "4100.25X");
         }
-        
+
         [TestMethod]
         public void NumericValidatorTests()
         {
-            IInputValidator validator = new NumericValidator();
+            IValidator validator = new NumericValidator();
             TestValidatorForSuccess(validator, 123);
-            TestValidatorForSuccess(validator,"123");
-            TestValidatorForSuccess(validator,123M);
-            TestValidatorForSuccess(validator,"");
-            TestValidatorForSuccess(validator,null);
+            TestValidatorForSuccess(validator, "123");
+            TestValidatorForSuccess(validator, 123M);
+            TestValidatorForSuccess(validator, "");
+            TestValidatorForSuccess(validator, null);
             TestValidatorForFailure(validator, "abc");
             TestValidatorForFailure(validator, "1v3");
             TestValidatorForFailure(validator, "32.45");
             TestValidatorForFailure(validator, 12.25M);
         }
+
         //Length min max, postcode is 4
     }
 }

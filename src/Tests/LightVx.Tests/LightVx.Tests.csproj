@@ -48,17 +48,17 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomValidator\PostCodeValidator.cs" />
     <Compile Include="FluentApiTests.cs" />
     <Compile Include="ValidationTests.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Validation.LightVx\LightVx.csproj">
-      <Project>{2b4dbf08-945c-48eb-8d1e-3a0c769a7e78}</Project>
+    <ProjectReference Include="..\..\LightVx\LightVx.csproj">
+      <Project>{27ba551b-5cc3-469b-b174-2ea0ef374f76}</Project>
       <Name>LightVx</Name>
     </ProjectReference>
   </ItemGroup>
