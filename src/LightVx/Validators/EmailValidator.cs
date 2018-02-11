@@ -5,15 +5,7 @@ namespace LightVx.Validators
     /// </summary>
     public class EmailValidator : ValidatorBase
     {
-        private const string RegExpression =
-            @"^([\&\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|" +
-            @"(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
-
-        #region base implementation
-
-        protected override string Expression => RegExpression;
-
-        #endregion
+        protected override string Expression => @"^([\&\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
 
         protected override void Validate()
         {
