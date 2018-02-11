@@ -7,7 +7,7 @@ Tim Wheeler - http://blog.timwheeler.io/
 
 ## Download
 [Source](https://github.com/TjWheeler/LightVx) on GitHub <br/>
-[Nuget Package]() <br/>
+[Nuget Package](https://www.nuget.org/packages/LightVx/1.0.0) <br/>
 
 ## Built-in Validators
 
