@@ -9,37 +9,8 @@ namespace Validation.LightVx.Tests
     [TestClass]
     public class ValidationTests
     {
-        private void Example2()
-        {
-            var input = "123ABC";
-            IValidator validator = new NumericValidator();
-            validator.Validate(input);
-            if (!validator.IsValid) Console.WriteLine(validator.ErrorMessage);
-        }
-
-        private void Example2Compressed()
-        {
-            var input = "123ABC";
-            IValidator validator = new NumericValidator();
-            string userErrorMessage;
-            if (!validator.Validate(input, "First Name", out userErrorMessage))
-                Console.WriteLine(userErrorMessage);
-        }
-        [TestMethod]
-        public void Example3FluentApi()
-        {
-            var input = "Joe";
-             Validator.Eval(input, "Customer First Name")
-                 .Required()
-                 .IsAlphaText()
-                 .HasLength(2,null)
-                 .Fail((errors, validators) =>
-                 {
-                     Console.WriteLine(string.Join(",",errors));
-                     // Validation failed, put your failure logic here
-                 });
-
-        }
+        
+        
         private void TestValidatorForSuccess(IValidator validator, object input)
         {
             validator.Validate(input);

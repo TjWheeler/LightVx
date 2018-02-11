@@ -4,7 +4,7 @@
 //   Description: A simple validation framework.  Intended to validate user input. 
 //              : Also useful for validating webservice or webapi input.
 //              : Validators can be combined using the AggregatedValidator.
-
+//  Note: Validators generally return Success if the data is null.  The Required validator and NotNull validators are the exceptions.
 
 //Examples:
 /*
@@ -19,14 +19,14 @@
         public void Example2Test()
         {
             string input = "ABCD";
-            bool? isValid = Validator.Eval(input, "MyFieldName")
+            var isValid = Validator.Eval(input, "MyFieldName")
                     .Required()
                     .HasLength(0, 3)
                     .IsAlphaText()
                     .Fail(((errors, validators) =>
                     {
                         Console.WriteLine("Example failure: " + string.Join(";", errors));
-                        return;
+                        
                     })).IsValid;
             if (isValid != false)
             {
@@ -66,7 +66,7 @@
 //           }
 //       }
 
-//Addint custom validator to the Fluent API
+//Adding custom validator to the Fluent API
 //Step 1: Add the custom validator
 /* public class PostCodeValidator : AggregatedValidator
     {
@@ -89,16 +89,15 @@
 */
 //Step 3: Call it to validate input
 /*
-    public void ExampleCustomValidaotr()
+    public void ExampleCustomValidator()
     {
         string input = "...";
-        bool? isValid = Validator.Eval(input, "MyFieldName")
+        var isValid = Validator.Eval(input, "MyFieldName")
             .Required()
             .IsPostCode()
             .Fail(((errors, validators) =>
             {
                 Console.WriteLine("Example failure: " + string.Join(";", errors));
-                return;
             })).IsValid;
     }
  *

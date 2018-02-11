@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomValidator\PostCodeValidator.cs" />
+    <Compile Include="ExampleMethodTests.cs" />
     <Compile Include="FluentApiTests.cs" />
     <Compile Include="ValidationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using LightVx.Validators;
 
@@ -24,9 +23,23 @@ namespace LightVx
         private readonly object _input;
         private readonly List<IValidator> _validators = new List<IValidator>();
         private readonly string _fieldName = ValidatorBase.DefaultFieldName;
+        private bool? _isValid;
         public bool Validated { get; private set; }
-        public bool? IsValid { get; private set; }
 
+        public bool? IsValid
+        {
+            get
+            {
+                if (!Validated)
+                {
+                    Validate();
+                }
+                return _isValid;
+            }
+            private set => _isValid = value;
+        }
+
+        public List<string> ErrorMessages { get; private set; }
         public ValidatorFluent(object input)
         {
             _input = input;
@@ -50,6 +63,7 @@ namespace LightVx
             return this;
         }
 
+        
         /// <summary>
         ///     Ensure that Failed and/or Success is called last in the fluent api chain.
         /// </summary>
@@ -179,19 +193,20 @@ namespace LightVx
             return this;
         }
 
-
         /// <summary>
         /// Calls all the validators and runs the validate method.
         /// </summary>
-        private void Validate()
+        public ValidatorFluent Validate()
         {
-            if (Validated) return;
+            if (Validated) return this;
             foreach (var validator in _validators)
             {
                 validator.Validate(_input, _fieldName);
             }
             IsValid = _validators.All(t => t.IsValid);
+            ErrorMessages = _validators.Where(t => !t.IsValid).Select(t => t.ErrorMessage).ToList();
             Validated = true;
+            return this;
         }
     }
 }

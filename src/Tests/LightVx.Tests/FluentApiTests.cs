@@ -9,25 +9,7 @@ namespace LightVx.Tests
     [TestClass]
     public class FluentApiTests
     {
-        [TestMethod]
-        public void Example2Test()
-        {
-            string input = "ABCD";
-            bool? isValid = Validator.Eval(input, "MyFieldName")
-                .Required()
-                .HasLength(0, 3)
-                .IsAlphaText()
-                .Fail(((errors, validators) =>
-                {
-                    Console.WriteLine("Example failure: " + string.Join(";", errors));
-                    return;
-                })).IsValid;
-            if (isValid != false)
-            {
-                Assert.Fail("This validator should have failed");
-            }
-        }
-
+        
 
         [TestMethod]
         public void RequiredValidatorTest_Ok()
