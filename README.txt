@@ -6,8 +6,8 @@ It's intended to help validating user input in apps, or service requests in Web 
 Tim Wheeler - http://blog.timwheeler.io/
 
 ## Download
-[Source](https://github.com/TjWheeler/LightVx) on GitHub <br/>
-[Nuget Package](https://www.nuget.org/packages/LightVx/1.0.0) <br/>
+[Source](https://github.com/TjWheeler/LightVx) on GitHub 
+[Nuget Package](https://www.nuget.org/packages/LightVx) 
 
 ## Built-in Validators
 
