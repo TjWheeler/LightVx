@@ -24,19 +24,18 @@ namespace LightVx
         private readonly List<IValidator> _validators = new List<IValidator>();
         private readonly string _fieldName = ValidatorBase.DefaultFieldName;
         private bool? _isValid;
-        public bool Validated { get; private set; }
 
         public bool? IsValid
         {
             get
             {
-                if (!Validated)
-                {
-                    Validate();
-                }
+                Validate();
                 return _isValid;
             }
-            private set => _isValid = value;
+            private set
+            {
+                _isValid = value;
+            }
         }
 
         public List<string> ErrorMessages { get; private set; }
@@ -198,14 +197,12 @@ namespace LightVx
         /// </summary>
         public ValidatorFluent Validate()
         {
-            if (Validated) return this;
             foreach (var validator in _validators)
             {
                 validator.Validate(_input, _fieldName);
             }
             IsValid = _validators.All(t => t.IsValid);
             ErrorMessages = _validators.Where(t => !t.IsValid).Select(t => t.ErrorMessage).ToList();
-            Validated = true;
             return this;
         }
     }
