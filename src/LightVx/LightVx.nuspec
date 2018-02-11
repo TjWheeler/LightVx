@@ -8,9 +8,9 @@
     <owners>Tim Wheeler</owners>
     <licenseUrl>https://github.com/TjWheeler/LightVx/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/TjWheeler/LightVx</projectUrl>
-    <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
+    <iconUrl>https://raw.githubusercontent.com/TjWheeler/LightVx/master/LightVx.jpg</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>LightVx is a light,easy and extensible validation framework for .Net that includes a Fluent API.</description>
+    <description>LightVx is a light, easy and extensible validation framework for .Net that includes a Fluent API.</description>
     <releaseNotes>Initial release.</releaseNotes>
     <copyright>Copyright 2018 - Tim Wheeler</copyright>
     <tags>.Net Validation FluentApi</tags>
