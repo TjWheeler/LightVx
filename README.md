@@ -177,7 +177,7 @@ public static class PostCodeValidatorExtension
 
 **Creating your own validator**
 
-Create a class and inherit `ValidatorBase`.  The only method you need to implement is `Validate`.  There are some base methods that will make it easy to validate using Regular Expressions.  Here's an example of one of the build in validators.
+Create a class and inherit `ValidatorBase`.  The only method you need to implement is `Validate`.  There are some base methods that will make it easy to validate using Regular Expressions.  Here's an example of one of the built in validators.
 
 ```
     /// <summary>
