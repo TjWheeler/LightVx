@@ -1,13 +1,15 @@
 # Light Vx
-LightVx is a light, easy and extensible validation framework for .Net that includes a Fluent API.  
+LightVx is a light, easy and extensible validation framework for .Net which includes a Fluent API.  
 It's intended to help validating user input in apps, or service requests in Web Services or Web API's, or anywhere you need to validate data.
 
 ## Author
 Tim Wheeler - http://blog.timwheeler.io/
+Contact - http://timwheeler.io/#contact
 
 ## Download
 [Source](https://github.com/TjWheeler/LightVx) on GitHub 
 [Nuget Package](https://www.nuget.org/packages/LightVx) 
+
 
 ## Built-in Validators
 
