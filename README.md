@@ -63,6 +63,7 @@ Available Methods
 * IsAlphaText()
 * IsDecimal()
 * IsEmailAddress()
+* IsNumeric()
 * IsPhoneNumber()
 * IsSafeText()
 * IsUrl()
@@ -77,8 +78,6 @@ Available Methods
 * HasMinLength(int minLength)
 * HasMaxLength(int maxLength)
 
-
-
 ## Fluent API Examples
 
 **Example using Result**
@@ -87,8 +86,7 @@ Available Methods
             var result = Validator.Eval(input, "Quantity Requested")
                 .Required()
                 .Min(50)
-                .Max(100)
-                .Validate();
+                .Max(100);
             if (result.IsValid == false)
             {
                 Console.WriteLine(string.Join(";", result.ErrorMessages));
