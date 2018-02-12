@@ -10,6 +10,7 @@ Contact - http://timwheeler.io/#contact
 [Source](https://github.com/TjWheeler/LightVx) on GitHub 
 [Nuget Package](https://www.nuget.org/packages/LightVx) 
 
+
 ## Built-in Validators
 
 * Aggregate - Combines other validators
