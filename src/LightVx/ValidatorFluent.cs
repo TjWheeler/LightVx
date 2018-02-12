@@ -25,6 +25,9 @@ namespace LightVx
         private readonly string _fieldName = ValidatorBase.DefaultFieldName;
         private bool? _isValid;
 
+        public string FieldName => _fieldName;
+        public List<IValidator> Validators => _validators;
+
         public bool? IsValid
         {
             get
@@ -98,6 +101,11 @@ namespace LightVx
         public ValidatorFluent IsAlphaNumeric()
         {
             _validators.Add(new AlphaNumericValidator());
+            return this;
+        }
+        public ValidatorFluent IsNumeric()
+        {
+            _validators.Add(new NumericValidator());
             return this;
         }
         public ValidatorFluent IsAlphaText()
