@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45;net40</TargetFrameworks>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <FileVersion>1.0.2.0</FileVersion>
-    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
+    <FileVersion>1.0.3.0</FileVersion>
+    <Version>1.0.3</Version>
     <Product>LightVx - A Fluent Validation Framework</Product>
     <Authors>Tim Wheeler</Authors>
     <Company>OTG</Company>
-    <Description>LightVx is a light, easy and extensible validation framework for .Net that includes a Fluent API.</Description>
+    <Description>LightVx is a light, easy and extensible validation framework for .Net which includes a Fluent API.</Description>
     <Copyright>Tim Wheeler 2018</Copyright>
     <PackageLicenseUrl>https://github.com/TjWheeler/LightVx/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/TjWheeler/LightVx</PackageProjectUrl>
@@ -17,6 +17,16 @@
     <RepositoryType>Git</RepositoryType>
     <PackageTags>.Net Validation FluentApi</PackageTags>
     <PackageReleaseNotes>https://github.com/TjWheeler/LightVx/blob/master/ReleaseNotes.md</PackageReleaseNotes>
+    <files>
+      <file src="bin\release\LightVx.xml" target="lib\net40" />
+    </files>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <DocumentationFile>bin\Release\LightVx.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+  </Target>
 
 </Project>

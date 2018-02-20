@@ -1,31 +1,15 @@
 namespace LightVx.Validators
 {
     /// <summary>
-    ///     Safe Text matches Lower and upper case letters and all digits
+    /// Safe Text that uses both the <see cref="XssSafeTextValidator"/> and the <see cref="SqlSafeTextValidator"/> validiators
     /// </summary>
-    public class SafeTextValidator : ValidatorBase
+    public class SafeTextValidator : AggregatedValidator
     {
-        private const string RegExpression =
-            @"^[a-zA-Z0-9\s.\-']+$";
-
-        #region base implementation
-
-        protected override string Expression => RegExpression;
-
-        #endregion
-
-        protected override void Validate()
+        public SafeTextValidator()
         {
-            if (_Input == null || (string) _Input == string.Empty)
-            {
-                Succeed();
-                return;
-            }
-
-            if (SingleMatch(_Input.ToString()))
-                Succeed();
-            else
-                Fail("is not valid.");
+            AddValidator(new XssSafeTextValidator());
+            AddValidator(new SqlSafeTextValidator());
         }
+        
     }
 }

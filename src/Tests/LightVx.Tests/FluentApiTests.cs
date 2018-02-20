@@ -88,15 +88,44 @@ namespace LightVx.Tests
         [TestMethod]
         public void SafeTextValidatorTest_Ok()
         {
-            ExpectSuccess("ABCDE DEF.'".Eval().IsSafeText());
+            ExpectSuccess("ABCDE DEF@$%^&*".Eval().IsSafeText());
         }
 
         [TestMethod]
         public void SafeTextValidatorTest_Fail()
         {
             ExpectFailure("<&".Eval().IsSafeText());
-            ExpectFailure("&".Eval().IsSafeText());
             ExpectFailure(">".Eval().IsSafeText());
+            ExpectFailure("--".Eval().IsSafeText());
+            ExpectFailure("%27".Eval().IsSafeText());
+            ExpectFailure("'".Eval().IsSafeText());
+        }
+
+        [TestMethod]
+        public void WebSafeTextValidatorTest_Ok()
+        {
+            ExpectSuccess("ABCdef0123 !@#$&*()-=:-'".Eval().IsSafeForXss());
+        }
+
+        [TestMethod]
+        public void WebSafeTextValidatorTest_Fail()
+        {
+            ExpectFailure("<script type='text/javascript'>alert('text')</script>".Eval().IsSafeText());
+            ExpectFailure(">".Eval().IsSafeText());
+            ExpectFailure(">".Eval().IsSafeText());
+        }
+        [TestMethod]
+        public void SqlSafeTextValidatorTest_Ok()
+        {
+            ExpectSuccess("ABCdef0123 !@$&*()-:-".Eval().IsSafeForXss());
+        }
+
+        [TestMethod]
+        public void SqlSafeTextValidatorTest_Fail()
+        {
+            ExpectFailure("' or 'a' = 'a'".Eval().IsSafeText());
+            ExpectFailure("--".Eval().IsSafeText());
+            ExpectFailure("%23".Eval().IsSafeText());
         }
 
         [TestMethod]

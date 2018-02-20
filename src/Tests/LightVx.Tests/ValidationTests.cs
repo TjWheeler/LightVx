@@ -44,6 +44,73 @@ namespace Validation.LightVx.Tests
             Console.WriteLine("Expected Error: " + validator.GetType().Name + " : " + errorMessage);
             Assert.IsFalse(validator.Validate(input, "Input Field", out errorMessage));
         }
+        [TestMethod]
+        public void WebSafeTextTest()
+        {
+            var validator = new XssSafeTextValidator();
+            TestValidatorForSuccess(validator, "ABCdef0123 !@#$&*()-=:-'");
+            TestValidatorForSuccess(validator, null);
+            TestValidatorForSuccess(validator, string.Empty);
+            TestValidatorForFailure(validator, "<script type='text/javascript'>alert('text')</script>");
+            TestValidatorForFailure(validator, "<");
+            TestValidatorForFailure(validator, ">");
+            TestValidatorForFailure(validator, "%3C");
+            TestValidatorForFailure(validator, "%3c");
+            TestValidatorForFailure(validator, "%3E");
+            TestValidatorForFailure(validator, "%3e");
+            TestValidatorForFailure(validator, "abc<def");
+            TestValidatorForFailure(validator, "<script");
+        }
+        [TestMethod]
+        public void SqlSafeTextTest()
+        {
+            var validator = new SqlSafeTextValidator();
+            TestValidatorForSuccess(validator, "ABCdef0123 !@$&*()-:-");
+            TestValidatorForSuccess(validator, null);
+            TestValidatorForSuccess(validator, string.Empty);
+            TestValidatorForFailure(validator, "--");
+            TestValidatorForFailure(validator, "'");
+            TestValidatorForFailure(validator, "exec sp_help");
+            TestValidatorForFailure(validator, "eXec sp_help");
+            TestValidatorForFailure(validator, "exec xp_help");
+            TestValidatorForFailure(validator, "%23");
+            TestValidatorForFailure(validator, "%27");
+            TestValidatorForFailure(validator, "ABC%3bDEF");
+            TestValidatorForFailure(validator, "ABC %3B DEF");
+
+        }
+        [TestMethod]
+        public void SafeTextTest()
+        {
+            var validator = new SafeTextValidator();
+            TestValidatorForSuccess(validator, "ABCdef0123 !@$&*()-:-");
+            TestValidatorForSuccess(validator, null);
+            TestValidatorForSuccess(validator, string.Empty);
+            TestValidatorForSuccess(validator, "ABCdef0123 !@$&*()-:-");
+            TestValidatorForSuccess(validator, null);
+            TestValidatorForSuccess(validator, string.Empty);
+
+
+            TestValidatorForFailure(validator, "--");
+            TestValidatorForFailure(validator, "'");
+            TestValidatorForFailure(validator, "exec sp_help");
+            TestValidatorForFailure(validator, "eXec sp_help");
+            TestValidatorForFailure(validator, "exec xp_help");
+            TestValidatorForFailure(validator, "%23");
+            TestValidatorForFailure(validator, "%27");
+            TestValidatorForFailure(validator, "ABC%3bDEF");
+            TestValidatorForFailure(validator, "ABC %3B DEF");
+
+            TestValidatorForFailure(validator, "<script type='text/javascript'>alert('text')</script>");
+            TestValidatorForFailure(validator, "<");
+            TestValidatorForFailure(validator, ">");
+            TestValidatorForFailure(validator, "%3C");
+            TestValidatorForFailure(validator, "%3c");
+            TestValidatorForFailure(validator, "%3E");
+            TestValidatorForFailure(validator, "%3e");
+            TestValidatorForFailure(validator, "abc<def");
+            TestValidatorForFailure(validator, "<script");
+        }
 
         [TestMethod]
         public void ABNTest()
