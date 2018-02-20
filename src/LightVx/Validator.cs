@@ -131,6 +131,11 @@ namespace LightVx
             return validator.IsValid;
         }
 
+        public static bool IsNotValid<T>(string input, string fieldName)
+            where T : IValidator
+        {
+            return !IsValid<T>(input, fieldName);
+        }
         public static bool IsNotValid<T>(string input, string fieldName, out string errorMessage)
             where T : IValidator
         {

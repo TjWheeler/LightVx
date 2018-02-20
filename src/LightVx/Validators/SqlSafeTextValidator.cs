@@ -1,0 +1,25 @@
+﻿namespace LightVx.Validators
+{
+    /// <summary>
+    /// Detects use of SQL Injection attack characters.
+    /// Prevents the use of '#;= and hex equivalents.
+    /// Warning: You should not rely on this, ensure other defence factors are in use to protect your system, such as parameterized queries.
+    /// </summary>
+    public class SqlSafeTextValidator : ValidatorBase
+    {
+        protected override void Validate()
+        {
+            if (_Input == null || (string)_Input == string.Empty)
+            {
+                Succeed();
+                return;
+            }
+            bool msSqlAttack = HasMatch((string)_Input, @"(?i)exec(\s|\+)+(s|x)p\w+");
+            bool hasMetachars = HasMatch((string)_Input, @"(?i)(\%27)|(\')|(\-\-)|(\%23)|(\#)|(\%3B)|(;)|(=)"); 
+            if (msSqlAttack || hasMetachars)
+                Fail("contains invalid characters.");
+            else
+                Succeed();
+        }
+    }
+}

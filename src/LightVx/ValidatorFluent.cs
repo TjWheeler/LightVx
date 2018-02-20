@@ -80,7 +80,7 @@ namespace LightVx
         }
 
         /// <summary>
-        ///     Ensure that Failed and/or Success is called last in the fluent api chain.
+        /// Ensure that Failed and/or Success is called last in the fluent api chain.
         /// </summary>
         /// <param name="onFailed"></param>
         /// <returns></returns>
@@ -129,11 +129,34 @@ namespace LightVx
             _validators.Add(new PhoneNumberValidator());
             return this;
         }
+        /// <summary>
+        /// Uses the <see cref="XssSafeTextValidator"/> and the <see cref="SqlSafeTextValidator"/>
+        /// </summary>
+        /// <returns></returns>
         public ValidatorFluent IsSafeText()
         {
             _validators.Add(new SafeTextValidator());
             return this;
         }
+        /// <summary>
+        /// Checks for known XSS characters
+        /// </summary>
+        /// <returns></returns>
+        public ValidatorFluent IsSafeForXss()
+        {
+            _validators.Add(new XssSafeTextValidator());
+            return this;
+        }
+        /// <summary>
+        /// Checks for known SQL injection characters
+        /// </summary>
+        /// <returns></returns>
+        public ValidatorFluent IsSafeForSql()
+        {
+            _validators.Add(new SqlSafeTextValidator());
+            return this;
+        }
+
         public ValidatorFluent IsUrl()
         {
             _validators.Add(new UrlValidator());
