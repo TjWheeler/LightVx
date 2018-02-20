@@ -31,7 +31,9 @@ Contact - http://timwheeler.io/#contact
 * Numeric - numbers only
 * PhoneAndLength - combine phone number validator and length validator
 * PhoneNumber - attempts to validate a phone number with optional braces
-* SafeText - very restrictive validator that allows a to Z, space, hyphen and apostrophe.
+* SqlSafeText - Detects use of characters used in SQL Injection Attacks
+* XssSafeText - Detects use of characters used in XSS Attacks
+* SafeText - Combines both the XSS and SQL validators.
 * Url - validates against a valid url
 
 ## Fluent API
@@ -66,6 +68,8 @@ Available Methods
 * IsNumeric()
 * IsPhoneNumber()
 * IsSafeText()
+* IsXssSafeText()
+* IsSqlSafeText()
 * IsUrl()
 * Min(int value)
 * Min(double value)
