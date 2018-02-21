@@ -1,49 +1,15 @@
 using System;
 using System.Linq;
 using LightVx;
+using LightVx.Tests;
 using LightVx.Validators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Validation.LightVx.Tests
 {
     [TestClass]
-    public class ValidationTests
+    public class ValidationTests : ValidatorUnitTestBase
     {
-        
-        
-        private void TestValidatorForSuccess(IValidator validator, object input)
-        {
-            validator.Validate(input);
-            if (!validator.IsValid)
-                Console.WriteLine("Input: " + input + " return error (" + validator.ErrorMessage + ")");
-            EvaluateTruePart(validator);
-            string errorMessage;
-            Assert.IsTrue(validator.Validate(input, "Input Field", out errorMessage));
-        }
-
-        private static void EvaluateTruePart(IValidator validator)
-        {
-            Assert.IsTrue(validator.IsValid,
-                "Validator " + validator.GetType().Name +
-                " returned IsValid = false, but should have been true.");
-            Assert.IsTrue(validator.ErrorMessage == string.Empty, "Error Message was not empty");
-        }
-
-        private void TestValidatorForFailure(IValidator validator, object input)
-        {
-            validator.Validate(input);
-            if (validator.IsValid)
-                Console.WriteLine(validator.GetType().Name + " failed to identify a validation issue with (" + input +
-                                  ")");
-            Assert.IsFalse(validator.IsValid,
-                "Validator " + validator.GetType().Name +
-                " returned IsValid = true, but should have been false.");
-            Assert.IsFalse(validator.ErrorMessage == string.Empty, "Error Message was empty");
-            string errorMessage;
-            validator.Validate(input, "Input Field", out errorMessage);
-            Console.WriteLine("Expected Error: " + validator.GetType().Name + " : " + errorMessage);
-            Assert.IsFalse(validator.Validate(input, "Input Field", out errorMessage));
-        }
         [TestMethod]
         public void WebSafeTextTest()
         {
@@ -225,6 +191,7 @@ namespace Validation.LightVx.Tests
         public void EmailValidatorTests()
         {
             var validator = new EmailValidator();
+            TestValidatorForSuccess(validator, "joe.smith@smith.io");
             TestValidatorForSuccess(validator, "abc@def.com");
             TestValidatorForSuccess(validator, "abc@def.co.nz");
             TestValidatorForSuccess(validator, "abc@def.net.au");

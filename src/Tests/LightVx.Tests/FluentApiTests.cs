@@ -7,7 +7,7 @@ using LightVx.Tests.CustomValidator;
 namespace LightVx.Tests
 {
     [TestClass]
-    public class FluentApiTests
+    public class FluentApiTests : ValidatorUnitTestBase
     {
         
 
@@ -153,8 +153,13 @@ namespace LightVx.Tests
             ExpectSuccess(10.Eval().Min(5));
             ExpectSuccess(10.Eval().Min(9));
             ExpectSuccess(10.Eval().Min(10));
-            ExpectSuccess(10D.Eval().Min(10));
-            ExpectSuccess(10M.Eval().Min(10));
+            ExpectSuccess(10D.Eval().Min(10D));
+            ExpectSuccess(10M.Eval().Min(10M));
+
+            ExpectSuccess(Validator.Eval("10").Min(10));
+            ExpectSuccess(Validator.Eval("10.5").Min(10D));
+            ExpectSuccess(Validator.Eval("10.5").Min(10M));
+
             ExpectSuccess(Validator.Eval(null).Min(10));
             ExpectSuccess(Validator.Eval(new[] { "first", "second", "third" }).Min(1));
             ExpectSuccess(Validator.Eval(new [] {"first", "second", "third"}).Min(2));
@@ -171,8 +176,13 @@ namespace LightVx.Tests
         {
             ExpectFailure("10".Eval().Min(11));
             ExpectFailure("10".Eval().Min(100));
+            ExpectFailure(Validator.Eval("10").Min(11));
+            ExpectFailure(Validator.Eval("10.5").Min(11D));
+            ExpectFailure(Validator.Eval("10.5").Min(11M));
+            ExpectFailure(Validator.Eval("10.5A").Min(11M));
             ExpectFailure(10.Eval().Min(11));
             ExpectFailure(10.Eval().Min(100));
+            ExpectFailure(Validator.Eval(new object()).Min(11));
             ExpectFailure(Validator.Eval(new[] { "first", "second", "third" }).Min(4));
             List<string> collection = new List<string>();
             collection.AddRange(new[] { "first", "second", "third" });
@@ -330,36 +340,6 @@ namespace LightVx.Tests
             ExpectFailure(Validator.Eval("999").IsPostCode());
             ExpectSuccess(Validator.Eval(1234).IsPostCode());
             ExpectFailure(Validator.Eval(123).IsPostCode());
-        }
-
-
-        private void ExpectSuccess(ValidatorFluent validation)
-        {
-            bool? success = null;
-            validation
-                .Success(() => { success = true; })
-                .Fail((errors, validators) =>
-                {
-                    Console.WriteLine(string.Join(",", errors));
-                    success = false;
-                });
-            if (!success.HasValue)
-            {
-                Assert.Fail("Received neither success or failure.");
-                return;
-            }
-
-            if (success == false) Assert.Fail("Expected success, but received failure.");
-        }
-
-        private void ExpectFailure(ValidatorFluent validation)
-        {
-            bool? success = null;
-            validation
-                .Success(() => { success = true; })
-                .Fail((errors, validators) => { success = false; });
-            if (!success.HasValue) Assert.Fail("Received neither success or failure.");
-            if (success == true) Assert.Fail("Expected failure but received success.");
         }
     }
 }

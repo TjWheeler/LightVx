@@ -1,4 +1,7 @@
 # LightVx - Release Notes
+20/02/2018 - Version 1.1.0
+
+* Added USStateValidator and Extensions for Fluent API - use namespace LightVx.Validators.US
 
 20/02/2018 - Version 1.0.3
 

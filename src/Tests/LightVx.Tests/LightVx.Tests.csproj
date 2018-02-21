@@ -51,8 +51,10 @@
     <Compile Include="CustomValidator\PostCodeValidator.cs" />
     <Compile Include="ExampleMethodTests.cs" />
     <Compile Include="FluentApiTests.cs" />
+    <Compile Include="US\USValidatorTests.cs" />
     <Compile Include="ValidationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidatorUnitTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
