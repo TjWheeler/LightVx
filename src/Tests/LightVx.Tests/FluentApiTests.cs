@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
 using LightVx.Tests.CustomValidator;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LightVx.Tests
 {
@@ -19,13 +17,13 @@ namespace LightVx.Tests
             ExpectSuccess(1D.Eval().IsDouble());
             ExpectSuccess(1M.Eval().IsDouble());
         }
+
         [TestMethod]
         public void IsDoubleTest_Fail()
         {
             ExpectFailure("ABC".Eval().IsDouble());
         }
 
-        
         [TestMethod]
         public void IsDecimalTest_Ok()
         {
@@ -36,13 +34,13 @@ namespace LightVx.Tests
             ExpectSuccess(1D.Eval().IsDecimal());
             ExpectSuccess(1M.Eval().IsDecimal());
         }
+
         [TestMethod]
         public void IsDecimalTest_Fail()
         {
             ExpectFailure("ABC".Eval().IsDecimal());
         }
 
-       
         [TestMethod]
         public void IsIntTest_Ok()
         {
@@ -53,6 +51,7 @@ namespace LightVx.Tests
             ExpectSuccess(1D.Eval().IsInt());
             ExpectSuccess(1M.Eval().IsInt());
         }
+
         [TestMethod]
         public void IsIntTest_Fail()
         {
@@ -162,6 +161,7 @@ namespace LightVx.Tests
             ExpectFailure(">".Eval().IsSafeText());
             ExpectFailure(">".Eval().IsSafeText());
         }
+
         [TestMethod]
         public void SqlSafeTextValidatorTest_Ok()
         {
@@ -209,11 +209,11 @@ namespace LightVx.Tests
             ExpectSuccess(Validator.Eval("10.5").Min(10M));
 
             ExpectSuccess(Validator.Eval(null).Min(10));
-            ExpectSuccess(Validator.Eval(new[] { "first", "second", "third" }).Min(1));
-            ExpectSuccess(Validator.Eval(new [] {"first", "second", "third"}).Min(2));
-            ExpectSuccess(Validator.Eval(new[] { "first", "second", "third" }).Min(3));
-            List<string> collection = new List<string>();
-            collection.AddRange(new[] { "first", "second", "third" });
+            ExpectSuccess(Validator.Eval(new[] {"first", "second", "third"}).Min(1));
+            ExpectSuccess(Validator.Eval(new[] {"first", "second", "third"}).Min(2));
+            ExpectSuccess(Validator.Eval(new[] {"first", "second", "third"}).Min(3));
+            var collection = new List<string>();
+            collection.AddRange(new[] {"first", "second", "third"});
             ExpectSuccess(Validator.Eval(collection).Min(1));
             ExpectSuccess(Validator.Eval(collection).Min(2));
             ExpectSuccess(Validator.Eval(collection).Min(3));
@@ -231,9 +231,9 @@ namespace LightVx.Tests
             ExpectFailure(10.Eval().Min(11));
             ExpectFailure(10.Eval().Min(100));
             ExpectFailure(Validator.Eval(new object()).Min(11));
-            ExpectFailure(Validator.Eval(new[] { "first", "second", "third" }).Min(4));
-            List<string> collection = new List<string>();
-            collection.AddRange(new[] { "first", "second", "third" });
+            ExpectFailure(Validator.Eval(new[] {"first", "second", "third"}).Min(4));
+            var collection = new List<string>();
+            collection.AddRange(new[] {"first", "second", "third"});
             ExpectFailure(Validator.Eval(collection).Min(4));
         }
 
@@ -251,10 +251,10 @@ namespace LightVx.Tests
             ExpectSuccess(10D.Eval().Max(10));
             ExpectSuccess(10M.Eval().Max(10));
             ExpectSuccess(Validator.Eval(null).Max(10));
-            ExpectSuccess(Validator.Eval(new[] { "first", "second", "third" }).Max(3));
-            ExpectSuccess(Validator.Eval(new[] { "first", "second", "third" }).Max(4));
-            List<string> collection = new List<string>();
-            collection.AddRange(new[] { "first", "second", "third" });
+            ExpectSuccess(Validator.Eval(new[] {"first", "second", "third"}).Max(3));
+            ExpectSuccess(Validator.Eval(new[] {"first", "second", "third"}).Max(4));
+            var collection = new List<string>();
+            collection.AddRange(new[] {"first", "second", "third"});
             ExpectSuccess(Validator.Eval(collection).Max(3));
             ExpectSuccess(Validator.Eval(collection).Max(4));
         }
@@ -267,11 +267,11 @@ namespace LightVx.Tests
             ExpectFailure(10.Eval().Max(9));
             ExpectFailure(10.Eval().Max(1));
             ExpectFailure(10.Eval().Max(0));
-            ExpectFailure(Validator.Eval(new[] { "first", "second", "third" }).Max(2));
-            ExpectFailure(Validator.Eval(new[] { "first", "second", "third" }).Max(1));
-            ExpectFailure(Validator.Eval(new[] { "first", "second", "third" }).Max(0));
-            List<string> collection = new List<string>();
-            collection.AddRange(new[] { "first", "second", "third" });
+            ExpectFailure(Validator.Eval(new[] {"first", "second", "third"}).Max(2));
+            ExpectFailure(Validator.Eval(new[] {"first", "second", "third"}).Max(1));
+            ExpectFailure(Validator.Eval(new[] {"first", "second", "third"}).Max(0));
+            var collection = new List<string>();
+            collection.AddRange(new[] {"first", "second", "third"});
             ExpectFailure(Validator.Eval(collection).Max(2));
             ExpectFailure(Validator.Eval(collection).Max(1));
             ExpectFailure(Validator.Eval(collection).Max(0));
@@ -292,6 +292,7 @@ namespace LightVx.Tests
             ExpectFailure(100M.Eval().IsEmpty());
             ExpectFailure(100D.Eval().IsEmpty());
         }
+
         [TestMethod]
         public void NotEmptyValidatorTest_Ok()
         {
@@ -320,6 +321,7 @@ namespace LightVx.Tests
             ExpectFailure(Validator.Eval(string.Empty).IsNull());
             ExpectFailure(Validator.Eval("A").IsNull());
         }
+
         [TestMethod]
         public void NotNullValidatorTest_Ok()
         {
