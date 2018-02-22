@@ -9,7 +9,55 @@ namespace LightVx.Tests
     [TestClass]
     public class FluentApiTests : ValidatorUnitTestBase
     {
+        [TestMethod]
+        public void IsDoubleTest_Ok()
+        {
+            ExpectSuccess(Validator.Eval(null).IsDouble());
+            ExpectSuccess(Validator.Eval(string.Empty).IsDouble());
+            ExpectSuccess("1".Eval().IsDouble());
+            ExpectSuccess(1.Eval().IsDouble());
+            ExpectSuccess(1D.Eval().IsDouble());
+            ExpectSuccess(1M.Eval().IsDouble());
+        }
+        [TestMethod]
+        public void IsDoubleTest_Fail()
+        {
+            ExpectFailure("ABC".Eval().IsDouble());
+        }
+
         
+        [TestMethod]
+        public void IsDecimalTest_Ok()
+        {
+            ExpectSuccess(Validator.Eval(null).IsDecimal());
+            ExpectSuccess(Validator.Eval(string.Empty).IsDecimal());
+            ExpectSuccess("1".Eval().IsDecimal());
+            ExpectSuccess(1.Eval().IsDecimal());
+            ExpectSuccess(1D.Eval().IsDecimal());
+            ExpectSuccess(1M.Eval().IsDecimal());
+        }
+        [TestMethod]
+        public void IsDecimalTest_Fail()
+        {
+            ExpectFailure("ABC".Eval().IsDecimal());
+        }
+
+       
+        [TestMethod]
+        public void IsIntTest_Ok()
+        {
+            ExpectSuccess(Validator.Eval(null).IsInt());
+            ExpectSuccess(Validator.Eval(string.Empty).IsInt());
+            ExpectSuccess("1".Eval().IsInt());
+            ExpectSuccess(1.Eval().IsInt());
+            ExpectSuccess(1D.Eval().IsInt());
+            ExpectSuccess(1M.Eval().IsInt());
+        }
+        [TestMethod]
+        public void IsIntTest_Fail()
+        {
+            ExpectFailure("ABC".Eval().IsInt());
+        }
 
         [TestMethod]
         public void RequiredValidatorTest_Ok()

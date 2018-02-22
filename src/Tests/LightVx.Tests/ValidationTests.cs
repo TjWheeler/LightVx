@@ -11,6 +11,66 @@ namespace Validation.LightVx.Tests
     public class ValidationTests : ValidatorUnitTestBase
     {
         [TestMethod]
+        public void IsBool_Ok()
+        {
+            var validator = new BoolValidator();
+            TestValidatorForSuccess(validator, "true");
+            TestValidatorForSuccess(validator, "True");
+            TestValidatorForSuccess(validator, "TRUE");
+            TestValidatorForSuccess(validator, "false");
+            TestValidatorForSuccess(validator, "False");
+            TestValidatorForSuccess(validator, "False");
+            TestValidatorForSuccess(validator, false);
+            TestValidatorForSuccess(validator, true);
+        }
+        [TestMethod]
+        public void IsBool_Fail()
+        {
+            var validator = new BoolValidator();
+            TestValidatorForFailure(validator, "0");
+            TestValidatorForFailure(validator, "1");
+            TestValidatorForFailure(validator, "ABC");
+            TestValidatorForFailure(validator, 1);
+            TestValidatorForFailure(validator, 1D);
+            TestValidatorForFailure(validator, 1M);
+            TestValidatorForFailure(validator, "Yes");
+            TestValidatorForFailure(validator, "No");
+        }
+        [TestMethod]
+        public void IsDouble_Ok()
+        {
+            var validator = new DoubleValidator();
+            TestValidatorForSuccess(validator, "1");
+            TestValidatorForSuccess(validator, 1D);
+            TestValidatorForSuccess(validator, "1.1");
+            TestValidatorForSuccess(validator, 1.1);
+            TestValidatorForSuccess(validator, 1.1M);
+            TestValidatorForSuccess(validator, 1.1D);
+        }
+        [TestMethod]
+        public void IsDouble_Fail()
+        {
+            var validator = new DoubleValidator();
+            TestValidatorForFailure(validator, "ABC");
+        }
+        [TestMethod]
+        public void IsDecimal_Ok()
+        {
+            var validator = new DecimalValidator();
+            TestValidatorForSuccess(validator, "1");
+            TestValidatorForSuccess(validator, 1D);
+            TestValidatorForSuccess(validator, "1.1");
+            TestValidatorForSuccess(validator, 1.1);
+            TestValidatorForSuccess(validator, 1.1M);
+            TestValidatorForSuccess(validator, 1.1D);
+        }
+        [TestMethod]
+        public void IsDecimal_Fail()
+        {
+            var validator = new DecimalValidator();
+            TestValidatorForFailure(validator, "ABC");
+        }
+        [TestMethod]
         public void WebSafeTextTest()
         {
             var validator = new XssSafeTextValidator();

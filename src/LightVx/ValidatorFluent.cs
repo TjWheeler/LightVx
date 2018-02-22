@@ -118,6 +118,11 @@ namespace LightVx
             _validators.Add(new DecimalValidator());
             return this;
         }
+        public ValidatorFluent IsDouble()
+        {
+            _validators.Add(new DoubleValidator());
+            return this;
+        }
         public ValidatorFluent IsEmailAddress()
         {
             _validators.Add(new EmailValidator());
@@ -195,6 +200,11 @@ namespace LightVx
         public ValidatorFluent IsEmpty()
         {
             _validators.Add(new EmptyValidator());
+            return this;
+        }
+        public ValidatorFluent IsInt()
+        {
+            _validators.Add(new IntValidator());
             return this;
         }
         public ValidatorFluent IsNotEmpty()
