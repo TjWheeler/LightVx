@@ -5,7 +5,7 @@
 * Added Min and Max Date Validators
 * Added Min/Max/IsAfter and IsBefore date validation to the Fluent API
 * Additional unit test coverage and bug fixes 
-* AlphaNumberic and Aplha validators now allow empty string.
+* AlphaNumeric and Alpha validators now allow empty string.
 
 20/02/2018 - Version 1.0.3
 
