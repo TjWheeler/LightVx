@@ -75,6 +75,7 @@ namespace LightVx.Validators
         {
             if (Input.ToString().Contains(".") && decimal.TryParse(Input.ToString(), out var decimalValue))
             {
+
                 ValidateAsDecimal(decimalValue, $"is not greater than {_decimalMin}");
             }
             else if (Input.ToString().Contains(".") && double.TryParse(Input.ToString(), out var doubleValue))
@@ -97,6 +98,10 @@ namespace LightVx.Validators
             {
                 _decimalMin = (decimal) _intMin.Value;
             }
+            else if (!_decimalMin.HasValue && _doubleMin.HasValue)
+            {
+                _decimalMin = (decimal) _doubleMin.Value;
+            }
             if (value >= _decimalMin)
             {
                 Succeed();
@@ -112,6 +117,10 @@ namespace LightVx.Validators
             if (!_doubleMin.HasValue && _intMin.HasValue)
             {
                 _doubleMin = (double)_intMin.Value; 
+            }
+            else if (!_doubleMin.HasValue && _decimalMin.HasValue)
+            {
+                _doubleMin = (double)_decimalMin.Value;
             }
             if (value >= _doubleMin)
             {

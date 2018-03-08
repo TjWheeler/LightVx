@@ -15,7 +15,7 @@ namespace LightVx.Validators
 
         protected override void Validate()
         {
-            if (_Input == null)
+            if (_Input == null || _Input is string && (string)_Input == string.Empty)
             {
                 Succeed();
                 return;

@@ -1,7 +1,7 @@
 ﻿namespace LightVx.Validators
 {
     /// <summary>
-    /// Detects use of SQL Injection attack characters.
+    /// Blacklist approach to detects use of SQL Injection attack characters.
     /// Prevents the use of '#;= and hex equivalents.
     /// Warning: You should not rely on this, ensure other defence factors are in use to protect your system, such as parameterized queries.
     /// </summary>

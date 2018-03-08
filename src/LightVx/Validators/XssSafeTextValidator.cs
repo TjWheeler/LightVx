@@ -1,7 +1,7 @@
 ﻿namespace LightVx.Validators
 {
     /// <summary>
-    /// Detects the use of characters or escaped values used in XSS.
+    /// Blacklist approach to detects the use of characters or escaped values used in XSS.
     /// Warning: Ensure other defence factors are in use to protect your system.
     /// </summary>
     public class XssSafeTextValidator : ValidatorBase

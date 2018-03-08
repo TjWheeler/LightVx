@@ -103,6 +103,22 @@ namespace LightVx
             _validators.Add(new AlphaNumericValidator());
             return this;
         }
+        public ValidatorFluent IsAfter(DateTime date)
+        {
+            _validators.Add(new MinDateValidator(date.AddMilliseconds(1)));
+            return this;
+        }
+        public ValidatorFluent IsBefore(DateTime date)
+        {
+            _validators.Add(new MaxDateValidator(date.AddMilliseconds(-1)));
+            return this;
+        }
+        public ValidatorFluent IsBetweenDates(DateTime fromDate, DateTime toDate)
+        {
+            _validators.Add(new BetweenDateValidator(fromDate, toDate));
+            return this;
+        }
+        
         public ValidatorFluent IsNumeric()
         {
             _validators.Add(new NumericValidator());
@@ -116,6 +132,11 @@ namespace LightVx
         public ValidatorFluent IsDecimal()
         {
             _validators.Add(new DecimalValidator());
+            return this;
+        }
+        public ValidatorFluent IsDouble()
+        {
+            _validators.Add(new DoubleValidator());
             return this;
         }
         public ValidatorFluent IsEmailAddress()
@@ -177,6 +198,11 @@ namespace LightVx
             _validators.Add(new MinValidator(value));
             return this;
         }
+        public ValidatorFluent Min(DateTime value)
+        {
+            _validators.Add(new MinDateValidator(value));
+            return this;
+        }
         public ValidatorFluent Max(int value)
         {
             _validators.Add(new MaxValidator(value));
@@ -192,9 +218,19 @@ namespace LightVx
             _validators.Add(new MaxValidator(value));
             return this;
         }
+        public ValidatorFluent Max(DateTime value)
+        {
+            _validators.Add(new MaxDateValidator(value));
+            return this;
+        }
         public ValidatorFluent IsEmpty()
         {
             _validators.Add(new EmptyValidator());
+            return this;
+        }
+        public ValidatorFluent IsInt()
+        {
+            _validators.Add(new IntValidator());
             return this;
         }
         public ValidatorFluent IsNotEmpty()

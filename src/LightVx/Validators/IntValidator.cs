@@ -1,12 +1,7 @@
-namespace LightVx.Validators
+﻿namespace LightVx.Validators
 {
-    /// <summary>
-    ///     Validate decimal numbers.  digits and 1 period.  Also has maxium decimal
-    ///     places restriction.
-    /// </summary>
-    public class DecimalValidator : ValidatorBase
+    public class IntValidator : ValidatorBase
     {
-
         protected override void Validate()
         {
             if (_Input == null || _Input is string && (string)_Input == string.Empty)
@@ -14,19 +9,19 @@ namespace LightVx.Validators
                 Succeed();
                 return;
             }
-            if (_Input is decimal)
+
+            if (_Input is int)
             {
                 Succeed();
             }
-            else if (decimal.TryParse(_Input.ToString(), out var _))
+            else if (int.TryParse(_Input.ToString(), out var _))
             {
                 Succeed();
             }
             else
             {
-                Fail("is not a valid Decimal.");
+                Fail("is not valid.");
             }
         }
-
     }
 }

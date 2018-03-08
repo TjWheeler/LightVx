@@ -1,48 +1,109 @@
 using System;
 using System.Linq;
 using LightVx;
+using LightVx.Tests;
 using LightVx.Validators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Validation.LightVx.Tests
 {
     [TestClass]
-    public class ValidationTests
+    public class ValidationTests : ValidatorUnitTestBase
     {
-        
-        
-        private void TestValidatorForSuccess(IValidator validator, object input)
+        [TestMethod]
+        public void MinDate()
         {
-            validator.Validate(input);
-            if (!validator.IsValid)
-                Console.WriteLine("Input: " + input + " return error (" + validator.ErrorMessage + ")");
-            EvaluateTruePart(validator);
-            string errorMessage;
-            Assert.IsTrue(validator.Validate(input, "Input Field", out errorMessage));
+            var date = new DateTime(2020, 1, 1);
+            var validator = new MinDateValidator(date);
+            TestValidatorForSuccess(validator, null);
+            TestValidatorForSuccess(validator, date);
+            TestValidatorForSuccess(validator, date.AddSeconds(1));
+            TestValidatorForSuccess(validator, date.AddDays(1));
+            TestValidatorForSuccess(validator, date.AddMonths(1));
+            TestValidatorForSuccess(validator, date.AddYears(1));
+            TestValidatorForFailure(validator, "0");
+            TestValidatorForFailure(validator, 1);
+            TestValidatorForFailure(validator, 1D);
+            TestValidatorForFailure(validator, date.AddSeconds(-1));
+            TestValidatorForFailure(validator, date.AddDays(-1));
+        }
+        [TestMethod]
+        public void MaxDate()
+        {
+            var date = new DateTime(2020, 1, 1);
+            var validator = new MaxDateValidator(date);
+            TestValidatorForSuccess(validator, null);
+            TestValidatorForSuccess(validator, date);
+            TestValidatorForSuccess(validator, date.AddSeconds(-1));
+            TestValidatorForSuccess(validator, date.AddDays(-1));
+            TestValidatorForSuccess(validator, date.AddMonths(-1));
+            TestValidatorForSuccess(validator, date.AddYears(-1));
+            TestValidatorForFailure(validator, "0");
+            TestValidatorForFailure(validator, 1);
+            TestValidatorForFailure(validator, 1D);
+            TestValidatorForFailure(validator, date.AddSeconds(1));
+            TestValidatorForFailure(validator, date.AddDays(1));
         }
 
-        private static void EvaluateTruePart(IValidator validator)
+        [TestMethod]
+        public void IsBool_Ok()
         {
-            Assert.IsTrue(validator.IsValid,
-                "Validator " + validator.GetType().Name +
-                " returned IsValid = false, but should have been true.");
-            Assert.IsTrue(validator.ErrorMessage == string.Empty, "Error Message was not empty");
+            var validator = new BoolValidator();
+            TestValidatorForSuccess(validator, "true");
+            TestValidatorForSuccess(validator, "True");
+            TestValidatorForSuccess(validator, "TRUE");
+            TestValidatorForSuccess(validator, "false");
+            TestValidatorForSuccess(validator, "False");
+            TestValidatorForSuccess(validator, "False");
+            TestValidatorForSuccess(validator, false);
+            TestValidatorForSuccess(validator, true);
         }
-
-        private void TestValidatorForFailure(IValidator validator, object input)
+        [TestMethod]
+        public void IsBool_Fail()
         {
-            validator.Validate(input);
-            if (validator.IsValid)
-                Console.WriteLine(validator.GetType().Name + " failed to identify a validation issue with (" + input +
-                                  ")");
-            Assert.IsFalse(validator.IsValid,
-                "Validator " + validator.GetType().Name +
-                " returned IsValid = true, but should have been false.");
-            Assert.IsFalse(validator.ErrorMessage == string.Empty, "Error Message was empty");
-            string errorMessage;
-            validator.Validate(input, "Input Field", out errorMessage);
-            Console.WriteLine("Expected Error: " + validator.GetType().Name + " : " + errorMessage);
-            Assert.IsFalse(validator.Validate(input, "Input Field", out errorMessage));
+            var validator = new BoolValidator();
+            TestValidatorForFailure(validator, "0");
+            TestValidatorForFailure(validator, "1");
+            TestValidatorForFailure(validator, "ABC");
+            TestValidatorForFailure(validator, 1);
+            TestValidatorForFailure(validator, 1D);
+            TestValidatorForFailure(validator, 1M);
+            TestValidatorForFailure(validator, "Yes");
+            TestValidatorForFailure(validator, "No");
+        }
+        [TestMethod]
+        public void IsDouble_Ok()
+        {
+            var validator = new DoubleValidator();
+            TestValidatorForSuccess(validator, "1");
+            TestValidatorForSuccess(validator, 1D);
+            TestValidatorForSuccess(validator, "1.1");
+            TestValidatorForSuccess(validator, 1.1);
+            TestValidatorForSuccess(validator, 1.1M);
+            TestValidatorForSuccess(validator, 1.1D);
+        }
+        [TestMethod]
+        public void IsDouble_Fail()
+        {
+            var validator = new DoubleValidator();
+            TestValidatorForFailure(validator, "ABC");
+        }
+        [TestMethod]
+        public void IsDecimal_Ok()
+        {
+            var validator = new DecimalValidator();
+            TestValidatorForSuccess(validator, "1");
+            TestValidatorForSuccess(validator, 1D);
+            TestValidatorForSuccess(validator, "1.1");
+            TestValidatorForSuccess(validator, 1.1);
+            TestValidatorForSuccess(validator, 1.1M);
+            TestValidatorForSuccess(validator, 1.1D);
+        }
+        [TestMethod]
+        public void IsDecimal_Fail()
+        {
+            var validator = new DecimalValidator();
+            TestValidatorForFailure(validator, "ABC");
         }
         [TestMethod]
         public void WebSafeTextTest()
@@ -139,6 +200,9 @@ namespace Validation.LightVx.Tests
         [TestMethod]
         public void AlphaTextValidator()
         {
+            TestValidatorForSuccess(new AlphaTextValidator(), null);
+            TestValidatorForSuccess(new AlphaTextValidator(), string.Empty);
+
             var data = "abc";
             TestValidatorForSuccess(new AlphaTextValidator(), data);
 
@@ -225,6 +289,7 @@ namespace Validation.LightVx.Tests
         public void EmailValidatorTests()
         {
             var validator = new EmailValidator();
+            TestValidatorForSuccess(validator, "joe.smith@smith.io");
             TestValidatorForSuccess(validator, "abc@def.com");
             TestValidatorForSuccess(validator, "abc@def.co.nz");
             TestValidatorForSuccess(validator, "abc@def.net.au");
