@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LightVx.Tests.CustomValidator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -7,6 +8,81 @@ namespace LightVx.Tests
     [TestClass]
     public class FluentApiTests : ValidatorUnitTestBase
     {
+        [TestMethod]
+        public void IsAfterDateTests()
+        {
+            var date = new DateTime(2020, 1, 1);
+            ExpectSuccess(Validator.Eval(null).IsAfter(date));
+            ExpectSuccess(Validator.Eval(date.AddMilliseconds(1)).IsAfter(date));
+            ExpectSuccess(Validator.Eval(date.AddDays(1)).IsAfter(date));
+
+            ExpectFailure(Validator.Eval(date).IsAfter(date));
+            ExpectFailure(Validator.Eval(date.AddSeconds(-1)).IsAfter(date));
+        }
+        [TestMethod]
+        public void IsBeforeDateTests()
+        {
+            var date = new DateTime(2020, 1, 1);
+            ExpectSuccess(Validator.Eval(null).IsBefore(date));
+            ExpectSuccess(Validator.Eval(date.AddMilliseconds(-1)).IsBefore(date));
+            ExpectSuccess(Validator.Eval(date.AddDays(-1)).IsBefore(date));
+
+            ExpectFailure(Validator.Eval(date).IsBefore(date));
+            ExpectFailure(Validator.Eval(date.AddSeconds(1)).IsBefore(date));
+        }
+        [TestMethod]
+        public void BetweenDateTest_Ok()
+        {
+            var startDate = new DateTime(2020, 1, 1);
+            var endDate = new DateTime(2020, 2, 1);
+            ExpectSuccess(Validator.Eval(null).IsBetweenDates(startDate, endDate));
+            ExpectSuccess(Validator.Eval(startDate.AddDays(1)).IsBetweenDates(startDate, endDate));
+            ExpectSuccess(Validator.Eval(endDate.AddSeconds(-1)).IsBetweenDates(startDate, endDate));
+            ExpectSuccess(Validator.Eval(startDate).IsBetweenDates(startDate, endDate));
+            ExpectSuccess(Validator.Eval(endDate).IsBetweenDates(startDate, endDate));
+        }
+        [TestMethod]
+        public void BetweenDateTest_Fail()
+        {
+            var startDate = new DateTime(2020, 1, 1);
+            var endDate = new DateTime(2020, 2, 1);
+            ExpectFailure(Validator.Eval(startDate.AddDays(-1)).IsBetweenDates(startDate, endDate));
+            ExpectFailure(Validator.Eval(endDate.AddSeconds(1)).IsBetweenDates(startDate, endDate));
+        }
+        [TestMethod]
+        public void MinDateTest_Ok()
+        {
+            var date = new DateTime(2020, 1, 1);
+            ExpectSuccess(Validator.Eval(null).Min(date));
+            ExpectSuccess(Validator.Eval(date).Min(date));
+            ExpectSuccess(Validator.Eval(date.AddSeconds(1)).Min(date));
+            ExpectSuccess(Validator.Eval(date.AddDays(1)).Min(date));
+        }
+        [TestMethod]
+        public void MinDateTest_Fail()
+        {
+            var date = new DateTime(2020, 1, 1);
+            ExpectFailure(Validator.Eval(string.Empty).Min(date));
+            ExpectFailure(Validator.Eval(date.AddSeconds(-1)).Min(date));
+            ExpectFailure(Validator.Eval(date.AddDays(-1)).Min(date));
+        }
+        [TestMethod]
+        public void MaxDateTest_Ok()
+        {
+            var date = new DateTime(2020, 1, 1);
+            ExpectSuccess(Validator.Eval(null));
+            ExpectSuccess(Validator.Eval(date).Max(date));
+            ExpectSuccess(Validator.Eval(date.AddSeconds(-1)).Max(date));
+            ExpectSuccess(Validator.Eval(date.AddDays(-11)).Max(date));
+        }
+        [TestMethod]
+        public void MaxDateTest_Fail()
+        {
+            var date = new DateTime(2020, 1, 1);
+            ExpectFailure(Validator.Eval(string.Empty).Max(date));
+            ExpectFailure(Validator.Eval(date.AddSeconds(1)).Max(date));
+            ExpectFailure(Validator.Eval(date.AddDays(1)).Max(date));
+        }
         [TestMethod]
         public void IsDoubleTest_Ok()
         {

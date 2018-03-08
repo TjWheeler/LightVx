@@ -1,6 +1,6 @@
 ﻿namespace LightVx.Validators.US
 {
-    public static class USFluientExtensions
+    public static class USFluentExtensions
     {
         public static ValidatorFluent IsUSState(this ValidatorFluent fluentApi)
         {

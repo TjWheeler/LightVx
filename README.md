@@ -35,6 +35,14 @@ Contact - http://timwheeler.io/#contact
 * XssSafeText - Detects use of characters used in XSS Attacks
 * SafeText - Combines both the XSS and SQL validators.
 * Url - validates against a valid url
+* MinDate - Date is equal to or greater than
+* MaxDate - Date is equal to or less than
+
+### Location Specific Validators
+#### US - United States
+Note: To use the US Validators in the Fluent API add use namespace: LightVx.Validators.US
+
+* USStateValidator - Checks values against a known list of US state codes (2 characters uppercase)
 
 ## Fluent API
 Using the `Validator.Eval` method you can call a number of validators.  
@@ -74,13 +82,21 @@ Available Methods
 * Min(int value)
 * Min(double value)
 * Min(decimal value)
-* Max(int/double/decimal value)
+* Max(int/double/decimal/date value)
 * IsEmpty()
 * IsNotEmpty()
 * IsNull()
 * IsNotNull()
 * HasMinLength(int minLength)
 * HasMaxLength(int maxLength)
+* IsAfter(DateTime date)
+* IsBefore(DateTime date)
+* IsAfter(DateTime date)
+* IsBetween(DateTime startDate, DateTime endDate)
+
+US Validation Extensions
+
+* IsUSState() - Checks values against a known list of US state codes (2 characters uppercase)
 
 ## Fluent API Examples
 

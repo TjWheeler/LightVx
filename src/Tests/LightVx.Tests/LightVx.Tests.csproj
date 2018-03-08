@@ -51,6 +51,7 @@
     <Compile Include="CustomValidator\PostCodeValidator.cs" />
     <Compile Include="ExampleMethodTests.cs" />
     <Compile Include="FluentApiTests.cs" />
+    <Compile Include="ValidatorTests.cs" />
     <Compile Include="US\USValidatorTests.cs" />
     <Compile Include="ValidationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

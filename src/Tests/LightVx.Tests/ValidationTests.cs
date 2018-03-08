@@ -11,6 +11,41 @@ namespace Validation.LightVx.Tests
     public class ValidationTests : ValidatorUnitTestBase
     {
         [TestMethod]
+        public void MinDate()
+        {
+            var date = new DateTime(2020, 1, 1);
+            var validator = new MinDateValidator(date);
+            TestValidatorForSuccess(validator, null);
+            TestValidatorForSuccess(validator, date);
+            TestValidatorForSuccess(validator, date.AddSeconds(1));
+            TestValidatorForSuccess(validator, date.AddDays(1));
+            TestValidatorForSuccess(validator, date.AddMonths(1));
+            TestValidatorForSuccess(validator, date.AddYears(1));
+            TestValidatorForFailure(validator, "0");
+            TestValidatorForFailure(validator, 1);
+            TestValidatorForFailure(validator, 1D);
+            TestValidatorForFailure(validator, date.AddSeconds(-1));
+            TestValidatorForFailure(validator, date.AddDays(-1));
+        }
+        [TestMethod]
+        public void MaxDate()
+        {
+            var date = new DateTime(2020, 1, 1);
+            var validator = new MaxDateValidator(date);
+            TestValidatorForSuccess(validator, null);
+            TestValidatorForSuccess(validator, date);
+            TestValidatorForSuccess(validator, date.AddSeconds(-1));
+            TestValidatorForSuccess(validator, date.AddDays(-1));
+            TestValidatorForSuccess(validator, date.AddMonths(-1));
+            TestValidatorForSuccess(validator, date.AddYears(-1));
+            TestValidatorForFailure(validator, "0");
+            TestValidatorForFailure(validator, 1);
+            TestValidatorForFailure(validator, 1D);
+            TestValidatorForFailure(validator, date.AddSeconds(1));
+            TestValidatorForFailure(validator, date.AddDays(1));
+        }
+
+        [TestMethod]
         public void IsBool_Ok()
         {
             var validator = new BoolValidator();
@@ -165,6 +200,9 @@ namespace Validation.LightVx.Tests
         [TestMethod]
         public void AlphaTextValidator()
         {
+            TestValidatorForSuccess(new AlphaTextValidator(), null);
+            TestValidatorForSuccess(new AlphaTextValidator(), string.Empty);
+
             var data = "abc";
             TestValidatorForSuccess(new AlphaTextValidator(), data);
 
