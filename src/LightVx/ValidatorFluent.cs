@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using LightVx.Validators;
@@ -177,7 +178,15 @@ namespace LightVx
             _validators.Add(new SqlSafeTextValidator());
             return this;
         }
-
+        /// <summary>
+        /// Checks if a datetime or datetime? is within the valid SQL date range
+        /// </summary>
+        /// <returns></returns>
+        public ValidatorFluent IsSqlDate()
+        {
+            _validators.Add(new SqlSafeDateValidator());
+            return this;
+        }
         public ValidatorFluent IsUrl()
         {
             _validators.Add(new UrlValidator());
@@ -203,6 +212,11 @@ namespace LightVx
             _validators.Add(new MinDateValidator(value));
             return this;
         }
+        public ValidatorFluent Min(DateTime? value)
+        {
+            _validators.Add(new MinDateValidator(value));
+            return this;
+        }
         public ValidatorFluent Max(int value)
         {
             _validators.Add(new MaxValidator(value));
@@ -223,6 +237,11 @@ namespace LightVx
             _validators.Add(new MaxDateValidator(value));
             return this;
         }
+        public ValidatorFluent Max(DateTime? value)
+        {
+            _validators.Add(new MaxDateValidator(value));
+            return this;
+        }
         public ValidatorFluent IsEmpty()
         {
             _validators.Add(new EmptyValidator());
@@ -231,6 +250,11 @@ namespace LightVx
         public ValidatorFluent IsInt()
         {
             _validators.Add(new IntValidator());
+            return this;
+        }
+        public ValidatorFluent IsIn(ICollection items, bool ignoreCase = false)
+        {
+            _validators.Add(new InCollectionValidator(items, ignoreCase));
             return this;
         }
         public ValidatorFluent IsNotEmpty()

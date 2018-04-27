@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using LightVx.Tests.CustomValidator;
+using LightVx.Validators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LightVx.Tests
@@ -466,6 +468,48 @@ namespace LightVx.Tests
             ExpectFailure(Validator.Eval("999").IsPostCode());
             ExpectSuccess(Validator.Eval(1234).IsPostCode());
             ExpectFailure(Validator.Eval(123).IsPostCode());
+        }
+        [TestMethod]
+        public void IsSqlDateTests()
+        {
+            var minDate = SqlDateTime.MinValue.Value;
+            var maxDate = SqlDateTime.MaxValue.Value;
+            var noDate = new DateTime?();
+
+            ExpectSuccess(Validator.Eval(null).IsSqlDate());
+            ExpectSuccess(Validator.Eval(minDate).IsSqlDate());
+            ExpectSuccess(Validator.Eval(maxDate).IsSqlDate());
+            ExpectSuccess(Validator.Eval(DateTime.Now).IsSqlDate());
+            ExpectSuccess(Validator.Eval(noDate).IsSqlDate());
+
+            ExpectFailure(Validator.Eval("").IsSqlDate());
+            ExpectFailure(Validator.Eval("abc").IsSqlDate());
+            ExpectFailure(Validator.Eval("123").IsSqlDate());
+            ExpectFailure(Validator.Eval("21/12/2018").IsSqlDate()); //Must be datetime or datetime? datatype
+
+        }
+
+        [TestMethod]
+        public void IsIn()
+        {
+            string[] arrayItems = { "One", "Two", "Three", "Four", "Five" };
+            int[] arrayIntItems = { 1, 2, 3, 4, 5 };
+            List<string> listItems = new List<string>(arrayItems);
+
+            ExpectSuccess(Validator.Eval(null).IsIn(listItems, false));
+            ExpectSuccess(Validator.Eval("One").IsIn(listItems, false));
+            ExpectSuccess(Validator.Eval("One").IsIn(arrayItems, false));
+            ExpectSuccess(Validator.Eval("one").IsIn(listItems, true));
+            ExpectFailure(Validator.Eval("one").IsIn(listItems, false));
+            ExpectSuccess(Validator.Eval("One").IsIn(listItems, false));
+
+            ExpectSuccess(Validator.Eval(1).IsIn(arrayIntItems, false));
+            ExpectSuccess(Validator.Eval(1).IsIn(arrayIntItems, true));
+
+            ExpectFailure(Validator.Eval(6).IsIn(arrayIntItems, false));
+            ExpectFailure(Validator.Eval(6).IsIn(arrayIntItems, true));
+            ExpectFailure(Validator.Eval("Six").IsIn(listItems, false));
+            ExpectFailure(Validator.Eval("Six").IsIn(listItems, true));
         }
     }
 }

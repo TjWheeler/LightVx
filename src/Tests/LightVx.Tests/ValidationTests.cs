@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using LightVx;
 using LightVx.Tests;
@@ -358,7 +360,72 @@ namespace Validation.LightVx.Tests
             TestValidatorForFailure(validator, "32.45");
             TestValidatorForFailure(validator, 12.25M);
         }
+        [TestMethod]
+        public void SqlDateValidatorTests()
+        {
+            IValidator validator = new SqlSafeDateValidator();
+            var minDate = SqlDateTime.MinValue.Value;
+            var maxDate = SqlDateTime.MaxValue.Value;
+            var noDate = new DateTime?();
 
-        //Length min max, postcode is 4
+            TestValidatorForSuccess(validator, minDate);
+            TestValidatorForSuccess(validator, maxDate);
+            TestValidatorForSuccess(validator, DateTime.Now);
+            TestValidatorForSuccess(validator, noDate);
+            TestValidatorForSuccess(validator, null);
+            TestValidatorForFailure(validator, minDate.AddSeconds(-1));
+            TestValidatorForFailure(validator, "abc");
+            TestValidatorForFailure(validator, "21/12/2018"); //Must be datetime or datetime? datatype
+            TestValidatorForFailure(validator, "");
+        }
+
+        [TestMethod]
+        public void InCollectionValidatorTests()
+        {
+            string[] arrayItems = {"One", "Two", "Three", "Four", "Five"};
+            int[] arrayIntItems = { 1,2,3,4,5  };
+            List<string> listItems = new List<string>(arrayItems);
+            IValidator arrayValidator = new InCollectionValidator(arrayItems);
+            IValidator listValidator = new InCollectionValidator(listItems);
+            IValidator arrayIntValidator = new InCollectionValidator(arrayIntItems);
+
+            TestValidatorForSuccess(arrayValidator, "One");
+            TestValidatorForSuccess(listValidator, "One");
+            TestValidatorForSuccess(arrayIntValidator, 1);
+
+            TestValidatorForSuccess(arrayValidator, "Two");
+            TestValidatorForSuccess(listValidator, "Two");
+            TestValidatorForSuccess(arrayIntValidator, 2);
+
+            TestValidatorForSuccess(arrayValidator, "Three");
+            TestValidatorForSuccess(listValidator, "Three");
+            TestValidatorForSuccess(arrayIntValidator, 3);
+
+            TestValidatorForSuccess(arrayValidator, "Four");
+            TestValidatorForSuccess(listValidator, "Four");
+            TestValidatorForSuccess(arrayIntValidator, 4);
+
+            TestValidatorForSuccess(arrayValidator, "Five");
+            TestValidatorForSuccess(listValidator, "Five");
+            TestValidatorForSuccess(arrayIntValidator, 5);
+
+            TestValidatorForSuccess(arrayValidator, "");
+            TestValidatorForSuccess(arrayValidator, null);
+
+            TestValidatorForSuccess(new InCollectionValidator(arrayItems, true), "one");
+
+            TestValidatorForFailure(arrayValidator, "one");
+            TestValidatorForFailure(arrayValidator, "Six");
+            TestValidatorForFailure(listValidator, "Six");
+            TestValidatorForFailure(arrayIntValidator, 6);
+            TestValidatorForFailure(arrayValidator, "Six");
+            TestValidatorForFailure(arrayValidator, "Seven");
+            TestValidatorForFailure(arrayValidator, "12345");
+            TestValidatorForFailure(arrayValidator, DateTime.Today);
+
+
+        }
+
+
     }
 }
