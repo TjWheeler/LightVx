@@ -1,4 +1,10 @@
 # LightVx - Release Notes
+26/04/2018 - Version 1.1.1
+* Added SqlSafeDateValidator - Ensures a date value is within valid SQL date range
+* Added InCollectionValidator - Checks if the input is within the items of a collection, optionally ignore case.
+* Added IsIn to Fluent Api - Calls the InCollectionValidator
+* Updated Min and Max date validators to accept nullable datetime datatypes.
+
 08/03/2018 - Version 1.1.0
 
 * Added USStateValidator and Extensions for Fluent API - use namespace LightVx.Validators.US

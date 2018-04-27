@@ -9,9 +9,13 @@ namespace LightVx.Validators
     /// </summary>
     public class MinDateValidator : ValidatorBase
     {
-        private DateTime _minDate;
+        private DateTime? _minDate;
 
         public MinDateValidator(DateTime minDate)
+        {
+            _minDate = minDate;
+        }
+        public MinDateValidator(DateTime? minDate)
         {
             _minDate = minDate;
         }
@@ -22,12 +26,17 @@ namespace LightVx.Validators
                 Succeed();
                 return;
             }
-            if (_Input.GetType() != typeof(DateTime))
+            if (_Input.GetType() != typeof(DateTime) && _Input.GetType() != typeof(DateTime?))
             {
                 Fail("is not a date data type.");
                 return;
             }
-            if (((DateTime)_Input) < _minDate)
+            if (_Input is DateTime && ((DateTime)_Input) < _minDate)
+            {
+                Fail("does not meet the minimum date range.");
+                return;
+            }
+            if (_Input is DateTime? && ((DateTime?)_Input).HasValue && ((DateTime?)_Input).Value < _minDate)
             {
                 Fail("does not meet the minimum date range.");
                 return;

@@ -9,9 +9,13 @@ namespace LightVx.Validators
     /// </summary>
     public class MaxDateValidator : ValidatorBase
     {
-        private DateTime _maxDate;
+        private DateTime? _maxDate;
 
         public MaxDateValidator(DateTime maxDate)
+        {
+            _maxDate = maxDate;
+        }
+        public MaxDateValidator(DateTime? maxDate)
         {
             _maxDate = maxDate;
         }
@@ -22,12 +26,17 @@ namespace LightVx.Validators
                 Succeed();
                 return;
             }
-            if (_Input.GetType() != typeof(DateTime))
+            if (_Input.GetType() != typeof(DateTime) && _Input.GetType() != typeof(DateTime?))
             {
                 Fail("is not a date data type.");
                 return;
             }
-            if (((DateTime)_Input) > _maxDate)
+            if (_Input is DateTime && ((DateTime)_Input) > _maxDate)
+            {
+                Fail("does not meet the maximum date range.");
+                return;
+            }
+            if (_Input is DateTime? && ((DateTime?)_Input).HasValue && ((DateTime?)_Input).Value > _maxDate)
             {
                 Fail("does not meet the maximum date range.");
                 return;

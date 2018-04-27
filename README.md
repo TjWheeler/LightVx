@@ -37,6 +37,8 @@ Contact - http://timwheeler.io/#contact
 * Url - validates against a valid url
 * MinDate - Date is equal to or greater than
 * MaxDate - Date is equal to or less than
+* SqlSafeDateValidator - Checks if a datetime or datetime? is within the valid SQL date range
+* InCollectionValidator - Checks if the input is an item within an ICollection.
 
 ### Location Specific Validators
 #### US - United States
@@ -93,6 +95,8 @@ Available Methods
 * IsBefore(DateTime date)
 * IsAfter(DateTime date)
 * IsBetween(DateTime startDate, DateTime endDate)
+* IsSqlDate()
+* IsIn(ICollection items, bool ignoreCase = false)
 
 US Validation Extensions
 
