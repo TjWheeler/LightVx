@@ -511,5 +511,36 @@ namespace LightVx.Tests
             ExpectFailure(Validator.Eval("Six").IsIn(listItems, false));
             ExpectFailure(Validator.Eval("Six").IsIn(listItems, true));
         }
+
+        [TestMethod]
+        public void ContainsTests()
+        {
+            ExpectSuccess(Validator.Eval(null).Contains("abc", false));
+            ExpectSuccess(Validator.Eval("").Contains("abc", false));
+            ExpectSuccess(Validator.Eval("abcdef").Contains("abc", false));
+            ExpectSuccess(Validator.Eval("aaa abc ccc").Contains("abc", false));
+            ExpectSuccess(Validator.Eval("aaa abc ccc").Contains("abc", true));
+            ExpectSuccess(Validator.Eval("aaa aBc ccc").Contains("abc", true));
+            ExpectSuccess(Validator.Eval("aaa aBc def").Contains(new [] {"abc", "def"}, true));
+            ExpectSuccess(Validator.Eval("aaa abc def").Contains(new[] { "abc", "def" }, false));
+
+            ExpectFailure(Validator.Eval("a ab acb").Contains("abc", false));
+            ExpectFailure(Validator.Eval("aaa aBc ccc").Contains("abc", false));
+        }
+        [TestMethod]
+        public void DoesNotContainTests()
+        {
+            ExpectSuccess(Validator.Eval(null).DoesNotContain("abc", false));
+            ExpectSuccess(Validator.Eval("").DoesNotContain("abc", false));
+            ExpectSuccess(Validator.Eval("a ab acb").DoesNotContain("abc", false));
+            ExpectSuccess(Validator.Eval("aaa aBc ccc").DoesNotContain("abc", false));
+
+            ExpectFailure(Validator.Eval("abcdef").DoesNotContain("abc", false));
+            ExpectFailure(Validator.Eval("aaa abc ccc").DoesNotContain("abc", false));
+            ExpectFailure(Validator.Eval("aaa abc ccc").DoesNotContain("abc", true));
+            ExpectFailure(Validator.Eval("aaa aBc ccc").DoesNotContain("abc", true));
+            ExpectFailure(Validator.Eval("aaa aBc def").DoesNotContain(new[] { "abc", "def" }, true));
+            ExpectFailure(Validator.Eval("aaa abc def").DoesNotContain(new[] { "abc", "def" }, false));
+        }
     }
 }

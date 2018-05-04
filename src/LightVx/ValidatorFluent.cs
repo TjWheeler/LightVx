@@ -93,48 +93,140 @@ namespace LightVx
             if (failedValidators.Count > 0) onFailed(errorMessages, failedValidators);
             return this;
         }
-
+        /// <summary>
+        /// Checks for blacklisted characters that might be used in canonical attacks to traverse directory structures.
+        /// This validation does not allow any directory information such as / or \ or .., however a single . is allowed.
+        /// </summary>
+        /// <returns></returns>
+        public ValidatorFluent DoesNotTraverse()
+        {
+            return DoesNotContain(new[] { "..", "/", "%2f", "\\", "%5c", "%2e%2e", "%2e%2e", "%2e%2e", "%c1%1c", "%c0%af" }, true);
+        }
+        /// <summary>
+        /// Checks to ensure the specified content exists within the input
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public ValidatorFluent Contains(string content, bool ignoreCase = false)
+        {
+            _validators.Add(new ContainsValidator(content, ignoreCase));
+            return this;
+        }
+        /// <summary>
+        /// Checks to ensure the specified content exists within the input
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="ignoreCase"></param>
+        /// <returns></returns>
+        public ValidatorFluent Contains(string[] content, bool ignoreCase = false)
+        {
+            _validators.Add(new ContainsValidator(content, ignoreCase));
+            return this;
+        }
+        /// <summary>
+        /// Checks to ensure the specified content (array items) do not exist within the input
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="ignoreCase"></param>
+        /// <returns></returns>
+        public ValidatorFluent DoesNotContain(string content, bool ignoreCase = false)
+        {
+            _validators.Add(new NotContainsValidator(content, ignoreCase));
+            return this;
+        }
+        /// <summary>
+        /// Checks to ensure the specified all the content (array items) do not exist within the input
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="ignoreCase"></param>
+        /// <returns></returns>
+        public ValidatorFluent DoesNotContain(string[] content, bool ignoreCase = false)
+        {
+            _validators.Add(new NotContainsValidator(content, ignoreCase));
+            return this;
+        }
+        /// <summary>
+        /// Checks for a string length
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
         public ValidatorFluent HasLength(int min, int? max)
         {
             _validators.Add(new LengthValidator(min, max));
             return this;
         }
+        /// <summary>
+        /// checks alpha and digits only
+        /// </summary>
+        /// <returns></returns>
         public ValidatorFluent IsAlphaNumeric()
         {
             _validators.Add(new AlphaNumericValidator());
             return this;
         }
+        /// <summary>
+        /// Validates the input is a date and after specified date
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         public ValidatorFluent IsAfter(DateTime date)
         {
             _validators.Add(new MinDateValidator(date.AddMilliseconds(1)));
             return this;
         }
+        /// <summary>
+        /// Validates the input is a date and before specified date
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         public ValidatorFluent IsBefore(DateTime date)
         {
             _validators.Add(new MaxDateValidator(date.AddMilliseconds(-1)));
             return this;
         }
+        /// <summary>
+        /// Validates the input is a date and between specified dates
+        /// </summary>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
+        /// <returns></returns>
         public ValidatorFluent IsBetweenDates(DateTime fromDate, DateTime toDate)
         {
             _validators.Add(new BetweenDateValidator(fromDate, toDate));
             return this;
         }
-        
+        /// <summary>
+        /// Validates input is numberic
+        /// </summary>
+        /// <returns></returns>
         public ValidatorFluent IsNumeric()
         {
             _validators.Add(new NumericValidator());
             return this;
         }
+        /// <summary>
+        /// Validates input is alpha only
+        /// </summary>
+        /// <returns></returns>
         public ValidatorFluent IsAlphaText()
         {
             _validators.Add(new AlphaTextValidator());
             return this;
         }
+        /// <summary>
+        /// Validates input can be parsed to a decimal
+        /// </summary>
+        /// <returns></returns>
         public ValidatorFluent IsDecimal()
         {
             _validators.Add(new DecimalValidator());
             return this;
         }
+        /// <summary>
+        /// Validates input can be parsed to a double
+        /// </summary>
+        /// <returns></returns>
         public ValidatorFluent IsDouble()
         {
             _validators.Add(new DoubleValidator());
@@ -145,7 +237,10 @@ namespace LightVx
             _validators.Add(new EmailValidator());
             return this;
         }
-
+        /// <summary>
+        /// Validates input is a phone number. Allows ( ) 0-9 and hyphen
+        /// </summary>
+        /// <returns></returns>
         public ValidatorFluent IsPhoneNumber()
         {
             _validators.Add(new PhoneNumberValidator());

@@ -1,4 +1,9 @@
 # LightVx - Release Notes
+04/05/2018 - Version 1.2.0
+* Added ContainsValidator - String contains
+* Added NotContainsValidator - String not contains
+* Added DoesNotTraverse, Contains and DoesNotContain to the fluent api
+
 26/04/2018 - Version 1.1.1
 * Added SqlSafeDateValidator - Ensures a date value is within valid SQL date range
 * Added InCollectionValidator - Checks if the input is within the items of a collection, optionally ignore case.
