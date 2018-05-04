@@ -39,6 +39,8 @@ Contact - http://timwheeler.io/#contact
 * MaxDate - Date is equal to or less than
 * SqlSafeDateValidator - Checks if a datetime or datetime? is within the valid SQL date range
 * InCollectionValidator - Checks if the input is an item within an ICollection.
+* ContainsValidator - Checks to ensure the specified content exists within the input
+* NotContainsValidator - Checks to ensure the specified content does not exist within the input
 
 ### Location Specific Validators
 #### US - United States
@@ -97,7 +99,9 @@ Available Methods
 * IsBetween(DateTime startDate, DateTime endDate)
 * IsSqlDate()
 * IsIn(ICollection items, bool ignoreCase = false)
-
+* DoesNotTraverse() 
+* Contains(string content, bool ignoreCase = false)
+* DoesNotContain(string content, bool ignoreCase = false)
 US Validation Extensions
 
 * IsUSState() - Checks values against a known list of US state codes (2 characters uppercase)

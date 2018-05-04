@@ -29,6 +29,7 @@ namespace Validation.LightVx.Tests
             TestValidatorForFailure(validator, date.AddSeconds(-1));
             TestValidatorForFailure(validator, date.AddDays(-1));
         }
+
         [TestMethod]
         public void MaxDate()
         {
@@ -60,6 +61,7 @@ namespace Validation.LightVx.Tests
             TestValidatorForSuccess(validator, false);
             TestValidatorForSuccess(validator, true);
         }
+
         [TestMethod]
         public void IsBool_Fail()
         {
@@ -73,6 +75,7 @@ namespace Validation.LightVx.Tests
             TestValidatorForFailure(validator, "Yes");
             TestValidatorForFailure(validator, "No");
         }
+
         [TestMethod]
         public void IsDouble_Ok()
         {
@@ -84,12 +87,14 @@ namespace Validation.LightVx.Tests
             TestValidatorForSuccess(validator, 1.1M);
             TestValidatorForSuccess(validator, 1.1D);
         }
+
         [TestMethod]
         public void IsDouble_Fail()
         {
             var validator = new DoubleValidator();
             TestValidatorForFailure(validator, "ABC");
         }
+
         [TestMethod]
         public void IsDecimal_Ok()
         {
@@ -101,12 +106,14 @@ namespace Validation.LightVx.Tests
             TestValidatorForSuccess(validator, 1.1M);
             TestValidatorForSuccess(validator, 1.1D);
         }
+
         [TestMethod]
         public void IsDecimal_Fail()
         {
             var validator = new DecimalValidator();
             TestValidatorForFailure(validator, "ABC");
         }
+
         [TestMethod]
         public void WebSafeTextTest()
         {
@@ -124,6 +131,7 @@ namespace Validation.LightVx.Tests
             TestValidatorForFailure(validator, "abc<def");
             TestValidatorForFailure(validator, "<script");
         }
+
         [TestMethod]
         public void SqlSafeTextTest()
         {
@@ -142,6 +150,7 @@ namespace Validation.LightVx.Tests
             TestValidatorForFailure(validator, "ABC %3B DEF");
 
         }
+
         [TestMethod]
         public void SafeTextTest()
         {
@@ -187,10 +196,11 @@ namespace Validation.LightVx.Tests
             TestValidatorForFailure(validator, null);
             TestValidatorForFailure(validator, "23005085616");
         }
+
         [TestMethod]
         public void HexColorTest()
         {
-            
+
             var validator = new HexColorValidator();
             TestValidatorForSuccess(validator, "#ffffff");
             TestValidatorForSuccess(validator, "#fff");
@@ -360,6 +370,7 @@ namespace Validation.LightVx.Tests
             TestValidatorForFailure(validator, "32.45");
             TestValidatorForFailure(validator, 12.25M);
         }
+
         [TestMethod]
         public void SqlDateValidatorTests()
         {
@@ -383,7 +394,7 @@ namespace Validation.LightVx.Tests
         public void InCollectionValidatorTests()
         {
             string[] arrayItems = {"One", "Two", "Three", "Four", "Five"};
-            int[] arrayIntItems = { 1,2,3,4,5  };
+            int[] arrayIntItems = {1, 2, 3, 4, 5};
             List<string> listItems = new List<string>(arrayItems);
             IValidator arrayValidator = new InCollectionValidator(arrayItems);
             IValidator listValidator = new InCollectionValidator(listItems);
@@ -422,10 +433,57 @@ namespace Validation.LightVx.Tests
             TestValidatorForFailure(arrayValidator, "Seven");
             TestValidatorForFailure(arrayValidator, "12345");
             TestValidatorForFailure(arrayValidator, DateTime.Today);
-
-
         }
 
+        [TestMethod]
+        public void ContainsValidatorTests()
+        {
+            IValidator validator = new ContainsValidator("abcde");
+            TestValidatorForSuccess(validator, "x abcde x");
+            TestValidatorForSuccess(validator, "xabcdex");
+            TestValidatorForSuccess(validator, "abcde");
+            TestValidatorForSuccess(validator, "");
+            TestValidatorForSuccess(validator, null);
 
+            TestValidatorForFailure(validator, ".");
+            TestValidatorForFailure(validator, "h");
+            TestValidatorForFailure(validator, "1");
+            TestValidatorForFailure(validator, "!@#$");
+
+            validator = new ContainsValidator(new [] {"abcde", "x" });
+            TestValidatorForSuccess(validator, "abcde x");
+            TestValidatorForSuccess(validator, "abxde abcde");
+            TestValidatorForSuccess(validator, "abcde aaa x");
+            TestValidatorForFailure(validator, "1");
+            TestValidatorForFailure(validator, "x");
+            TestValidatorForFailure(validator, "abcde");
+
+            
+        }
+
+        [TestMethod]
+        public void NotContainsValidatorTests()
+        {
+            IValidator validator = new NotContainsValidator("abcde");
+            TestValidatorForSuccess(validator, "");
+            TestValidatorForSuccess(validator, null);
+            TestValidatorForSuccess(validator, ".");
+            TestValidatorForSuccess(validator, "h");
+            TestValidatorForSuccess(validator, "1");
+            TestValidatorForSuccess(validator, "!@#$");
+
+            TestValidatorForFailure(validator, "x abcde x");
+            TestValidatorForFailure(validator, "xabcdex");
+            TestValidatorForFailure(validator, "abcde");
+
+            validator = new NotContainsValidator(new [] { "abcde", " "});
+            validator.FieldName = "My Field";
+            Assert.IsFalse(validator.Validate("abcde"));
+            Assert.IsTrue(validator.ErrorMessage.Contains("My Field"));
+            TestValidatorForFailure(validator, "abcde");
+            TestValidatorForFailure(validator, "x a");
+            TestValidatorForFailure(validator, " ");
+            TestValidatorForSuccess(validator, "1");
+        }
     }
 }
