@@ -1,4 +1,8 @@
 # LightVx - Release Notes
+20/04/2020 - Version 2.0.0
+* ObjectValidator feature allows for construction of an Advanced Validator to validate an entire object.
+* Empty, NotEmpty and Length validators now work with Arrays.
+
 04/05/2018 - Version 1.2.0
 * Added ContainsValidator - String contains
 * Added NotContainsValidator - String not contains

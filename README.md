@@ -10,7 +10,6 @@ Contact - http://timwheeler.io/#contact
 [Source](https://github.com/TjWheeler/LightVx) on GitHub 
 [Nuget Package](https://www.nuget.org/packages/LightVx) 
 
-
 ## Built-in Validators
 
 * Aggregate - Combines other validators
@@ -41,6 +40,40 @@ Contact - http://timwheeler.io/#contact
 * InCollectionValidator - Checks if the input is an item within an ICollection.
 * ContainsValidator - Checks to ensure the specified content exists within the input
 * NotContainsValidator - Checks to ensure the specified content does not exist within the input
+
+### Object Validation Feature
+
+Recently, this framework has been upgraded to provide a more holistic approach to validating an object.
+Object Validation works by creating your own validation class to define all the validators.
+The following example validates the Name and Date of Birth properties of the Customer.
+```
+public class CustomerValidator : ObjectValidator<Customer>
+    {
+        public CustomerValidator(Customer customer) : base(customer)
+        {
+            Eval(Input.Name, "Name")
+                .IsNotEmpty()
+                .HasMinLength(3)
+                .HasMaxLength(120)
+                .IsNameText(); //Allows alpha, hyphen, space, apostrophie
+
+            Eval(Input.DOB, "Date of Birth")
+                .IsNotNull()
+                .IsBefore(DateTime.Now);
+        }
+    }
+```
+Accessing the validator is similiar to all other validators, but note that the ObjectValidator does not implement `IValidator`.
+Instead it implements 'IObjectValidator<T>'.
+Here is an example based on calling the above CustomerValidator:
+```
+	var customer = new Customer();
+    customer.Name = "Joe Someone";
+    customer.DOB = DateTime.Now.AddYears(-25);
+
+    var validator = new CustomerValidator(customer);
+	Assert.IsTrue(validator.IsValid, $"Failed to validate: {validator.ToString()}" );
+```
 
 ### Location Specific Validators
 #### US - United States
@@ -162,7 +195,6 @@ Note: Although you can call the validators directly, using the `Validation` help
                 Console.WriteLine("Input: " + input + " return error (" + validator.ErrorMessage + ")");
             }
 ```
-
 ## Extending and creating your own validators
 
 In the following example, we are inheriting from an `AggregateValidator`, this allows us to combine validators.
@@ -203,7 +235,6 @@ public static class PostCodeValidatorExtension
             })).IsValid;
     }
 ```
-
 **Creating your own validator**
 
 Create a class and inherit `ValidatorBase`.  The only method you need to implement is `Validate`.  There are some base methods that will make it easy to validate using Regular Expressions.  Here's an example of one of the built in validators.
@@ -232,5 +263,4 @@ Create a class and inherit `ValidatorBase`.  The only method you need to impleme
     }
 
 ```
-
 When using Regular expressions you can also use the `HasMatch` and `MatchCount` base methods.

@@ -1,7 +1,7 @@
 namespace LightVx.Validators
 {
     /// <summary>
-    ///     Validate text with length options
+    ///     Validate text with alpha, numeric and spaces.
     /// </summary>
     public class AlphaNumericValidator : ValidatorBase
     {
