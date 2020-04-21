@@ -11,7 +11,11 @@ namespace LightVx.Validators
     {
         protected override void Validate()
         {
-            if (Input == null || string.IsNullOrEmpty(Input.ToString()))
+            if (Input != null && Input is Array && ((Array)Input).Length == 0)
+            {
+                Succeed();
+            }
+            else if (Input == null || string.IsNullOrEmpty(Input.ToString()))
             {
                 Succeed();
             }

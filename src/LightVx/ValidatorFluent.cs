@@ -367,6 +367,24 @@ namespace LightVx
             _validators.Add(new NotNullValidator());
             return this;
         }
+        /// <summary>
+        /// Allows Alpha, Spaces, Numbers and Hyphens
+        /// </summary>
+        /// <returns></returns>
+        public ValidatorFluent IsTitleText()
+        {
+            _validators.Add(new AlphaNumericHyphenValidator());
+            return this;
+        }
+        /// <summary>
+        /// Allows Alpha, Hyphens and Apostrophies
+        /// </summary>
+        /// <returns></returns>
+        public ValidatorFluent IsNameText()
+        {
+            _validators.Add(new NameTextValidator());
+            return this;
+        }
         public ValidatorFluent HasMinLength(int minLength)
         {
             _validators.Add(new MinLengthValidator(minLength));
