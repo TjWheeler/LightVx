@@ -14,6 +14,7 @@ Contact - http://timwheeler.io/#contact
 
 * Aggregate - Combines other validators
 * AlphaNumeric - Alphabetical or Numbers
+* AlphaNumericHyphen - Alphabetical, Numbers, Hyphens and Spaces
 * AlphaText - a to Z and spaces
 * Decimal  - a decimal value
 * Email - email address
