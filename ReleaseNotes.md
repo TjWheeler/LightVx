@@ -1,4 +1,7 @@
 # LightVx - Release Notes
+22/05/2020 - Version 2.0.1
+* Added AlphaNumericHyphen validator
+
 20/04/2020 - Version 2.0.0
 * ObjectValidator feature allows for construction of an Advanced Validator to validate an entire object.
 * Empty, NotEmpty and Length validators now work with Arrays.

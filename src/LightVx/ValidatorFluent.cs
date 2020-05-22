@@ -166,6 +166,15 @@ namespace LightVx
             return this;
         }
         /// <summary>
+        /// checks alpha,digits hyphens and spaces.
+        /// </summary>
+        /// <returns></returns>
+        public ValidatorFluent IsAlphaNumericHyphen()
+        {
+            _validators.Add(new AlphaNumericHyphenValidator());
+            return this;
+        }
+        /// <summary>
         /// Validates the input is a date and after specified date
         /// </summary>
         /// <param name="date"></param>
