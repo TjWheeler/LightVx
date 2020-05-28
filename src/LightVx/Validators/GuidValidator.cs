@@ -1,6 +1,8 @@
-﻿namespace LightVx.Validators
+﻿using System;
+
+namespace LightVx.Validators
 {
-    public class IntValidator : ValidatorBase
+    public class GuidValidator : ValidatorBase
     {
         protected override void Validate()
         {
@@ -10,17 +12,17 @@
                 return;
             }
 
-            if (_Input is int)
+            if (_Input is Guid)
             {
                 Succeed();
             }
-            else if (int.TryParse(_Input.ToString(), out var _))
+            else if (Guid.TryParse(_Input.ToString(), out var _))
             {
                 Succeed();
             }
             else
             {
-                Fail("is not a valid Integer.");
+                Fail("is not a valid GUID.");
             }
         }
     }

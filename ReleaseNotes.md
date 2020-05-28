@@ -1,4 +1,8 @@
 # LightVx - Release Notes
+28/05/2020 - Version 2.0.2
+* Added Guid validator
+* Updated error label in Int validator to be more descriptive
+
 22/05/2020 - Version 2.0.1
 * Added AlphaNumericHyphen validator
 

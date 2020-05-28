@@ -351,6 +351,11 @@ namespace LightVx
             _validators.Add(new EmptyValidator());
             return this;
         }
+        public ValidatorFluent IsGuid()
+        {
+            _validators.Add(new GuidValidator());
+            return this;
+        }
         public ValidatorFluent IsInt()
         {
             _validators.Add(new IntValidator());
