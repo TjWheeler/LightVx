@@ -1,4 +1,7 @@
 # LightVx - Release Notes
+16/11/2020 - Version 2.0.3
+* Add fix for allowing apostrophie in Email Address validation.
+
 28/05/2020 - Version 2.0.2
 * Added Guid validator
 * Updated error label in Int validator to be more descriptive
