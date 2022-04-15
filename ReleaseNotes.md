@@ -1,4 +1,7 @@
 # LightVx - Release Notes
+15/04/2022 - Version 2.0.4
+* Changed email validation Regex to support updated standard.
+
 16/11/2020 - Version 2.0.3
 * Add fix for allowing apostrophie in Email Address validation.
 

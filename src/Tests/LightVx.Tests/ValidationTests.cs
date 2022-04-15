@@ -305,6 +305,8 @@ namespace Validation.LightVx.Tests
             TestValidatorForSuccess(validator, "abc@def.com");
             TestValidatorForSuccess(validator, "abc@def.co.nz");
             TestValidatorForSuccess(validator, "abc@def.net.au");
+            TestValidatorForSuccess(validator, "abc@freds.technology");
+            TestValidatorForSuccess(validator, "o'connel@freds.technology");
             TestValidatorForSuccess(validator, "abcdefghijklmnopqrstuvwxy.z-j@def.com");
             TestValidatorForFailure(validator, " a @b");
             TestValidatorForFailure(validator, "ab.co.nz");
