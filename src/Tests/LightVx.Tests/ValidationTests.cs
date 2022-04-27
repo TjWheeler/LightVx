@@ -301,6 +301,8 @@ namespace Validation.LightVx.Tests
         public void EmailValidatorTests()
         {
             var validator = new EmailValidator();
+            TestValidatorForSuccess(validator, "AbcTest1800@gmail.com".ToLower());
+            TestValidatorForSuccess(validator, "AbcTest1800@gmail.com");
             TestValidatorForSuccess(validator, "joe.smith@smith.io");
             TestValidatorForSuccess(validator, "abc@def.com");
             TestValidatorForSuccess(validator, "abc@def.co.nz");
