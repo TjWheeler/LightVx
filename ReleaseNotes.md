@@ -1,4 +1,7 @@
 # LightVx - Release Notes
+15/04/2022 - Version 2.0.5
+* Bug fix - email validation should support upper and lower case.  
+
 15/04/2022 - Version 2.0.4
 * Changed email validation Regex to support updated standard.
 
