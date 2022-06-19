@@ -1,4 +1,7 @@
 # LightVx - Release Notes
+19/06/2022 - Version 2.0.6
+* Added Apply method to Fluent Validator allowing for a more convenient access style.
+
 15/04/2022 - Version 2.0.5
 * Bug fix - email validation should support upper and lower case.  
 

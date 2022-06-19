@@ -101,6 +101,14 @@ Example
                     // Validation failed, put your failure logic here
                 });
 ```
+
+Example 2
+```
+            var input = "123ABC";
+            if(!Validator.Eval(input, "Customer ID").Required().IsGuid().Apply()) {
+                //... validation failed 
+            }
+```
 For more examples, see below.
 
 Available Methods

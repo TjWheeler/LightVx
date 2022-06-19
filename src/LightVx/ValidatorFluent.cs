@@ -41,7 +41,17 @@ namespace LightVx
                 _isValid = value;
             }
         }
-
+        /// <summary>
+        /// Calls the Validate method and returns true if validation succeeded
+        /// </summary>
+        public bool Apply
+        {
+            get
+            {
+                Validate();
+                return _isValid.HasValue && _isValid.Value;
+            }
+        }
         public List<string> ErrorMessages { get; private set; }
         public ValidatorFluent(object input)
         {
@@ -423,5 +433,6 @@ namespace LightVx
             ErrorMessages = _validators.Where(t => !t.IsValid).Select(t => t.ErrorMessage).ToList();
             return this;
         }
+
     }
 }
