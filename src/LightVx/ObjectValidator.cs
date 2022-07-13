@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace LightVx
@@ -17,8 +18,9 @@ namespace LightVx
             Input = input;
             Name = typeof(T).Name;
         }
-        public ObjectValidator(T input, string name) : this(input)
+        public ObjectValidator(T input, string name) 
         {
+            Input = input;
             Name = name;
         }
 
@@ -46,8 +48,15 @@ namespace LightVx
         public string[] ErrorMessages { get; set; }
         public override string ToString()
         {
+            if (RequiresRevalidation)
+            {
+                return "Not yet evaluated";
+            }
             return $"{Name} is {(IsValid ? "Valid" : "Invalid")}{(!IsValid ? " Errors: " + string.Join(",", ErrorMessages) : "")}";
         }
+        /// <summary>
+        /// Clears all validators.  Eval and AddValidator methods should be called after using this function.
+        /// </summary>
         public void Reset()
         {
             RequiresRevalidation = true;
@@ -57,12 +66,17 @@ namespace LightVx
             IsValid = false;
         }
         /// <summary>
-        /// If you override this method, make sure you clear the Validators and FluentValidators collections first.
+        /// Checks all validators.  If you override this method and add validators uing Eval, ensure you Reset first.
         /// </summary>
         /// <returns></returns>
         public virtual bool Validate()
         {
-            var errors = new List<string>();
+            Console.WriteLine("LightVx:Running Validation Method");
+            if (Validators.Count == 0 && FluentValidators.Count == 0)
+            {
+                throw new InvalidOperationException("No validators have been added.  Validation is invalid.");
+            }
+            var errors = new List<string>(ErrorMessages ?? new string[]{});
             foreach (var validator in Validators)
             {
                 var tempValidator = Activator.CreateInstance(validator.GetType()) as IValidator;
@@ -80,6 +94,7 @@ namespace LightVx
                     errors.AddRange(validator.ErrorMessages);
                 }
             }
+            
             ErrorMessages = errors.ToArray();
             IsValid = ErrorMessages.Length == 0;
             RequiresRevalidation = false;

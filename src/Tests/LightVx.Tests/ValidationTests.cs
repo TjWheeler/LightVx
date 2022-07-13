@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
-using System.Linq;
 using LightVx;
 using LightVx.Tests;
 using LightVx.Validators;
@@ -148,7 +147,6 @@ namespace Validation.LightVx.Tests
             TestValidatorForFailure(validator, "%27");
             TestValidatorForFailure(validator, "ABC%3bDEF");
             TestValidatorForFailure(validator, "ABC %3B DEF");
-
         }
 
         [TestMethod]
@@ -200,13 +198,22 @@ namespace Validation.LightVx.Tests
         [TestMethod]
         public void HexColorTest()
         {
-
             var validator = new HexColorValidator();
             TestValidatorForSuccess(validator, "#ffffff");
             TestValidatorForSuccess(validator, "#fff");
             TestValidatorForSuccess(validator, null);
             TestValidatorForFailure(validator, "3004085616");
             TestValidatorForFailure(validator, "");
+        }
+
+        [TestMethod]
+        public void ArrayLengthValidator()
+        {
+            TestValidatorForSuccess(new LengthValidator(0, 50), new int[] { });
+            TestValidatorForSuccess(new LengthValidator(0, 50), new[] { 1, 2, 3 });
+            TestValidatorForSuccess(new LengthValidator(0, 3), new[] { 1, 2, 3 });
+            TestValidatorForSuccess(new LengthValidator(0, 3), null);
+            TestValidatorForFailure(new LengthValidator(0, 1), new[] { 1, 2, 3 });
         }
 
         [TestMethod]
@@ -397,9 +404,9 @@ namespace Validation.LightVx.Tests
         [TestMethod]
         public void InCollectionValidatorTests()
         {
-            string[] arrayItems = {"One", "Two", "Three", "Four", "Five"};
-            int[] arrayIntItems = {1, 2, 3, 4, 5};
-            List<string> listItems = new List<string>(arrayItems);
+            string[] arrayItems = { "One", "Two", "Three", "Four", "Five" };
+            int[] arrayIntItems = { 1, 2, 3, 4, 5 };
+            var listItems = new List<string>(arrayItems);
             IValidator arrayValidator = new InCollectionValidator(arrayItems);
             IValidator listValidator = new InCollectionValidator(listItems);
             IValidator arrayIntValidator = new InCollectionValidator(arrayIntItems);
@@ -454,15 +461,13 @@ namespace Validation.LightVx.Tests
             TestValidatorForFailure(validator, "1");
             TestValidatorForFailure(validator, "!@#$");
 
-            validator = new ContainsValidator(new [] {"abcde", "x" });
+            validator = new ContainsValidator(new[] { "abcde", "x" });
             TestValidatorForSuccess(validator, "abcde x");
             TestValidatorForSuccess(validator, "abxde abcde");
             TestValidatorForSuccess(validator, "abcde aaa x");
             TestValidatorForFailure(validator, "1");
             TestValidatorForFailure(validator, "x");
             TestValidatorForFailure(validator, "abcde");
-
-            
         }
 
         [TestMethod]
@@ -480,7 +485,7 @@ namespace Validation.LightVx.Tests
             TestValidatorForFailure(validator, "xabcdex");
             TestValidatorForFailure(validator, "abcde");
 
-            validator = new NotContainsValidator(new [] { "abcde", " "});
+            validator = new NotContainsValidator(new[] { "abcde", " " });
             validator.FieldName = "My Field";
             Assert.IsFalse(validator.Validate("abcde"));
             Assert.IsTrue(validator.ErrorMessage.Contains("My Field"));

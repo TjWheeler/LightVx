@@ -77,14 +77,14 @@ namespace LightVx.Validators
             if(((Array)Input).Length < _minOccurance)
             {
                 Fail(
-                    string.Format("is not valid. Must have a length greater than {0}.",
+                    string.Format("is not valid. Must have a length greater than or equal to {0}.",
                         _minOccurance));
                 return;
             }
 
             if (_maxOccurance.HasValue)
             {
-                if (_maxOccurance.Value > ((Array)Input).Length)
+                if (_maxOccurance.Value < ((Array)Input).Length)
                 {
                     Fail(
                         string.Format("is not valid. Must have a length of between {0} and {1}.",
