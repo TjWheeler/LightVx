@@ -56,6 +56,10 @@ namespace LightVx
             FluentValidators.Clear();
             IsValid = false;
         }
+        /// <summary>
+        /// If you override this method, make sure you clear the Validators and FluentValidators collections first.
+        /// </summary>
+        /// <returns></returns>
         public virtual bool Validate()
         {
             var errors = new List<string>();
