@@ -1,4 +1,9 @@
 # LightVx - Release Notes
+13/07/2022 - Version 2.0.7
+* Fix to Length Validator bug for Array Max length.
+* Allowed existing ErrorMessages in ObjectValidator to support overrides.
+* Added unit test
+
 19/06/2022 - Version 2.0.6
 * Added Apply method to Fluent Validator allowing for a more convenient access style.
 
