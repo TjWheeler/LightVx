@@ -109,6 +109,20 @@ Example 2
                 //... validation failed 
             }
 ```
+
+Example 3
+```
+            var onFail = new Action<List<string>, List<IValidator>>((list, validators) =>
+            {
+                foreach (var validator in validators)
+                {
+                    ///...do something
+                }
+                
+            });
+            Validator.Eval(item.Name, nameof(item.Name)).IsSafeForXss().IsNotNull().HasMinLength(1).HasMaxLength(150).Fail(onFail).Validate();
+           
+```
 For more examples, see below.
 
 Available Methods
