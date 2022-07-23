@@ -1,4 +1,7 @@
 # LightVx - Release Notes
+23/07/2022 - Version 2.0.8
+* Fix to field name's being lost on Fluent API
+
 13/07/2022 - Version 2.0.7
 * Fix to Length Validator bug for Array Max length.
 * Allowed existing ErrorMessages in ObjectValidator to support overrides.

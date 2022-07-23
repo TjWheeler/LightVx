@@ -150,6 +150,21 @@ namespace LightVx.Tests
             ExpectFailure("".Eval().Required());
             ExpectFailure(Validator.Eval(null).Required());
         }
+        [TestMethod]
+        public void ValidatorFieldNameTest_Ok()
+        {
+            bool hasFoundName = false;
+            var onFail = new Action<List<string>, List<IValidator>>((list, validators) =>
+            {
+                foreach (var validator in validators)
+                {
+                    Assert.AreEqual("Name", validator.FieldName, "The Field Name value has not been returned");
+                    hasFoundName = true;
+                }
+            });
+            Validator.Eval(null, "Name").Required().Fail(onFail);
+            Assert.IsTrue(hasFoundName, "Validation did not trigger");
+        }
 
         [TestMethod]
         public void AlphaNumbericValidatorTest_Ok()

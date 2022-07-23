@@ -59,7 +59,6 @@ namespace LightVx
             _Input = input;
             _FieldName = fieldName;
             Validate();
-            ResetFieldName();
             errorMessage = _ErrorMessage;
             return _IsValid;
         }
@@ -69,7 +68,6 @@ namespace LightVx
             _Input = input;
             _FieldName = fieldName;
             Validate();
-            ResetFieldName();
             return _IsValid;
         }
 
