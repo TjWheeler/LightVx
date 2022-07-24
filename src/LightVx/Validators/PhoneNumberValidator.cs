@@ -17,7 +17,7 @@ namespace LightVx.Validators
                 Succeed();
             else
                 Fail(
-                    "is not a valid phone number, is can only contain left and right brace, spaces, hyphens and digits.");
+                    "is not a valid phone number, it can only contain left and right brace, spaces, hyphens and digits.");
         }
 
         #region base implementation
