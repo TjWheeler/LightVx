@@ -41,11 +41,19 @@ namespace LightVx.Validators
                 return;
             }
 
-            if (_Input == null && _minOccurance > 0)
+            if (_Input == null && _minOccurance > 0 && _maxOccurance.HasValue)
             {
                 Fail(
                     string.Format("has no data (null) and is not valid. Must have a length of between {0} and {1}.",
                         _minOccurance, _maxOccurance));
+                return;
+            }
+
+            if (_Input == null && _minOccurance > 0 && !_maxOccurance.HasValue)
+            {
+                Fail(
+                    string.Format(_minOccurance == 1 ? "is required" : "has no data (null) and is not valid. Must have at least a length of {0}.",
+                        _minOccurance));
                 return;
             }
 

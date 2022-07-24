@@ -1,4 +1,9 @@
 # LightVx - Release Notes
+24/07/2022 - Version 3.0.0 (Breaking Changes - Only if you are implementing IValidator on your own validators)
+* Interface IValidator now specifies FieldDisplayName:string property.
+* Update to Length validator to fix output message when no max length set.
+* Added Display Name option to allow for both Field and User Friendly names to be used.
+
 23/07/2022 - Version 2.0.8
 * Fix to field name's being lost on Fluent API
 

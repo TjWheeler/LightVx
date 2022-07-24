@@ -21,7 +21,8 @@ namespace LightVx
         protected bool _IsValid;
         public const string DefaultFieldName = "The Field";
         protected string _FieldName = DefaultFieldName;
-        
+        protected string _FieldDisplayName = null;
+
 
         #endregion
 
@@ -30,7 +31,7 @@ namespace LightVx
         protected void Fail(string message)
         {
             _IsValid = false;
-            _ErrorMessage = $"{_FieldName} {message}";
+            _ErrorMessage = $"{_FieldDisplayName ?? _FieldName} {message}";
         }
 
         protected void Succeed()
@@ -53,6 +54,12 @@ namespace LightVx
         #endregion
 
         #region public methods and properties
+
+        public virtual bool Validate(object input, string fieldName, string fieldDisplayName)
+        {
+            _FieldDisplayName = fieldDisplayName;
+            return Validate(input, fieldName);
+        }
 
         public virtual bool Validate(object input, string fieldName, out string errorMessage)
         {
@@ -110,6 +117,14 @@ namespace LightVx
                     _FieldName = DefaultFieldName;
                 else
                     _FieldName = value;
+            }
+        }
+        public string FieldDisplayName
+        {
+            get => _FieldDisplayName;
+            set
+            {
+                _FieldDisplayName = value;
             }
         }
 

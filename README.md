@@ -2,6 +2,10 @@
 LightVx is a light, easy and extensible validation framework for .Net which includes a Fluent API.  
 It's intended to help validating user input in apps, or service requests in Web Services or Web API's, or anywhere you need to validate data.
 
+## Breaking Changes in Version 3
+The validation framework now supports a user friendly name `FieldDisplayName` property on all validators and the FuentAPI.
+If you are creating your own validators and implementing IValidator, you must add the FieldDisplayName string property.
+
 ## Author
 Tim Wheeler - http://blog.timwheeler.io/
 Contact - http://timwheeler.io/#contact

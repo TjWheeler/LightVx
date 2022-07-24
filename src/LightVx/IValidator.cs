@@ -3,6 +3,7 @@ namespace LightVx
     public interface IValidator
     {
         string FieldName { get; set; }
+        string FieldDisplayName { get; set; }
 
         /// <summary>
         ///     Accepts any object as input to be validated
@@ -31,7 +32,7 @@ namespace LightVx
         /// <param name="errorMessage">Empty string if no error, error message if failure</param>
         /// <returns>True if the input object is valid, false if a validation rule was broken</returns>
         bool Validate(object input, string fieldName, out string errorMessage);
-
+        bool Validate(object input, string fieldName, string fieldDisplayName);
         bool Validate(object input, string fieldName);
 
         bool Validate(object input);

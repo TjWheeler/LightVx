@@ -120,6 +120,10 @@ namespace LightVx
         {
             return new ValidatorFluent(input, fieldName);
         }
+        public static ValidatorFluent Eval(this object input, string fieldName, string fieldDisplayName)
+        {
+            return new ValidatorFluent(input, fieldName, fieldDisplayName);
+        }
         public static ValidatorFluent Eval(this object input)
         {
             return new ValidatorFluent(input);

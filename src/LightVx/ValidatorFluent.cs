@@ -24,6 +24,8 @@ namespace LightVx
         private readonly object _input;
         private readonly List<IValidator> _validators = new List<IValidator>();
         private readonly string _fieldName = ValidatorBase.DefaultFieldName;
+        private string _fieldDisplayName = null;
+
         private bool? _isValid;
 
         public string FieldName => _fieldName;
@@ -62,8 +64,12 @@ namespace LightVx
         {
             _fieldName = fieldName;
         }
+        public ValidatorFluent(object input, string fieldName, string fieldDisplayName) : this(input, fieldName)
+        {
+            _fieldDisplayName = fieldDisplayName;
+        }
 
-        
+
         public ValidatorFluent Required()
         {
             _validators.Add(new LengthValidator(1));
@@ -427,7 +433,7 @@ namespace LightVx
         {
             foreach (var validator in _validators)
             {
-                validator.Validate(_input, _fieldName);
+                validator.Validate(_input, _fieldName, _fieldDisplayName);
             }
             IsValid = _validators.All(t => t.IsValid);
             ErrorMessages = _validators.Where(t => !t.IsValid).Select(t => t.ErrorMessage).ToList();

@@ -118,6 +118,14 @@ namespace LightVx
             return validator;
 
         }
+        public ValidatorFluent Eval(object input, string fieldName, string fieldDisplayName)
+        {
+            RequiresRevalidation = true;
+            var validator = new ValidatorFluent(input, fieldName, fieldDisplayName);
+            FluentValidators.Add(validator);
+            return validator;
+
+        }
         public ValidatorFluent Eval(object input)
         {
             RequiresRevalidation = true;

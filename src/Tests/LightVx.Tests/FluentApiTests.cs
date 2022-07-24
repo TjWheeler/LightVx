@@ -149,6 +149,9 @@ namespace LightVx.Tests
         {
             ExpectFailure("".Eval().Required());
             ExpectFailure(Validator.Eval(null).Required());
+            var result =Validator.Eval(null).Required().Validate();
+            Assert.IsTrue(result.ErrorMessages.Count == 1);
+            Assert.AreEqual("The Field is required", result.ErrorMessages[0]);
         }
         [TestMethod]
         public void ValidatorFieldNameTest_Ok()
@@ -163,6 +166,23 @@ namespace LightVx.Tests
                 }
             });
             Validator.Eval(null, "Name").Required().Fail(onFail);
+            Assert.IsTrue(hasFoundName, "Validation did not trigger");
+        }
+        [TestMethod]
+        public void ValidatorFieldDisplayNameTest_Ok()
+        {
+            bool hasFoundName = false;
+            var onFail = new Action<List<string>, List<IValidator>>((list, validators) =>
+            {
+                foreach (var validator in validators)
+                {
+                    Assert.AreEqual("Name", validator.FieldName, "The Field Name value has not been returned");
+                    Assert.AreEqual("First Name", validator.FieldDisplayName, "The Field Display Name value has not been returned");
+                    Assert.IsTrue(validator.ErrorMessage.Contains("First Name"));
+                    hasFoundName = true;
+                }
+            });
+            Validator.Eval(null, "Name", "First Name").Required().Fail(onFail);
             Assert.IsTrue(hasFoundName, "Validation did not trigger");
         }
 
