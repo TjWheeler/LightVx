@@ -1,4 +1,7 @@
 # LightVx - Release Notes
+24/07/2022 - Version 3.0.1
+* The Validator.FieldDisplayName will now default to Validator.FieldName when not set.
+
 24/07/2022 - Version 3.0.0 (Breaking Changes - Only if you are implementing IValidator on your own validators)
 * Interface IValidator now specifies FieldDisplayName:string property.
 * Update to Length validator to fix output message when no max length set.

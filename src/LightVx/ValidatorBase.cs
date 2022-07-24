@@ -121,7 +121,7 @@ namespace LightVx
         }
         public string FieldDisplayName
         {
-            get => _FieldDisplayName;
+            get => _FieldDisplayName ?? _FieldName;
             set
             {
                 _FieldDisplayName = value;
