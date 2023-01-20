@@ -1,4 +1,7 @@
 # LightVx - Release Notes
+21/01/2023 - Version 3.0.2
+* Updated IsIn validator to allow arrays and collections as inputs.  Validates each item in the input exists in the collection.
+
 24/07/2022 - Version 3.0.1
 * The Validator.FieldDisplayName will now default to Validator.FieldName when not set.
 

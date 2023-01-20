@@ -25,21 +25,49 @@ namespace LightVx.Validators
                 Succeed();
                 return;
             }
-
-            foreach (var item in _items)
+            if (Input is Array || Input is ICollection)
             {
-                if (!_ignoreCase && String.Equals(item?.ToString(), _Input.ToString(), StringComparison.CurrentCulture))
+                if(Input is Array && ((Array)Input).Length == 0) { Succeed(); return; }
+                if (Input is ICollection && ((ICollection)Input).Count == 0) { Succeed(); return; }
+                bool isValid = true;
+                foreach (var input in (IEnumerable) _Input)
                 {
-                    Succeed();
-                    return;
+                    if (!ValidateItem(input))
+                    {
+                        isValid = false;
+                        break;
+                    };
                 }
-                if (_ignoreCase && String.Equals(item?.ToString(), _Input.ToString(), StringComparison.CurrentCultureIgnoreCase))
+                if (isValid)
                 {
-                    Succeed();
                     return;
                 }
             }
+            else
+            {
+                if (ValidateItem(_Input)) return;
+            }
             Fail("is not a valid selection.");
+        }
+
+        private bool ValidateItem(object input)
+        {
+            foreach (var item in _items)
+            {
+                if (!_ignoreCase && String.Equals(item?.ToString(), input.ToString(), StringComparison.CurrentCulture))
+                {
+                    Succeed();
+                    return true;
+                }
+
+                if (_ignoreCase && String.Equals(item?.ToString(), input.ToString(), StringComparison.CurrentCultureIgnoreCase))
+                {
+                    Succeed();
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

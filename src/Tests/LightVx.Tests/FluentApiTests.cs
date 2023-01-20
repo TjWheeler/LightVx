@@ -545,6 +545,13 @@ namespace LightVx.Tests
             ExpectFailure(Validator.Eval(6).IsIn(arrayIntItems, true));
             ExpectFailure(Validator.Eval("Six").IsIn(listItems, false));
             ExpectFailure(Validator.Eval("Six").IsIn(listItems, true));
+
+            //Collections
+            string[] stringArrayMaster = { "One", "Two", "Three", "Four", "Five" };
+            string[] stringArraySubset = { "One", "Two", "Three" };
+            ExpectSuccess(Validator.Eval(stringArraySubset).IsIn(stringArrayMaster, false));
+            ExpectFailure(Validator.Eval(new[] {"OneTwo", "Two"}).IsIn(stringArrayMaster, false));
+            ExpectSuccess(Validator.Eval(Array.Empty<string>()).IsIn(stringArrayMaster, false));
         }
 
         [TestMethod]
