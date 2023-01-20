@@ -7,8 +7,7 @@ The validation framework now supports a user friendly name `FieldDisplayName` pr
 If you are creating your own validators and implementing IValidator, you must add the FieldDisplayName string property.
 
 ## Author
-Tim Wheeler - http://blog.timwheeler.io/
-Contact - http://timwheeler.io/#contact
+Tim Wheeler - https://www.linkedin.com/in/timwheeler/
 
 ## Download
 [Source](https://github.com/TjWheeler/LightVx) on GitHub 
