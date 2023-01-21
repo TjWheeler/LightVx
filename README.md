@@ -90,41 +90,41 @@ Note: To use the US Validators in the Fluent API add use namespace: LightVx.Vali
 Using the `Validator.Eval` method you can call a number of validators.  
 Example
 ```
-            var input = "123ABC";
-            Validator.Eval(input, "Customer ID")
-                .Required()
-                .IsAlphaNumeric()
-                .HasLength(6, 6)
-                .Success((() =>
-                {
-                    Console.WriteLine("Validation succeeded");
-                }))
-                .Fail((errors, validators) =>
-                {
-                    Console.WriteLine(string.Join(",", errors));
-                    // Validation failed, put your failure logic here
-                });
+    var input = "123ABC";
+    Validator.Eval(input, "Customer ID")
+        .Required()
+        .IsAlphaNumeric()
+        .HasLength(6, 6)
+        .Success((() =>
+        {
+            Console.WriteLine("Validation succeeded");
+        }))
+        .Fail((errors, validators) =>
+        {
+            Console.WriteLine(string.Join(",", errors));
+            // Validation failed, put your failure logic here
+        });
 ```
 
 Example 2
 ```
-            var input = "123ABC";
-            if(!Validator.Eval(input, "Customer ID").Required().IsGuid().Apply()) {
-                //... validation failed 
-            }
+    var input = "123ABC";
+    if(!Validator.Eval(input, "Customer ID").Required().IsGuid().Apply()) {
+        //... validation failed 
+    }
 ```
 
 Example 3
 ```
-            var onFail = new Action<List<string>, List<IValidator>>((list, validators) =>
-            {
-                foreach (var validator in validators)
-                {
-                    ///...do something
-                }
+    var onFail = new Action<List<string>, List<IValidator>>((list, validators) =>
+    {
+        foreach (var validator in validators)
+        {
+            ///...do something
+        }
                 
-            });
-            Validator.Eval(item.Name, nameof(item.Name)).IsSafeForXss().IsNotNull().HasMinLength(1).HasMaxLength(150).Fail(onFail).Validate();
+    });
+    Validator.Eval(item.Name, nameof(item.Name)).IsSafeForXss().IsNotNull().HasMinLength(1).HasMaxLength(150).Fail(onFail).Validate();
            
 ```
 For more examples, see below.
@@ -172,57 +172,89 @@ US Validation Extensions
 
 **Example using Result**
 ```
-            var input = 100; //user input to be validated
-            var result = Validator.Eval(input, "Quantity Requested")
-                .Required()
-                .Min(50)
-                .Max(100);
-            if (result.IsValid == false)
-            {
-                Console.WriteLine(string.Join(";", result.ErrorMessages));
-                //... add failure logic here
-            }
+    var input = 100; //user input to be validated
+    var result = Validator.Eval(input, "Quantity Requested")
+        .Required()
+        .Min(50)
+        .Max(100);
+    if (result.IsValid == false)
+    {
+        Console.WriteLine(string.Join(";", result.ErrorMessages));
+        //... add failure logic here
+    }
 ```
 **Inline Example**
 ```
-            var input = "https://github.com/TjWheeler/LightVx"; //user input to be validated
-            Validator.Eval(input, "Source Url")
-                .Required()
-                .IsUrl()
-                .Success((() =>
-                {
-                    Console.WriteLine("Validation succeeded");
-                }))
-                .Fail((errors, validators) =>
-                {
-                    Console.WriteLine(string.Join(",", errors));
-                    // Validation failed, put your failure logic here
-                });
+    var input = "https://github.com/TjWheeler/LightVx"; //user input to be validated
+    Validator.Eval(input, "Source Url")
+        .Required()
+        .IsUrl()
+        .Success((() =>
+        {
+            Console.WriteLine("Validation succeeded");
+        }))
+        .Fail((errors, validators) =>
+        {
+            Console.WriteLine(string.Join(",", errors));
+            // Validation failed, put your failure logic here
+        });
+```
+
+**Validation Set using Validation Definitions**
+```
+    var nameValidationSet = Validator.Define().Required().IsNameText().HasMaxLength(50);
+    string firstName = "Joe";
+    if(firstName.Eval(firstName, nameValidationSet).Validate().IsValid == false)
+    {
+        //Value Invalid
+    }
+```
+
+**MVC.net Controller Example using Validation Definitions **
+```
+    //The onFail delegate will add a model state error using the Field Name to match it to the appropriate Form control.
+    Action<List<string>, List<IValidator>> onFail = (list, validators) => {
+        foreach (var validator in validators)
+        {
+            modelState.AddModelError(validator.FieldName, validator.ErrorMessage);
+        }
+    };
+    var nameValidationSet = Validator.Define().Required().IsNameText().HasMaxLength(50);
+    string firstName = "!@#";
+    string lastName = "Smith";
+    
+    //This
+    firstName.Eval("FirstName", "First Name", nameValidationSet).Fail(onFail);
+    lastName.Eval("LastName", "Last Name", nameValidationSet).Fail(onFail);
+    
+    //Or
+    firstName.Eval("FirstName", "First Name").ValidateWith(nameValidationSet).Fail(onFail);
+    lastName.Eval("LastName", "Last Name").ValidateWith(nameValidationSet).Fail(onFail);
 ```
 
 ## Examples using Validation Helper
 ```
-            //WebApi - Validate that the text is matches Alphabet only
-            var input = "ABC";
-            string errorMessage;
-            if (Validator.IsNotValid<AlphaTextValidator>(input, "First Name" , out errorMessage))
-            {
-                return BadRequest($"The input is invalid: {errorMessage}");
-            }
+        //WebApi - Validate that the text is matches Alphabet only
+        var input = "ABC";
+        string errorMessage;
+        if (Validator.IsNotValid<AlphaTextValidator>(input, "First Name" , out errorMessage))
+        {
+            return BadRequest($"The input is invalid: {errorMessage}");
+        }
 ```
 
 ## Examples using Validators directly
 
 Note: Although you can call the validators directly, using the `Validation` helper is more convenient. 
 ```
-            //Validate numberic
-            string input = "123ABC";
-            IValidator validator = new NumericValidator();
-            validator.Validate(input, "My Field Name");
-            if (!validator.IsValid)
-            {
-                Console.WriteLine("Input: " + input + " return error (" + validator.ErrorMessage + ")");
-            }
+        //Validate numberic
+        string input = "123ABC";
+        IValidator validator = new NumericValidator();
+        validator.Validate(input, "My Field Name");
+        if (!validator.IsValid)
+        {
+            Console.WriteLine("Input: " + input + " return error (" + validator.ErrorMessage + ")");
+        }
 ```
 ## Extending and creating your own validators
 

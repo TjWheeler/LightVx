@@ -128,6 +128,28 @@ namespace LightVx
         {
             return new ValidatorFluent(input);
         }
+
+        public static ValidatorFluent Eval(this object input, string fieldName, ValidatorFluent validationSet)
+        {
+            return new ValidatorFluent(input, fieldName, validationSet);
+        }
+        public static ValidatorFluent Eval(this object input, string fieldName, string fieldDisplayName, ValidatorFluent validationSet)
+        {
+            return new ValidatorFluent(input, fieldName, fieldDisplayName, validationSet);
+        }
+        public static ValidatorFluent Eval(this object input, ValidatorFluent validationSet)
+        {
+            return new ValidatorFluent(input, validationSet);
+        }
+        /// <summary>
+        /// Create a Validation Definition which can be supplied later and reused
+        /// </summary>
+        /// <returns></returns>
+        public static ValidatorFluent Define()
+        {
+            return new ValidatorFluent();
+        }
+        
         public static bool IsValid<T>(string input, string fieldName) where T : IValidator
         {
             var validator = (IValidator) Activator.CreateInstance(typeof(T));

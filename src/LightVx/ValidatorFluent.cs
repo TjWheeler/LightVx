@@ -22,7 +22,7 @@ namespace LightVx
     public class ValidatorFluent
     {
         private readonly object _input;
-        private readonly List<IValidator> _validators = new List<IValidator>();
+        private List<IValidator> _validators = new List<IValidator>();
         private readonly string _fieldName = ValidatorBase.DefaultFieldName;
         private string _fieldDisplayName = null;
 
@@ -55,18 +55,40 @@ namespace LightVx
             }
         }
         public List<string> ErrorMessages { get; private set; }
-        public ValidatorFluent(object input)
+
+        public ValidatorFluent()
         {
-            _input = input;
+
         }
 
-        public ValidatorFluent(object input, string fieldName) : this(input)
+        public ValidatorFluent(ValidatorFluent validationDefinition)
+        {
+            _validators = new List<IValidator>(validationDefinition._validators);
+        }
+        public ValidatorFluent(object input, ValidatorFluent validationSet = null)
+        {
+            _input = input;
+            if (validationSet != null)
+            {
+                _validators = new List<IValidator>(validationSet._validators);
+            }
+        }
+
+        public ValidatorFluent(object input, string fieldName, ValidatorFluent validationSet = null) : this(input)
         {
             _fieldName = fieldName;
+            if (validationSet != null)
+            {
+                _validators = new List<IValidator>(validationSet._validators);
+            }
         }
-        public ValidatorFluent(object input, string fieldName, string fieldDisplayName) : this(input, fieldName)
+        public ValidatorFluent(object input, string fieldName, string fieldDisplayName, ValidatorFluent validationSet = null) : this(input, fieldName)
         {
             _fieldDisplayName = fieldDisplayName;
+            if (validationSet != null)
+            {
+                _validators = new List<IValidator>(validationSet._validators);
+            }
         }
 
 
@@ -449,6 +471,20 @@ namespace LightVx
             ErrorMessages = _validators.Where(t => !t.IsValid).Select(t => t.ErrorMessage).ToList();
             return this;
         }
-
+        /// <summary>
+        /// Validates using the provided enumerable IValidator objects
+        /// </summary>
+        /// <param name="validators"></param>
+        /// <returns></returns>
+        public ValidatorFluent ValidateWith(IEnumerable<IValidator> validators)
+        {
+            _validators = new List<IValidator>(validators);
+            return Validate();
+        }
+        public ValidatorFluent ValidateWith(ValidatorFluent validationDefintion)
+        {
+            _validators = new List<IValidator>(validationDefintion._validators);
+            return Validate();
+        }
     }
 }

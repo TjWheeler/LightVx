@@ -1,4 +1,8 @@
 # LightVx - Release Notes
+22/01/2023 - Version 3.1.0
+* Added ability to create Validation Defintions (Sets of Validators) to allow a more centralised location for validators to
+	be defined then used later as needed.
+
 21/01/2023 - Version 3.0.3
 * Added RegExValidator and MatchesExpression to the FluentApi to validated against Regular Expressions.
 

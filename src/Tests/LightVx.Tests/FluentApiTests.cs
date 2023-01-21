@@ -609,5 +609,25 @@ namespace LightVx.Tests
             ExpectFailure(Validator.Eval("123").MatchesExpression("^[a-zA-Z]*$"));
         }
 
+        [TestMethod]
+        public void ValidationSetTests()
+        {
+            var numberTo5Set = Validator.Define().IsNumeric().Max(5);
+            ExpectSuccess(1.Eval(numberTo5Set));
+            ExpectSuccess("1".Eval(numberTo5Set));
+            ExpectFailure(6.Eval(numberTo5Set));
+            ExpectFailure("6".Eval(numberTo5Set));
+
+            ExpectSuccess(Validator.Eval("1", numberTo5Set));
+            ExpectSuccess(Validator.Eval(1, "FieldName", numberTo5Set));
+            ExpectFailure(Validator.Eval("6", numberTo5Set));
+            ExpectFailure(Validator.Eval(6, "FieldName", "FieldDisplayName", numberTo5Set));
+
+            var nameValidationSet = Validator.Define().Required().IsNameText().HasMaxLength(15);
+            ExpectSuccess(Validator.Eval("Joe Smith").ValidateWith(nameValidationSet));
+            ExpectSuccess(Validator.Eval("Mark O'Malley").ValidateWith(nameValidationSet));
+            ExpectFailure(Validator.Eval("Joe#Smith").ValidateWith(nameValidationSet));
+            ExpectFailure(Validator.Eval(new string('A',16)).ValidateWith(nameValidationSet));
+        }
     }
 }
