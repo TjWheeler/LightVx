@@ -21,6 +21,7 @@ namespace LightVx.Tests
             ExpectFailure(Validator.Eval(date).IsAfter(date));
             ExpectFailure(Validator.Eval(date.AddSeconds(-1)).IsAfter(date));
         }
+
         [TestMethod]
         public void IsBeforeDateTests()
         {
@@ -32,6 +33,7 @@ namespace LightVx.Tests
             ExpectFailure(Validator.Eval(date).IsBefore(date));
             ExpectFailure(Validator.Eval(date.AddSeconds(1)).IsBefore(date));
         }
+
         [TestMethod]
         public void BetweenDateTest_Ok()
         {
@@ -43,6 +45,7 @@ namespace LightVx.Tests
             ExpectSuccess(Validator.Eval(startDate).IsBetweenDates(startDate, endDate));
             ExpectSuccess(Validator.Eval(endDate).IsBetweenDates(startDate, endDate));
         }
+
         [TestMethod]
         public void BetweenDateTest_Fail()
         {
@@ -51,6 +54,7 @@ namespace LightVx.Tests
             ExpectFailure(Validator.Eval(startDate.AddDays(-1)).IsBetweenDates(startDate, endDate));
             ExpectFailure(Validator.Eval(endDate.AddSeconds(1)).IsBetweenDates(startDate, endDate));
         }
+
         [TestMethod]
         public void MinDateTest_Ok()
         {
@@ -60,6 +64,7 @@ namespace LightVx.Tests
             ExpectSuccess(Validator.Eval(date.AddSeconds(1)).Min(date));
             ExpectSuccess(Validator.Eval(date.AddDays(1)).Min(date));
         }
+
         [TestMethod]
         public void MinDateTest_Fail()
         {
@@ -68,6 +73,7 @@ namespace LightVx.Tests
             ExpectFailure(Validator.Eval(date.AddSeconds(-1)).Min(date));
             ExpectFailure(Validator.Eval(date.AddDays(-1)).Min(date));
         }
+
         [TestMethod]
         public void MaxDateTest_Ok()
         {
@@ -77,6 +83,7 @@ namespace LightVx.Tests
             ExpectSuccess(Validator.Eval(date.AddSeconds(-1)).Max(date));
             ExpectSuccess(Validator.Eval(date.AddDays(-11)).Max(date));
         }
+
         [TestMethod]
         public void MaxDateTest_Fail()
         {
@@ -85,6 +92,7 @@ namespace LightVx.Tests
             ExpectFailure(Validator.Eval(date.AddSeconds(1)).Max(date));
             ExpectFailure(Validator.Eval(date.AddDays(1)).Max(date));
         }
+
         [TestMethod]
         public void IsDoubleTest_Ok()
         {
@@ -149,10 +157,11 @@ namespace LightVx.Tests
         {
             ExpectFailure("".Eval().Required());
             ExpectFailure(Validator.Eval(null).Required());
-            var result =Validator.Eval(null).Required().Validate();
+            var result = Validator.Eval(null).Required().Validate();
             Assert.IsTrue(result.ErrorMessages.Count == 1);
             Assert.AreEqual("The Field is required", result.ErrorMessages[0]);
         }
+
         [TestMethod]
         public void ValidatorFieldNameTest_Ok()
         {
@@ -168,6 +177,7 @@ namespace LightVx.Tests
             Validator.Eval(null, "Name").Required().Fail(onFail);
             Assert.IsTrue(hasFoundName, "Validation did not trigger");
         }
+
         [TestMethod]
         public void ValidatorFieldDisplayNameTest_Ok()
         {
@@ -322,11 +332,11 @@ namespace LightVx.Tests
             ExpectSuccess(Validator.Eval("10.5").Min(10M));
 
             ExpectSuccess(Validator.Eval(null).Min(10));
-            ExpectSuccess(Validator.Eval(new[] {"first", "second", "third"}).Min(1));
-            ExpectSuccess(Validator.Eval(new[] {"first", "second", "third"}).Min(2));
-            ExpectSuccess(Validator.Eval(new[] {"first", "second", "third"}).Min(3));
+            ExpectSuccess(Validator.Eval(new[] { "first", "second", "third" }).Min(1));
+            ExpectSuccess(Validator.Eval(new[] { "first", "second", "third" }).Min(2));
+            ExpectSuccess(Validator.Eval(new[] { "first", "second", "third" }).Min(3));
             var collection = new List<string>();
-            collection.AddRange(new[] {"first", "second", "third"});
+            collection.AddRange(new[] { "first", "second", "third" });
             ExpectSuccess(Validator.Eval(collection).Min(1));
             ExpectSuccess(Validator.Eval(collection).Min(2));
             ExpectSuccess(Validator.Eval(collection).Min(3));
@@ -344,9 +354,9 @@ namespace LightVx.Tests
             ExpectFailure(10.Eval().Min(11));
             ExpectFailure(10.Eval().Min(100));
             ExpectFailure(Validator.Eval(new object()).Min(11));
-            ExpectFailure(Validator.Eval(new[] {"first", "second", "third"}).Min(4));
+            ExpectFailure(Validator.Eval(new[] { "first", "second", "third" }).Min(4));
             var collection = new List<string>();
-            collection.AddRange(new[] {"first", "second", "third"});
+            collection.AddRange(new[] { "first", "second", "third" });
             ExpectFailure(Validator.Eval(collection).Min(4));
         }
 
@@ -364,10 +374,10 @@ namespace LightVx.Tests
             ExpectSuccess(10D.Eval().Max(10));
             ExpectSuccess(10M.Eval().Max(10));
             ExpectSuccess(Validator.Eval(null).Max(10));
-            ExpectSuccess(Validator.Eval(new[] {"first", "second", "third"}).Max(3));
-            ExpectSuccess(Validator.Eval(new[] {"first", "second", "third"}).Max(4));
+            ExpectSuccess(Validator.Eval(new[] { "first", "second", "third" }).Max(3));
+            ExpectSuccess(Validator.Eval(new[] { "first", "second", "third" }).Max(4));
             var collection = new List<string>();
-            collection.AddRange(new[] {"first", "second", "third"});
+            collection.AddRange(new[] { "first", "second", "third" });
             ExpectSuccess(Validator.Eval(collection).Max(3));
             ExpectSuccess(Validator.Eval(collection).Max(4));
         }
@@ -380,11 +390,11 @@ namespace LightVx.Tests
             ExpectFailure(10.Eval().Max(9));
             ExpectFailure(10.Eval().Max(1));
             ExpectFailure(10.Eval().Max(0));
-            ExpectFailure(Validator.Eval(new[] {"first", "second", "third"}).Max(2));
-            ExpectFailure(Validator.Eval(new[] {"first", "second", "third"}).Max(1));
-            ExpectFailure(Validator.Eval(new[] {"first", "second", "third"}).Max(0));
+            ExpectFailure(Validator.Eval(new[] { "first", "second", "third" }).Max(2));
+            ExpectFailure(Validator.Eval(new[] { "first", "second", "third" }).Max(1));
+            ExpectFailure(Validator.Eval(new[] { "first", "second", "third" }).Max(0));
             var collection = new List<string>();
-            collection.AddRange(new[] {"first", "second", "third"});
+            collection.AddRange(new[] { "first", "second", "third" });
             ExpectFailure(Validator.Eval(collection).Max(2));
             ExpectFailure(Validator.Eval(collection).Max(1));
             ExpectFailure(Validator.Eval(collection).Max(0));
@@ -504,6 +514,7 @@ namespace LightVx.Tests
             ExpectSuccess(Validator.Eval(1234).IsPostCode());
             ExpectFailure(Validator.Eval(123).IsPostCode());
         }
+
         [TestMethod]
         public void IsSqlDateTests()
         {
@@ -550,7 +561,7 @@ namespace LightVx.Tests
             string[] stringArrayMaster = { "One", "Two", "Three", "Four", "Five" };
             string[] stringArraySubset = { "One", "Two", "Three" };
             ExpectSuccess(Validator.Eval(stringArraySubset).IsIn(stringArrayMaster, false));
-            ExpectFailure(Validator.Eval(new[] {"OneTwo", "Two"}).IsIn(stringArrayMaster, false));
+            ExpectFailure(Validator.Eval(new[] { "OneTwo", "Two" }).IsIn(stringArrayMaster, false));
             ExpectSuccess(Validator.Eval(Array.Empty<string>()).IsIn(stringArrayMaster, false));
         }
 
@@ -563,12 +574,13 @@ namespace LightVx.Tests
             ExpectSuccess(Validator.Eval("aaa abc ccc").Contains("abc", false));
             ExpectSuccess(Validator.Eval("aaa abc ccc").Contains("abc", true));
             ExpectSuccess(Validator.Eval("aaa aBc ccc").Contains("abc", true));
-            ExpectSuccess(Validator.Eval("aaa aBc def").Contains(new [] {"abc", "def"}, true));
+            ExpectSuccess(Validator.Eval("aaa aBc def").Contains(new[] { "abc", "def" }, true));
             ExpectSuccess(Validator.Eval("aaa abc def").Contains(new[] { "abc", "def" }, false));
 
             ExpectFailure(Validator.Eval("a ab acb").Contains("abc", false));
             ExpectFailure(Validator.Eval("aaa aBc ccc").Contains("abc", false));
         }
+
         [TestMethod]
         public void DoesNotContainTests()
         {
@@ -584,5 +596,18 @@ namespace LightVx.Tests
             ExpectFailure(Validator.Eval("aaa aBc def").DoesNotContain(new[] { "abc", "def" }, true));
             ExpectFailure(Validator.Eval("aaa abc def").DoesNotContain(new[] { "abc", "def" }, false));
         }
+        
+        [TestMethod]
+        public void MatchesExpressionTests()
+        {
+            ExpectSuccess(Validator.Eval(null).MatchesExpression("^[a-zA-Z]*$"));
+            ExpectSuccess(Validator.Eval("abc").MatchesExpression("^[a-zA-Z]*$"));
+            ExpectSuccess(Validator.Eval("abcDEF").MatchesExpression("^[a-zA-Z]*$"));
+
+            ExpectFailure(Validator.Eval("abc DEF").MatchesExpression("^[a-zA-Z]*$"));
+            ExpectFailure(Validator.Eval("abc#DEF").MatchesExpression("^[a-zA-Z]*$"));
+            ExpectFailure(Validator.Eval("123").MatchesExpression("^[a-zA-Z]*$"));
+        }
+
     }
 }

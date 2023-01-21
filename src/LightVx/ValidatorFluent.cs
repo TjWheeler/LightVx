@@ -425,6 +425,16 @@ namespace LightVx
             _validators.Add(new MaxLengthValidator(maxLength));
             return this;
         }
+        /// <summary>
+        /// Looks for a Single Match
+        /// </summary>
+        /// <param name="regularExpression"></param>
+        /// <returns></returns>
+        public ValidatorFluent MatchesExpression(string regularExpression)
+        {
+            _validators.Add(new RegExValidator(regularExpression));
+            return this;
+        }
 
         /// <summary>
         /// Calls all the validators and runs the validate method.

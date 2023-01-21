@@ -44,6 +44,7 @@ Tim Wheeler - https://www.linkedin.com/in/timwheeler/
 * InCollectionValidator - Checks if the input is an item within an ICollection.
 * ContainsValidator - Checks to ensure the specified content exists within the input
 * NotContainsValidator - Checks to ensure the specified content does not exist within the input
+* RegExValidator - Validates against a supplied Regular Expression
 
 ### Object Validation Feature
 
@@ -161,6 +162,8 @@ Available Methods
 * DoesNotTraverse() 
 * Contains(string content, bool ignoreCase = false)
 * DoesNotContain(string content, bool ignoreCase = false)
+* MatchesExpression(string)
+
 US Validation Extensions
 
 * IsUSState() - Checks values against a known list of US state codes (2 characters uppercase)
