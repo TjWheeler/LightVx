@@ -210,7 +210,7 @@ US Validation Extensions
     }
 ```
 
-**MVC.net Controller Example using Validation Definitions **
+**MVC.net Controller Example using Validation Definitions**
 ```
     //The onFail delegate will add a model state error using the Field Name to match it to the appropriate Form control.
     Action<List<string>, List<IValidator>> onFail = (list, validators) => {
