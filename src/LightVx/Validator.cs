@@ -108,6 +108,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Xml.Schema;
 
@@ -157,13 +158,23 @@ namespace LightVx
         {
             return new ValidatorFluent();
         }
-
-        public static ValidationResult Validate<T>(T input) where T : class
+        /// <summary>
+        /// Validates an Object based on its Property Attributes.
+        /// Attributes must be of type <see cref="IAttributeValidator"/>.
+        /// Optionally restrict validation to a subset of fields
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="input"></param>
+        /// <param name="validateFields">t => new { t.FirstName, t.LastName } will restrict validation to specified fields only</param>
+        /// <returns></returns>
+        public static ValidationResult Validate<T>(T input, Expression<Func<T, object>> validateFields = null) where T : class
         {
             var validators = GetAttributeValidators(input);
             var result = new ValidationResult();
+            var propNames = validateFields != null ? GetPropNames(validateFields) : new List<string>();
             foreach (var validator in validators)
             {
+                if(propNames.Count > 0 && !propNames.Contains(validator.FieldName)) continue;
                 validator.Validate();
                 if (result.FieldResults.ContainsKey(validator.FieldName))
                 {
@@ -180,6 +191,27 @@ namespace LightVx
                     });
                 }
             }
+            return result;
+        }
+        private static List<string> GetPropNames<T>(Expression<Func<T, object>> selectedProperties)
+        {
+            var result = new List<string>();
+            var expression = selectedProperties.Body as NewExpression;
+            if (expression != null)
+            {
+                foreach (var member in expression.Members)
+                {
+                    result.Add(member.Name);
+                }
+            }
+            //foreach (var navigationProperty in selectedProperties.Body)
+            //{
+            //    var member = navigationProperty.Body as NewExpression;
+            //    if (member != null)
+            //    {
+            //        //result.Add(member.Members.Member.Name);
+            //    }
+            //}
             return result;
         }
         public static bool IsValid<T>(string input, string fieldName) where T : IValidator

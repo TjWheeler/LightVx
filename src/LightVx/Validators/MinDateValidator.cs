@@ -11,7 +11,7 @@ namespace LightVx.Validators
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class MinDateAttribute : DateAttributeValidator
     {
-        public MinDateAttribute(DateTypeEnum dateType, DateOffsetEnum offsetType, int offset = 0)
+        public MinDateAttribute(DateTypeEnum dateType, DateOffsetEnum offsetType = DateOffsetEnum.None, int offset = 0)
         {
             DateTime date = CalculateDateOffset(dateType, offsetType, offset);
             Validator = new MinDateValidator(date);

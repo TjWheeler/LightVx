@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Linq;
+using System.Linq.Expressions;
 using LightVx;
 using LightVx.Tests.AttributeValidation;
 using LightVx.Validators;
@@ -56,6 +57,12 @@ namespace LightVx.Tests
 
             person.FirstName = string.Empty;
             result = Validator.Validate(person);
+            Assert.IsFalse(result.IsValid);
+
+            person.FirstName = string.Empty;  //Invalid
+            person.LastName = "Smith";  // Valid
+            result = Validator.Validate(person, t => new { t.FirstName, t.LastName });
+            Assert.AreEqual(2, result.ValidatorResults.Count);
             Assert.IsFalse(result.IsValid);
         }
 
