@@ -19,7 +19,7 @@ namespace LightVx.Validators
         {
             _minDate = minDate;
         }
-        protected override void Validate()
+        public override void Validate()
         {
             if (_Input == null)
             {

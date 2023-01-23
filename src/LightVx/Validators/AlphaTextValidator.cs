@@ -1,7 +1,15 @@
 namespace LightVx.Validators
 {
     /// <summary>
-    ///     Validate text with length options
+    ///     Validate text alpha and spaces
+    /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class AlphaTextValidatorAttribute : AttributeValidator
+    {
+        public AlphaTextValidatorAttribute() : base(new AlphaTextValidator()) { }
+    }
+    /// <summary>
+    ///     Validate text alpha and spaces
     /// </summary>
     public class AlphaTextValidator : ValidatorBase
     {
@@ -13,7 +21,7 @@ namespace LightVx.Validators
 
         #endregion
 
-        protected override void Validate()
+        public override void Validate()
         {
             if (_Input == null || _Input is string && (string)_Input == string.Empty)
             {

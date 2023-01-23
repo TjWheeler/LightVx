@@ -1,8 +1,13 @@
 ﻿namespace LightVx.Validators
 {
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class DoubleValidatorAttribute : AttributeValidator
+    {
+        public DoubleValidatorAttribute() : base(new DoubleValidator()) { }
+    }
     public class DoubleValidator : ValidatorBase
     {
-        protected override void Validate()
+        public override void Validate()
         {
             if (_Input == null || _Input is string && (string)_Input == string.Empty)
             {

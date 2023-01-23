@@ -4,9 +4,14 @@ using System.Text;
 
 namespace LightVx.Validators
 {
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class IsNullValidatorAttribute : AttributeValidator
+    {
+        public IsNullValidatorAttribute() : base(new IsNullValidator()) { }
+    }
     public class IsNullValidator : ValidatorBase
     {
-        protected override void Validate()
+        public override void Validate()
         {
             if (Input == null)
             {

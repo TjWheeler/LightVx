@@ -36,5 +36,6 @@ namespace LightVx
         bool Validate(object input, string fieldName);
 
         bool Validate(object input);
+        void Validate();
     }
 }

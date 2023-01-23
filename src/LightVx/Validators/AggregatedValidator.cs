@@ -45,7 +45,7 @@ namespace LightVx.Validators
 
         public StringCollection ErrorMessages { get; private set; } = new StringCollection();
 
-        protected override void Validate()
+        public override void Validate()
         {
             var sbErrorMessage = new StringBuilder();
             ErrorMessages = new StringCollection();

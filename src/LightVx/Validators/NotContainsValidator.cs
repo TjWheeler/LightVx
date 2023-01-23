@@ -7,6 +7,15 @@ namespace LightVx.Validators
     /// <summary>
     /// Checks to ensure the specified content does not exist within the input
     /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class NotContainsValidatorAttribute : AttributeValidator
+    {
+        public NotContainsValidatorAttribute(string content, bool ignoreCase = false) : base(new NotContainsValidator(content, ignoreCase)) { }
+        public NotContainsValidatorAttribute(string[] content, bool ignoreCase = false) : base(new NotContainsValidator(content, ignoreCase)) { }
+    }
+    /// <summary>
+    /// Checks to ensure the specified content does not exist within the input
+    /// </summary>
     public class NotContainsValidator : ValidatorBase
     {
         private string[] _content;
@@ -22,7 +31,7 @@ namespace LightVx.Validators
             _ignoreCase = ignoreCase;
             _content = new[] { content };
         }
-        protected override void Validate()
+        public override void Validate()
         {
             if (_Input == null || _Input.ToString() == string.Empty)
             {

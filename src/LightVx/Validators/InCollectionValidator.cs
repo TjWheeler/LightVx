@@ -8,6 +8,14 @@ namespace LightVx.Validators
     /// <summary>
     /// Checks if the input is within the items of a collection, optionally ignore case.
     /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class InCollectionValidatorAttribute : AttributeValidator
+    {
+        public InCollectionValidatorAttribute(ICollection items, bool ignoreCase = false) : base(new InCollectionValidator(items, ignoreCase)) { }
+    }
+    /// <summary>
+    /// Checks if the input is within the items of a collection, optionally ignore case.
+    /// </summary>
     public class InCollectionValidator : ValidatorBase
     {
         private bool _ignoreCase;
@@ -18,7 +26,7 @@ namespace LightVx.Validators
             _items = items;
             _ignoreCase = ignoreCase;
         }
-        protected override void Validate()
+        public override void Validate()
         {
             if (_Input == null || _Input.ToString() == string.Empty)
             {

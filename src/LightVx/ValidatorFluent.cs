@@ -31,12 +31,12 @@ namespace LightVx
         public string FieldName => _fieldName;
         public List<IValidator> Validators => _validators;
 
-        public bool? IsValid
+        public bool IsValid
         {
             get
             {
                 Validate();
-                return _isValid;
+                return _isValid.HasValue && _isValid.Value;
             }
             private set
             {
@@ -65,13 +65,14 @@ namespace LightVx
         {
             _validators = new List<IValidator>(validationDefinition._validators);
         }
-        public ValidatorFluent(object input, ValidatorFluent validationSet = null)
+        public ValidatorFluent(object input, List<IValidator> validators = null) 
         {
             _input = input;
-            if (validationSet != null)
+            if (validators != null)
             {
-                _validators = new List<IValidator>(validationSet._validators);
+                _validators = validators;
             }
+
         }
 
         public ValidatorFluent(object input, string fieldName, ValidatorFluent validationSet = null) : this(input)
@@ -90,7 +91,6 @@ namespace LightVx
                 _validators = new List<IValidator>(validationSet._validators);
             }
         }
-
 
         public ValidatorFluent Required()
         {

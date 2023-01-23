@@ -4,7 +4,14 @@ using System.Text;
 
 namespace LightVx.Validators
 {
-    
+    /// <summary>
+    ///     Validates name type text. Allows alpha, spaces, hyphen and apostrophe
+    /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class NameTextValidatorAttribute : AttributeValidator
+    {
+        public NameTextValidatorAttribute() : base(new NameTextValidator()) { }
+    }
     /// <summary>
     ///     Validates name type text. Allows alpha, spaces, hyphen and apostrophe
     /// </summary>

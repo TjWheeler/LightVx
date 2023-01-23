@@ -5,6 +5,19 @@ namespace LightVx.Validators
     /// <summary>
     ///     Validate text or arrays with length options
     /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class LengthValidatorAttribute : AttributeValidator
+    {
+        public LengthValidatorAttribute(int minOccurance, int? maxOccurance) : base(new LengthValidator(minOccurance, maxOccurance)) { }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class RequiredValidatorAttribute : AttributeValidator
+    {
+        public RequiredValidatorAttribute() : base(new LengthValidator(1)) { }
+    }
+    /// <summary>
+    ///     Validate text or arrays with length options
+    /// </summary>
     public class LengthValidator : ValidatorBase
     {
         private readonly int? _maxOccurance;
@@ -27,7 +40,7 @@ namespace LightVx.Validators
 
         #endregion
 
-        protected override void Validate()
+        public override void Validate()
         {
             if (Input != null && Input is Array)
             {

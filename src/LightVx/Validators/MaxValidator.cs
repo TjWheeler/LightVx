@@ -3,6 +3,13 @@ using System.Collections;
 
 namespace LightVx.Validators
 {
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class MaxValidatorAttribute : AttributeValidator
+    {
+        public MaxValidatorAttribute(int max) : base(new MaxValidator(max)) { }
+        public MaxValidatorAttribute(decimal max) : base(new MaxValidator(max)) { }
+        public MaxValidatorAttribute(double max) : base(new MaxValidator(max)) { }
+    }
     public class MaxValidator : ValidatorBase
     {
         private readonly int? _intMax;
@@ -24,7 +31,7 @@ namespace LightVx.Validators
             _doubleMax = doubleMax;
         }
 
-        protected override void Validate()
+        public override void Validate()
         {
             if (Input == null || Input.ToString() == string.Empty)
             {

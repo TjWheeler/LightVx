@@ -1,7 +1,15 @@
 namespace LightVx.Validators
 {
     /// <summary>
-    ///     Validate numeric numbers
+    ///     Validate numbers only
+    /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class NumericValidatorAttribute : AttributeValidator
+    {
+        public NumericValidatorAttribute() : base(new NumericValidator()) { }
+    }
+    /// <summary>
+    ///     Validate numbers only
     /// </summary>
     public class NumericValidator : ValidatorBase
     {
@@ -13,7 +21,7 @@ namespace LightVx.Validators
 
         #endregion
 
-        protected override void Validate()
+        public override void Validate()
         {
             if (_Input == null || _Input is string && (string) _Input == string.Empty)
             {

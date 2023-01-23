@@ -14,7 +14,7 @@ namespace LightVx.Tests
         public void IsAfterDateTests()
         {
             var date = new DateTime(2020, 1, 1);
-            ExpectSuccess(Validator.Eval(null).IsAfter(date));
+            ExpectSuccess(Validator.Eval((string) null).IsAfter(date));
             ExpectSuccess(Validator.Eval(date.AddMilliseconds(1)).IsAfter(date));
             ExpectSuccess(Validator.Eval(date.AddDays(1)).IsAfter(date));
 
@@ -26,7 +26,7 @@ namespace LightVx.Tests
         public void IsBeforeDateTests()
         {
             var date = new DateTime(2020, 1, 1);
-            ExpectSuccess(Validator.Eval(null).IsBefore(date));
+            ExpectSuccess(Validator.Eval((string) null).IsBefore(date));
             ExpectSuccess(Validator.Eval(date.AddMilliseconds(-1)).IsBefore(date));
             ExpectSuccess(Validator.Eval(date.AddDays(-1)).IsBefore(date));
 
@@ -39,7 +39,7 @@ namespace LightVx.Tests
         {
             var startDate = new DateTime(2020, 1, 1);
             var endDate = new DateTime(2020, 2, 1);
-            ExpectSuccess(Validator.Eval(null).IsBetweenDates(startDate, endDate));
+            ExpectSuccess(Validator.Eval((string) null).IsBetweenDates(startDate, endDate));
             ExpectSuccess(Validator.Eval(startDate.AddDays(1)).IsBetweenDates(startDate, endDate));
             ExpectSuccess(Validator.Eval(endDate.AddSeconds(-1)).IsBetweenDates(startDate, endDate));
             ExpectSuccess(Validator.Eval(startDate).IsBetweenDates(startDate, endDate));
@@ -59,7 +59,7 @@ namespace LightVx.Tests
         public void MinDateTest_Ok()
         {
             var date = new DateTime(2020, 1, 1);
-            ExpectSuccess(Validator.Eval(null).Min(date));
+            ExpectSuccess(Validator.Eval((string) null).Min(date));
             ExpectSuccess(Validator.Eval(date).Min(date));
             ExpectSuccess(Validator.Eval(date.AddSeconds(1)).Min(date));
             ExpectSuccess(Validator.Eval(date.AddDays(1)).Min(date));
@@ -78,7 +78,7 @@ namespace LightVx.Tests
         public void MaxDateTest_Ok()
         {
             var date = new DateTime(2020, 1, 1);
-            ExpectSuccess(Validator.Eval(null));
+            ExpectSuccess(Validator.Eval((string) null));
             ExpectSuccess(Validator.Eval(date).Max(date));
             ExpectSuccess(Validator.Eval(date.AddSeconds(-1)).Max(date));
             ExpectSuccess(Validator.Eval(date.AddDays(-11)).Max(date));
@@ -96,68 +96,68 @@ namespace LightVx.Tests
         [TestMethod]
         public void IsDoubleTest_Ok()
         {
-            ExpectSuccess(Validator.Eval(null).IsDouble());
+            ExpectSuccess(Validator.Eval((string) null).IsDouble());
             ExpectSuccess(Validator.Eval(string.Empty).IsDouble());
-            ExpectSuccess("1".Eval().IsDouble());
-            ExpectSuccess(1.Eval().IsDouble());
-            ExpectSuccess(1D.Eval().IsDouble());
-            ExpectSuccess(1M.Eval().IsDouble());
+            ExpectSuccess(Validator.Eval("1").IsDouble());
+            ExpectSuccess(Validator.Eval(1).IsDouble());
+            ExpectSuccess(Validator.Eval(1D).IsDouble());
+            ExpectSuccess(Validator.Eval(1M).IsDouble());
         }
 
         [TestMethod]
         public void IsDoubleTest_Fail()
         {
-            ExpectFailure("ABC".Eval().IsDouble());
+            ExpectFailure(Validator.Eval("ABC").IsDouble());
         }
 
         [TestMethod]
         public void IsDecimalTest_Ok()
         {
-            ExpectSuccess(Validator.Eval(null).IsDecimal());
+            ExpectSuccess(Validator.Eval((string) null).IsDecimal());
             ExpectSuccess(Validator.Eval(string.Empty).IsDecimal());
-            ExpectSuccess("1".Eval().IsDecimal());
-            ExpectSuccess(1.Eval().IsDecimal());
-            ExpectSuccess(1D.Eval().IsDecimal());
-            ExpectSuccess(1M.Eval().IsDecimal());
+            ExpectSuccess(Validator.Eval("1").IsDecimal());
+            ExpectSuccess(Validator.Eval(1).IsDecimal());
+            ExpectSuccess(Validator.Eval(1D).IsDecimal());
+            ExpectSuccess(Validator.Eval(1M).IsDecimal());
         }
 
         [TestMethod]
         public void IsDecimalTest_Fail()
         {
-            ExpectFailure("ABC".Eval().IsDecimal());
+            ExpectFailure(Validator.Eval("ABC").IsDecimal());
         }
 
         [TestMethod]
         public void IsIntTest_Ok()
         {
-            ExpectSuccess(Validator.Eval(null).IsInt());
+            ExpectSuccess(Validator.Eval((string) null).IsInt());
             ExpectSuccess(Validator.Eval(string.Empty).IsInt());
-            ExpectSuccess("1".Eval().IsInt());
-            ExpectSuccess(1.Eval().IsInt());
-            ExpectSuccess(1D.Eval().IsInt());
-            ExpectSuccess(1M.Eval().IsInt());
+            ExpectSuccess(Validator.Eval("1").IsInt());
+            ExpectSuccess(Validator.Eval(1).IsInt());
+            ExpectSuccess(Validator.Eval(1D).IsInt());
+            ExpectSuccess(Validator.Eval(1M).IsInt());
         }
 
         [TestMethod]
         public void IsIntTest_Fail()
         {
-            ExpectFailure("ABC".Eval().IsInt());
+            ExpectFailure(Validator.Eval("ABC").IsInt());
         }
 
         [TestMethod]
         public void RequiredValidatorTest_Ok()
         {
-            ExpectSuccess("abc".Eval().Required());
-            ExpectSuccess("1".Eval().Required());
-            ExpectSuccess("123".Eval().Required());
+            ExpectSuccess(Validator.Eval("abc").Required());
+            ExpectSuccess(Validator.Eval("1").Required());
+            ExpectSuccess(Validator.Eval("123").Required());
         }
 
         [TestMethod]
         public void RequiredValidatorTest_Fail()
         {
-            ExpectFailure("".Eval().Required());
-            ExpectFailure(Validator.Eval(null).Required());
-            var result = Validator.Eval(null).Required().Validate();
+            ExpectFailure(Validator.Eval("").Required());
+            ExpectFailure(Validator.Eval((string) null).Required());
+            var result = Validator.Eval((string) null).Required().Validate();
             Assert.IsTrue(result.ErrorMessages.Count == 1);
             Assert.AreEqual("The Field is required", result.ErrorMessages[0]);
         }
@@ -174,7 +174,7 @@ namespace LightVx.Tests
                     hasFoundName = true;
                 }
             });
-            Validator.Eval(null, "Name").Required().Fail(onFail);
+            Validator.Eval((string) null, "Name").Required().Fail(onFail);
             Assert.IsTrue(hasFoundName, "Validation did not trigger");
         }
 
@@ -192,146 +192,146 @@ namespace LightVx.Tests
                     hasFoundName = true;
                 }
             });
-            Validator.Eval(null, "Name", "First Name").Required().Fail(onFail);
+            Validator.Eval((string) null, "Name", "First Name").Required().Fail(onFail);
             Assert.IsTrue(hasFoundName, "Validation did not trigger");
         }
 
         [TestMethod]
         public void AlphaNumbericValidatorTest_Ok()
         {
-            ExpectSuccess("123".Eval().IsAlphaNumeric());
-            ExpectSuccess(123.Eval().IsAlphaNumeric());
-            ExpectSuccess("ABC123".Eval().IsAlphaNumeric());
+            ExpectSuccess(Validator.Eval("123").IsAlphaNumeric());
+            ExpectSuccess(Validator.Eval(123).IsAlphaNumeric());
+            ExpectSuccess(Validator.Eval("ABC123").IsAlphaNumeric());
         }
 
         [TestMethod]
         public void AlphaNumbericValidatorTest_Fail()
         {
-            ExpectFailure("123.34".Eval().IsAlphaNumeric());
-            ExpectFailure(123.34.Eval().IsAlphaNumeric());
+            ExpectFailure(Validator.Eval("123.34").IsAlphaNumeric());
+            ExpectFailure(Validator.Eval(123.34).IsAlphaNumeric());
         }
 
         [TestMethod]
         public void LengthValidatorTest_Ok()
         {
-            ExpectSuccess("123".Eval().HasLength(0, 3));
-            ExpectSuccess("123".Eval().HasLength(1, 3));
-            ExpectSuccess("123".Eval().HasLength(3, 3));
-            ExpectSuccess("123456789".Eval().HasLength(9, 9));
-            ExpectSuccess("123456789".Eval().HasLength(0, 9));
+            ExpectSuccess(Validator.Eval("123").HasLength(0, 3));
+            ExpectSuccess(Validator.Eval("123").HasLength(1, 3));
+            ExpectSuccess(Validator.Eval("123").HasLength(3, 3));
+            ExpectSuccess(Validator.Eval("123456789").HasLength(9, 9));
+            ExpectSuccess(Validator.Eval("123456789").HasLength(0, 9));
         }
 
         [TestMethod]
         public void LengthValidatorTest_Fail()
         {
-            ExpectFailure("12345".Eval().HasLength(6, 7));
-            ExpectFailure(123.34.Eval().HasLength(0, 3));
+            ExpectFailure(Validator.Eval("12345").HasLength(6, 7));
+            ExpectFailure(Validator.Eval(123.34).HasLength(0, 3));
         }
 
         [TestMethod]
         public void AlphaTextValidatorTest_Ok()
         {
-            ExpectSuccess("ABC DEF".Eval().IsAlphaText());
+            ExpectSuccess(Validator.Eval("ABC DEF").IsAlphaText());
         }
 
         [TestMethod]
         public void AlphaTextValidatorTest_Fail()
         {
-            ExpectFailure("123.34".Eval().IsAlphaText());
-            ExpectFailure("ABC-DEF".Eval().IsAlphaText());
+            ExpectFailure(Validator.Eval("123.34").IsAlphaText());
+            ExpectFailure(Validator.Eval("ABC-DEF").IsAlphaText());
         }
 
         [TestMethod]
         public void PhoneNumberValidatorTest_Ok()
         {
-            ExpectSuccess("(555) 1234 5678".Eval().IsPhoneNumber());
-            ExpectSuccess("555-1234-5678".Eval().IsPhoneNumber());
+            ExpectSuccess(Validator.Eval("(555) 1234 5678").IsPhoneNumber());
+            ExpectSuccess(Validator.Eval("555-1234-5678").IsPhoneNumber());
         }
 
         [TestMethod]
         public void PhoneNumberValidatorTest_Fail()
         {
-            ExpectFailure("ABC".Eval().IsPhoneNumber());
-            ExpectFailure("(04) 1234-abcd".Eval().IsPhoneNumber());
+            ExpectFailure(Validator.Eval("ABC").IsPhoneNumber());
+            ExpectFailure(Validator.Eval("(04) 1234-abcd").IsPhoneNumber());
         }
 
         [TestMethod]
         public void SafeTextValidatorTest_Ok()
         {
-            ExpectSuccess("ABCDE DEF@$%^&*".Eval().IsSafeText());
+            ExpectSuccess(Validator.Eval("ABCDE DEF@$%^&*").IsSafeText());
         }
 
         [TestMethod]
         public void SafeTextValidatorTest_Fail()
         {
-            ExpectFailure("<&".Eval().IsSafeText());
-            ExpectFailure(">".Eval().IsSafeText());
-            ExpectFailure("--".Eval().IsSafeText());
-            ExpectFailure("%27".Eval().IsSafeText());
-            ExpectFailure("'".Eval().IsSafeText());
+            ExpectFailure(Validator.Eval("<&").IsSafeText());
+            ExpectFailure(Validator.Eval(">").IsSafeText());
+            ExpectFailure(Validator.Eval("--").IsSafeText());
+            ExpectFailure(Validator.Eval("%27").IsSafeText());
+            ExpectFailure(Validator.Eval("'").IsSafeText());
         }
 
         [TestMethod]
         public void WebSafeTextValidatorTest_Ok()
         {
-            ExpectSuccess("ABCdef0123 !@#$&*()-=:-'".Eval().IsSafeForXss());
+            ExpectSuccess(Validator.Eval("ABCdef0123 !@#$&*()-=:-'").IsSafeForXss());
         }
 
         [TestMethod]
         public void WebSafeTextValidatorTest_Fail()
         {
-            ExpectFailure("<script type='text/javascript'>alert('text')</script>".Eval().IsSafeText());
-            ExpectFailure(">".Eval().IsSafeText());
-            ExpectFailure(">".Eval().IsSafeText());
+            ExpectFailure(Validator.Eval("<script type='text/javascript'>alert('text')</script>").IsSafeText());
+            ExpectFailure(Validator.Eval(">").IsSafeText());
+            ExpectFailure(Validator.Eval(">").IsSafeText());
         }
 
         [TestMethod]
         public void SqlSafeTextValidatorTest_Ok()
         {
-            ExpectSuccess("ABCdef0123 !@$&*()-:-".Eval().IsSafeForXss());
+            ExpectSuccess(Validator.Eval("ABCdef0123 !@$&*()-:-").IsSafeForXss());
         }
 
         [TestMethod]
         public void SqlSafeTextValidatorTest_Fail()
         {
-            ExpectFailure("' or 'a' = 'a'".Eval().IsSafeText());
-            ExpectFailure("--".Eval().IsSafeText());
-            ExpectFailure("%23".Eval().IsSafeText());
+            ExpectFailure(Validator.Eval("' or 'a' = 'a'").IsSafeText());
+            ExpectFailure(Validator.Eval("--").IsSafeText());
+            ExpectFailure(Validator.Eval("%23").IsSafeText());
         }
 
         [TestMethod]
         public void UrlValidatorTest_Ok()
         {
-            ExpectSuccess("http://abc.com".Eval().IsUrl());
-            ExpectSuccess("https://abc.com".Eval().IsUrl());
-            ExpectSuccess("https://abc.com:1234".Eval().IsUrl());
+            ExpectSuccess(Validator.Eval("http://abc.com").IsUrl());
+            ExpectSuccess(Validator.Eval("https://abc.com").IsUrl());
+            ExpectSuccess(Validator.Eval("https://abc.com:1234").IsUrl());
         }
 
         [TestMethod]
         public void UrlValidatorTest_Fail()
         {
-            ExpectFailure("www.someaddress.com".Eval().IsUrl());
-            ExpectFailure("http://www.some address.com".Eval().IsUrl());
+            ExpectFailure(Validator.Eval("www.someaddress.com").IsUrl());
+            ExpectFailure(Validator.Eval("http://www.some address.com").IsUrl());
         }
 
         [TestMethod]
         public void MinValidatorTest_Ok()
         {
-            ExpectSuccess("10".Eval().Min(10));
-            ExpectSuccess("10".Eval().Min(5));
-            ExpectSuccess("10".Eval().Min(9));
-            ExpectSuccess("10".Eval().Min(10));
-            ExpectSuccess(10.Eval().Min(5));
-            ExpectSuccess(10.Eval().Min(9));
-            ExpectSuccess(10.Eval().Min(10));
-            ExpectSuccess(10D.Eval().Min(10D));
-            ExpectSuccess(10M.Eval().Min(10M));
+            ExpectSuccess(Validator.Eval("10").Min(10));
+            ExpectSuccess(Validator.Eval("10").Min(5));
+            ExpectSuccess(Validator.Eval("10").Min(9));
+            ExpectSuccess(Validator.Eval("10").Min(10));
+            ExpectSuccess(Validator.Eval(10).Min(5));
+            ExpectSuccess(Validator.Eval(10).Min(9));
+            ExpectSuccess(Validator.Eval(10).Min(10));
+            ExpectSuccess(Validator.Eval(10D).Min(10D));
+            ExpectSuccess(Validator.Eval(10M).Min(10M));
 
             ExpectSuccess(Validator.Eval("10").Min(10));
             ExpectSuccess(Validator.Eval("10.5").Min(10D));
             ExpectSuccess(Validator.Eval("10.5").Min(10M));
 
-            ExpectSuccess(Validator.Eval(null).Min(10));
+            ExpectSuccess(Validator.Eval((string) null).Min(10));
             ExpectSuccess(Validator.Eval(new[] { "first", "second", "third" }).Min(1));
             ExpectSuccess(Validator.Eval(new[] { "first", "second", "third" }).Min(2));
             ExpectSuccess(Validator.Eval(new[] { "first", "second", "third" }).Min(3));
@@ -345,14 +345,14 @@ namespace LightVx.Tests
         [TestMethod]
         public void MinValidatorTest_Fail()
         {
-            ExpectFailure("10".Eval().Min(11));
-            ExpectFailure("10".Eval().Min(100));
+            ExpectFailure(Validator.Eval("10").Min(11));
+            ExpectFailure(Validator.Eval("10").Min(100));
             ExpectFailure(Validator.Eval("10").Min(11));
             ExpectFailure(Validator.Eval("10.5").Min(11D));
             ExpectFailure(Validator.Eval("10.5").Min(11M));
             ExpectFailure(Validator.Eval("10.5A").Min(11M));
-            ExpectFailure(10.Eval().Min(11));
-            ExpectFailure(10.Eval().Min(100));
+            ExpectFailure(Validator.Eval(10).Min(11));
+            ExpectFailure(Validator.Eval(10).Min(100));
             ExpectFailure(Validator.Eval(new object()).Min(11));
             ExpectFailure(Validator.Eval(new[] { "first", "second", "third" }).Min(4));
             var collection = new List<string>();
@@ -363,17 +363,17 @@ namespace LightVx.Tests
         [TestMethod]
         public void MaxValidatorTest_Ok()
         {
-            ExpectSuccess("10".Eval().Max(10));
-            ExpectSuccess("10".Eval().Max(11));
-            ExpectSuccess("10".Eval().Max(100));
-            ExpectSuccess(10.Eval().Max(10));
-            ExpectSuccess(10.Eval().Max(11));
-            ExpectSuccess(10.Eval().Max(100));
-            ExpectSuccess(10D.Eval().Max(10D));
-            ExpectSuccess(10M.Eval().Max(10M));
-            ExpectSuccess(10D.Eval().Max(10));
-            ExpectSuccess(10M.Eval().Max(10));
-            ExpectSuccess(Validator.Eval(null).Max(10));
+            ExpectSuccess(Validator.Eval("10").Max(10));
+            ExpectSuccess(Validator.Eval("10").Max(11));
+            ExpectSuccess(Validator.Eval("10").Max(100));
+            ExpectSuccess(Validator.Eval(10).Max(10));
+            ExpectSuccess(Validator.Eval(10).Max(11));
+            ExpectSuccess(Validator.Eval(10).Max(100));
+            ExpectSuccess(Validator.Eval(10D).Max(10D));
+            ExpectSuccess(Validator.Eval(10M).Max(10M));
+            ExpectSuccess(Validator.Eval(10D).Max(10));
+            ExpectSuccess(Validator.Eval(10M).Max(10));
+            ExpectSuccess(Validator.Eval((string) null).Max(10));
             ExpectSuccess(Validator.Eval(new[] { "first", "second", "third" }).Max(3));
             ExpectSuccess(Validator.Eval(new[] { "first", "second", "third" }).Max(4));
             var collection = new List<string>();
@@ -385,11 +385,11 @@ namespace LightVx.Tests
         [TestMethod]
         public void MaxValidatorTest_Fail()
         {
-            ExpectFailure("10".Eval().Max(9));
-            ExpectFailure("10".Eval().Max(0));
-            ExpectFailure(10.Eval().Max(9));
-            ExpectFailure(10.Eval().Max(1));
-            ExpectFailure(10.Eval().Max(0));
+            ExpectFailure(Validator.Eval("10").Max(9));
+            ExpectFailure(Validator.Eval("10").Max(0));
+            ExpectFailure(Validator.Eval(10).Max(9));
+            ExpectFailure(Validator.Eval(10).Max(1));
+            ExpectFailure(Validator.Eval(10).Max(0));
             ExpectFailure(Validator.Eval(new[] { "first", "second", "third" }).Max(2));
             ExpectFailure(Validator.Eval(new[] { "first", "second", "third" }).Max(1));
             ExpectFailure(Validator.Eval(new[] { "first", "second", "third" }).Max(0));
@@ -403,17 +403,17 @@ namespace LightVx.Tests
         [TestMethod]
         public void EmptyValidatorTest_Ok()
         {
-            ExpectSuccess(Validator.Eval(null).IsEmpty());
+            ExpectSuccess(Validator.Eval((string) null).IsEmpty());
             ExpectSuccess(Validator.Eval(string.Empty).IsEmpty());
         }
 
         [TestMethod]
         public void EmptyValidatorTest_Fail()
         {
-            ExpectFailure("A".Eval().IsEmpty());
-            ExpectFailure(1.Eval().IsEmpty());
-            ExpectFailure(100M.Eval().IsEmpty());
-            ExpectFailure(100D.Eval().IsEmpty());
+            ExpectFailure(Validator.Eval("A").IsEmpty());
+            ExpectFailure(Validator.Eval(1).IsEmpty());
+            ExpectFailure(Validator.Eval(100M).IsEmpty());
+            ExpectFailure(Validator.Eval(100D).IsEmpty());
         }
 
         [TestMethod]
@@ -428,14 +428,14 @@ namespace LightVx.Tests
         [TestMethod]
         public void NotEmptyValidatorTest_Fail()
         {
-            ExpectFailure(Validator.Eval(null).IsNotEmpty());
+            ExpectFailure(Validator.Eval((string) null).IsNotEmpty());
             ExpectFailure(Validator.Eval(string.Empty).IsNotEmpty());
         }
 
         [TestMethod]
         public void NullValidatorTest_Ok()
         {
-            ExpectSuccess(Validator.Eval(null).IsNull());
+            ExpectSuccess(Validator.Eval((string) null).IsNull());
         }
 
         [TestMethod]
@@ -458,7 +458,7 @@ namespace LightVx.Tests
         [TestMethod]
         public void NotNullValidatorTest_Fail()
         {
-            ExpectFailure(Validator.Eval(null).IsNotNull());
+            ExpectFailure(Validator.Eval((string) null).IsNotNull());
         }
 
         [TestMethod]
@@ -467,7 +467,7 @@ namespace LightVx.Tests
             ExpectSuccess(Validator.Eval("A").HasMinLength(1));
             ExpectSuccess(Validator.Eval("1233456").HasMinLength(1));
             ExpectSuccess(Validator.Eval("1233456").HasMinLength(6));
-            ExpectSuccess(Validator.Eval(null).HasMinLength(5));
+            ExpectSuccess(Validator.Eval((string) null).HasMinLength(5));
             ExpectSuccess(Validator.Eval(1).HasMinLength(1));
             ExpectSuccess(Validator.Eval(1D).HasMinLength(1));
             ExpectSuccess(Validator.Eval(1M).HasMinLength(1));
@@ -488,7 +488,7 @@ namespace LightVx.Tests
             ExpectSuccess(Validator.Eval("A").HasMaxLength(1));
             ExpectSuccess(Validator.Eval("A").HasMaxLength(2));
             ExpectSuccess(Validator.Eval("123456").HasMaxLength(6));
-            ExpectSuccess(Validator.Eval(null).HasMaxLength(5));
+            ExpectSuccess(Validator.Eval((string) null).HasMaxLength(5));
             ExpectSuccess(Validator.Eval(1).HasMaxLength(1));
             ExpectSuccess(Validator.Eval(1D).HasMaxLength(1));
             ExpectSuccess(Validator.Eval(1M).HasMaxLength(1));
@@ -522,7 +522,7 @@ namespace LightVx.Tests
             var maxDate = SqlDateTime.MaxValue.Value;
             var noDate = new DateTime?();
 
-            ExpectSuccess(Validator.Eval(null).IsSqlDate());
+            ExpectSuccess(Validator.Eval((string) null).IsSqlDate());
             ExpectSuccess(Validator.Eval(minDate).IsSqlDate());
             ExpectSuccess(Validator.Eval(maxDate).IsSqlDate());
             ExpectSuccess(Validator.Eval(DateTime.Now).IsSqlDate());
@@ -542,7 +542,7 @@ namespace LightVx.Tests
             int[] arrayIntItems = { 1, 2, 3, 4, 5 };
             List<string> listItems = new List<string>(arrayItems);
 
-            ExpectSuccess(Validator.Eval(null).IsIn(listItems, false));
+            ExpectSuccess(Validator.Eval((string) null).IsIn(listItems, false));
             ExpectSuccess(Validator.Eval("One").IsIn(listItems, false));
             ExpectSuccess(Validator.Eval("One").IsIn(arrayItems, false));
             ExpectSuccess(Validator.Eval("one").IsIn(listItems, true));
@@ -568,7 +568,7 @@ namespace LightVx.Tests
         [TestMethod]
         public void ContainsTests()
         {
-            ExpectSuccess(Validator.Eval(null).Contains("abc", false));
+            ExpectSuccess(Validator.Eval((string) null).Contains("abc", false));
             ExpectSuccess(Validator.Eval("").Contains("abc", false));
             ExpectSuccess(Validator.Eval("abcdef").Contains("abc", false));
             ExpectSuccess(Validator.Eval("aaa abc ccc").Contains("abc", false));
@@ -584,7 +584,7 @@ namespace LightVx.Tests
         [TestMethod]
         public void DoesNotContainTests()
         {
-            ExpectSuccess(Validator.Eval(null).DoesNotContain("abc", false));
+            ExpectSuccess(Validator.Eval((string) null).DoesNotContain("abc", false));
             ExpectSuccess(Validator.Eval("").DoesNotContain("abc", false));
             ExpectSuccess(Validator.Eval("a ab acb").DoesNotContain("abc", false));
             ExpectSuccess(Validator.Eval("aaa aBc ccc").DoesNotContain("abc", false));
@@ -600,7 +600,7 @@ namespace LightVx.Tests
         [TestMethod]
         public void MatchesExpressionTests()
         {
-            ExpectSuccess(Validator.Eval(null).MatchesExpression("^[a-zA-Z]*$"));
+            ExpectSuccess(Validator.Eval((string) null).MatchesExpression("^[a-zA-Z]*$"));
             ExpectSuccess(Validator.Eval("abc").MatchesExpression("^[a-zA-Z]*$"));
             ExpectSuccess(Validator.Eval("abcDEF").MatchesExpression("^[a-zA-Z]*$"));
 
@@ -613,14 +613,14 @@ namespace LightVx.Tests
         public void ValidationSetTests()
         {
             var numberTo5Set = Validator.Define().IsNumeric().Max(5);
-            ExpectSuccess(1.Eval(numberTo5Set));
-            ExpectSuccess("1".Eval(numberTo5Set));
-            ExpectFailure(6.Eval(numberTo5Set));
-            ExpectFailure("6".Eval(numberTo5Set));
+            ExpectSuccess(Validator.Eval(1,"Number", numberTo5Set));
+            ExpectSuccess(Validator.Eval("1", "Number", numberTo5Set));
+            ExpectFailure(Validator.Eval(6, "Number", numberTo5Set));
+            ExpectFailure(Validator.Eval("6", "Number", numberTo5Set));
 
-            ExpectSuccess(Validator.Eval("1", numberTo5Set));
-            ExpectSuccess(Validator.Eval(1, "FieldName", numberTo5Set));
-            ExpectFailure(Validator.Eval("6", numberTo5Set));
+            ExpectSuccess(Validator.Eval("1", "Number", numberTo5Set));
+            ExpectSuccess(Validator.Eval(1, "Number", "FieldName", numberTo5Set));
+            ExpectFailure(Validator.Eval("6", "Number", numberTo5Set));
             ExpectFailure(Validator.Eval(6, "FieldName", "FieldDisplayName", numberTo5Set));
 
             var nameValidationSet = Validator.Define().Required().IsNameText().HasMaxLength(15);

@@ -8,9 +8,18 @@ namespace LightVx.Validators
     /// If string type, validates not null or empty string.
     /// If array type, validates not null and length is greater than 0
     /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class NotEmptyValidatorAttribute : AttributeValidator
+    {
+        public NotEmptyValidatorAttribute() : base(new NotEmptyValidator()) { }
+    }
+    /// <summary>
+    /// If string type, validates not null or empty string.
+    /// If array type, validates not null and length is greater than 0
+    /// </summary>
     public class NotEmptyValidator : ValidatorBase
     {
-        protected override void Validate()
+        public override void Validate()
         {
             if(Input != null && Input is Array && ((Array) Input).Length == 0)
             {

@@ -49,7 +49,7 @@ namespace LightVx
         /// </summary>
         protected virtual string Expression { get; }
 
-        protected abstract void Validate();
+        public abstract void Validate();
 
         #endregion
 
@@ -85,6 +85,7 @@ namespace LightVx
             return _IsValid;
         }
 
+        
         public object Input
         {
             get => _Input;
@@ -92,7 +93,7 @@ namespace LightVx
             {
                 _Input = value;
                 _IsValid = false; //Reset the state
-                _ErrorMessage = "Valdate() function not yet called";
+                _ErrorMessage = "Validate() function not yet called";
             }
         }
 

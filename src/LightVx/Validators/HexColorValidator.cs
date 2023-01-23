@@ -3,6 +3,14 @@ namespace LightVx.Validators
     /// <summary>
     ///     Validate text with length options
     /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class HexColorValidatorAttribute : AttributeValidator
+    {
+        public HexColorValidatorAttribute() : base(new HexColorValidator()) { }
+    }
+    /// <summary>
+    ///     Validate text with length options
+    /// </summary>
     public class HexColorValidator : ValidatorBase
     {
         private const string RegExpression = @"^\#{1}[A-Fa-f0-9]{3}([A-Fa-f0-9]{3})?$";
@@ -13,7 +21,7 @@ namespace LightVx.Validators
 
         #endregion
 
-        protected override void Validate()
+        public override void Validate()
         {
             if (_Input == null)
             {

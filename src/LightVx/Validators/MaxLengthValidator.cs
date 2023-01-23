@@ -4,6 +4,12 @@ using System.Text;
 
 namespace LightVx.Validators
 {
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class MaxLengthValidatorAttribute : AttributeValidator
+    {
+        public MaxLengthValidatorAttribute(int maxLength) : base(new MaxLengthValidator(maxLength)) { }
+    }
+
     public class MaxLengthValidator : ValidatorBase
     {
         private readonly int _maxLength;
@@ -12,7 +18,7 @@ namespace LightVx.Validators
         {
             _maxLength = maxLength;
         }
-        protected override void Validate()
+        public override void Validate()
         {
             if (_Input == null)
             {

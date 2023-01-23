@@ -7,9 +7,17 @@ namespace LightVx.Validators
     /// <summary>
     /// Validates string is empty
     /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class EmptyValidatorAttribute : AttributeValidator
+    {
+        public EmptyValidatorAttribute() : base(new EmptyValidator()) { }
+    }
+    /// <summary>
+    /// Validates string is empty
+    /// </summary>
     public class EmptyValidator : ValidatorBase
     {
-        protected override void Validate()
+        public override void Validate()
         {
             if (Input != null && Input is Array && ((Array)Input).Length == 0)
             {

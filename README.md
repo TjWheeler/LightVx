@@ -46,6 +46,41 @@ Tim Wheeler - https://www.linkedin.com/in/timwheeler/
 * NotContainsValidator - Checks to ensure the specified content does not exist within the input
 * RegExValidator - Validates against a supplied Regular Expression
 
+### Property Attribute Validators - new in Version 4
+You can use Attributes on your class properties to define validation requirements.
+(Currently Date Validators are not implemented as Attributes)
+
+Example:
+```C#
+    public class Person
+    {
+        [GuidValidator]
+        public string Id { get; set; }
+        [RequiredValidator, MaxLengthValidator(10), NameTextValidator]
+        public string FirstName { get; set; }
+        [RequiredValidator, MaxLengthValidator(15), NameTextValidator]
+        public string LastName { get; set; }
+    }
+```
+
+To validate:
+```C#
+    var person = new Person()
+    {
+        Id = string.Empty,
+        FirstName = "Joe",
+        LastName = "Smith"
+    };
+    var result = Validator.Validate(person);
+    Assert.IsTrue(result.IsValid);
+    //Get all error messags
+    List<string> errorMessages = result.ErrorMessages;
+    //Get error messages for each Property
+    Dictionary<string, List<string>> fieldErrorMessages = result.FieldErrorMessages;
+
+```
+
+
 ### Object Validation Feature
 
 Recently, this framework has been upgraded to provide a more holistic approach to validating an object.

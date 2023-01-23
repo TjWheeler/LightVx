@@ -19,7 +19,7 @@ namespace LightVx.Validators
         {
             _maxDate = maxDate;
         }
-        protected override void Validate()
+        public override void Validate()
         {
             if (_Input == null)
             {

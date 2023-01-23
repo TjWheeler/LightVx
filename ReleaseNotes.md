@@ -1,4 +1,15 @@
 # LightVx - Release Notes
+Version 4
+
+Breaking changes in Version 4
+ValidatorBase.Validate is now public
+Eval is no longer an Extension method on object, you must call Validator.Eval instead.
+
+## New Features
+Attribute Validators for Class Properties.
+Call Validator.Validate(myClassInstance)
+
+
 22/01/2023 - Version 3.1.0
 * Added ability to create Validation Defintions (Sets of Validators) to allow a more centralised location for validators to
 	be defined then used later as needed.
