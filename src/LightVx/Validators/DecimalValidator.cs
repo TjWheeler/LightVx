@@ -5,9 +5,9 @@ namespace LightVx.Validators
     ///     places restriction.
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class DecimalValidatorAttribute : AttributeValidator
+    public class DecimalAttribute : AttributeValidator
     {
-        public DecimalValidatorAttribute() : base(new DecimalValidator()) { }
+        public DecimalAttribute() : base(new DecimalValidator()) { }
     }
     /// <summary>
     ///     Validate decimal numbers.  digits and 1 period.  Also has maximum decimal

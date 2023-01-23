@@ -4,9 +4,9 @@ namespace LightVx.Validators
     ///     Validate Url
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class UrlValidatorAttribute : AttributeValidator
+    public class UrlAttribute : AttributeValidator
     {
-        public UrlValidatorAttribute() : base(new UrlValidator()) { }
+        public UrlAttribute() : base(new UrlValidator()) { }
     }
 
     /// <summary>

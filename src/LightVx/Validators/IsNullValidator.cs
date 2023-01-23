@@ -5,9 +5,9 @@ using System.Text;
 namespace LightVx.Validators
 {
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class IsNullValidatorAttribute : AttributeValidator
+    public class IsNullAttribute : AttributeValidator
     {
-        public IsNullValidatorAttribute() : base(new IsNullValidator()) { }
+        public IsNullAttribute() : base(new IsNullValidator()) { }
     }
     public class IsNullValidator : ValidatorBase
     {

@@ -9,9 +9,9 @@ namespace LightVx.Validators
     /// Checks if the input is within the items of a collection, optionally ignore case.
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class InCollectionValidatorAttribute : AttributeValidator
+    public class InCollectionAttribute : AttributeValidator
     {
-        public InCollectionValidatorAttribute(ICollection items, bool ignoreCase = false) : base(new InCollectionValidator(items, ignoreCase)) { }
+        public InCollectionAttribute(ICollection items, bool ignoreCase = false) : base(new InCollectionValidator(items, ignoreCase)) { }
     }
     /// <summary>
     /// Checks if the input is within the items of a collection, optionally ignore case.

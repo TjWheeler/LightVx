@@ -6,9 +6,9 @@ using System.Text.RegularExpressions;
 namespace LightVx.Validators
 {
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class RegExValidatorAttribute : AttributeValidator
+    public class RegExAttribute : AttributeValidator
     {
-        public RegExValidatorAttribute(string expression) : base(new RegExValidator(expression)) { }
+        public RegExAttribute(string expression) : base(new RegExValidator(expression)) { }
     }
     public class RegExValidator : ValidatorBase
     {

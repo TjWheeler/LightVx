@@ -8,9 +8,9 @@ namespace LightVx.Validators
     ///     Validates name type text. Allows alpha, spaces, hyphen and apostrophe
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class NameTextValidatorAttribute : AttributeValidator
+    public class NameTextAttribute : AttributeValidator
     {
-        public NameTextValidatorAttribute() : base(new NameTextValidator()) { }
+        public NameTextAttribute() : base(new NameTextValidator()) { }
     }
     /// <summary>
     ///     Validates name type text. Allows alpha, spaces, hyphen and apostrophe

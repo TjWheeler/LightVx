@@ -6,9 +6,9 @@ namespace LightVx.Validators
     ///     Validate Australian Business Numbers
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class AbnValidatorAttribute : AttributeValidator
+    public class AbnAttribute : AttributeValidator
     {
-        public AbnValidatorAttribute(): base(new AbnValidator()) { }
+        public AbnAttribute(): base(new AbnValidator()) { }
     }
     /// <summary>
     ///     Validate Australian Business Numbers

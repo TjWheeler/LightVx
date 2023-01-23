@@ -4,9 +4,9 @@ namespace LightVx.Validators
     ///     Validate numbers only
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class NumericValidatorAttribute : AttributeValidator
+    public class NumericAttribute : AttributeValidator
     {
-        public NumericValidatorAttribute() : base(new NumericValidator()) { }
+        public NumericAttribute() : base(new NumericValidator()) { }
     }
     /// <summary>
     ///     Validate numbers only

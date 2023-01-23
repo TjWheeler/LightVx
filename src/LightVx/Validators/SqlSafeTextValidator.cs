@@ -6,9 +6,9 @@
     /// Warning: You should not rely on this, ensure other defence factors are in use to protect your system, such as parameterized queries.
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class SqlSafeTextValidatorAttribute : AttributeValidator
+    public class SqlSafeTextAttribute : AttributeValidator
     {
-        public SqlSafeTextValidatorAttribute() : base(new SqlSafeTextValidator()) { }
+        public SqlSafeTextAttribute() : base(new SqlSafeTextValidator()) { }
     }
 
     /// <summary>

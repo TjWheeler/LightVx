@@ -4,9 +4,9 @@ namespace LightVx.Validators
     ///     Validate text with alpha, numeric and spaces.
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class AlphaNumericValidatorAttribute : AttributeValidator
+    public class AlphaNumericAttribute : AttributeValidator
     {
-        public AlphaNumericValidatorAttribute() : base(new AlphaNumericValidator()) { }
+        public AlphaNumericAttribute() : base(new AlphaNumericValidator()) { }
     }
     /// <summary>
     ///     Validate text with alpha, numeric and spaces.

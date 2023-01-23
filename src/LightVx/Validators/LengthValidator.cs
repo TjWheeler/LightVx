@@ -6,14 +6,14 @@ namespace LightVx.Validators
     ///     Validate text or arrays with length options
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class LengthValidatorAttribute : AttributeValidator
+    public class LengthAttribute : AttributeValidator
     {
-        public LengthValidatorAttribute(int minOccurance, int? maxOccurance) : base(new LengthValidator(minOccurance, maxOccurance)) { }
+        public LengthAttribute(int minOccurance, int? maxOccurance) : base(new LengthValidator(minOccurance, maxOccurance)) { }
     }
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class RequiredValidatorAttribute : AttributeValidator
+    public class RequiredAttribute : AttributeValidator
     {
-        public RequiredValidatorAttribute() : base(new LengthValidator(1)) { }
+        public RequiredAttribute() : base(new LengthValidator(1)) { }
     }
     /// <summary>
     ///     Validate text or arrays with length options

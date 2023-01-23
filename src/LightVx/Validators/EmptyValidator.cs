@@ -8,9 +8,9 @@ namespace LightVx.Validators
     /// Validates string is empty
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class EmptyValidatorAttribute : AttributeValidator
+    public class EmptyAttribute : AttributeValidator
     {
-        public EmptyValidatorAttribute() : base(new EmptyValidator()) { }
+        public EmptyAttribute() : base(new EmptyValidator()) { }
     }
     /// <summary>
     /// Validates string is empty

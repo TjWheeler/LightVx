@@ -4,9 +4,9 @@ namespace LightVx.Validators
     /// Safe Text that uses both the <see cref="XssSafeTextValidator"/> and the <see cref="SqlSafeTextValidator"/> validiators
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class SafeTextValidatorAttribute : AttributeValidator
+    public class SafeTextAttribute : AttributeValidator
     {
-        public SafeTextValidatorAttribute() : base(new SafeTextValidator()) { }
+        public SafeTextAttribute() : base(new SafeTextValidator()) { }
     }
     /// <summary>
     /// Safe Text that uses both the <see cref="XssSafeTextValidator"/> and the <see cref="SqlSafeTextValidator"/> validiators

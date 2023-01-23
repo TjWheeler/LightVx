@@ -7,7 +7,7 @@ namespace LightVx.Validators
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public abstract class AttributeValidator : System.Attribute, IAttributeValidator
     {
-        private IValidator _validator;
+        protected IValidator _validator;
         public AttributeValidator(IValidator validator)
         {
             _validator = validator;

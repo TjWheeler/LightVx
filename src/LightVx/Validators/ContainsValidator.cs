@@ -8,10 +8,10 @@ namespace LightVx.Validators
     /// Checks to ensure the specified content exists within the input
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class ContainsValidatorAttribute : AttributeValidator
+    public class ContainsAttribute : AttributeValidator
     {
-        public ContainsValidatorAttribute(string content, bool ignoreCase = false) : base(new ContainsValidator(content, ignoreCase)) { }
-        public ContainsValidatorAttribute(string[] content, bool ignoreCase = false) : base(new ContainsValidator(content, ignoreCase)) { }
+        public ContainsAttribute(string content, bool ignoreCase = false) : base(new ContainsValidator(content, ignoreCase)) { }
+        public ContainsAttribute(string[] content, bool ignoreCase = false) : base(new ContainsValidator(content, ignoreCase)) { }
     }
     /// <summary>
     /// Checks to ensure the specified content exists within the input

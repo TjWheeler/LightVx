@@ -3,9 +3,9 @@
 namespace LightVx.Validators
 {
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class GuidValidatorAttribute : AttributeValidator
+    public class GuidAttribute : AttributeValidator
     {
-        public GuidValidatorAttribute() : base(new GuidValidator()) { }
+        public GuidAttribute() : base(new GuidValidator()) { }
     }
 
     public class GuidValidator : ValidatorBase

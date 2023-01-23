@@ -4,11 +4,11 @@ using System.Collections;
 namespace LightVx.Validators
 {
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class MaxValidatorAttribute : AttributeValidator
+    public class MaxAttribute : AttributeValidator
     {
-        public MaxValidatorAttribute(int max) : base(new MaxValidator(max)) { }
-        public MaxValidatorAttribute(decimal max) : base(new MaxValidator(max)) { }
-        public MaxValidatorAttribute(double max) : base(new MaxValidator(max)) { }
+        public MaxAttribute(int max) : base(new MaxValidator(max)) { }
+        public MaxAttribute(decimal max) : base(new MaxValidator(max)) { }
+        public MaxAttribute(double max) : base(new MaxValidator(max)) { }
     }
     public class MaxValidator : ValidatorBase
     {

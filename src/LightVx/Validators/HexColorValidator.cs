@@ -4,9 +4,9 @@ namespace LightVx.Validators
     ///     Validate text with length options
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class HexColorValidatorAttribute : AttributeValidator
+    public class HexColorAttribute : AttributeValidator
     {
-        public HexColorValidatorAttribute() : base(new HexColorValidator()) { }
+        public HexColorAttribute() : base(new HexColorValidator()) { }
     }
     /// <summary>
     ///     Validate text with length options

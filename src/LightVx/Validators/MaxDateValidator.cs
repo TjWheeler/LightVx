@@ -1,9 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LightVx.Attribute;
 
 namespace LightVx.Validators
 {
+    /// <summary>
+    /// Verify that the input is a datetime and less or equal to the datetime specified in the constructor.
+    /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class MaxDateAttribute : DateAttributeValidator
+    {
+        public MaxDateAttribute(DateTypeEnum dateType, DateOffsetEnum offsetType, int offset = 0)
+        {
+            DateTime date = CalculateDateOffset(dateType, offsetType, offset);
+            Validator = new MaxDateValidator(date);
+        }
+    }
     /// <summary>
     /// Verify that the input is a datetime and less or equal to the datetime specified in the constructor.
     /// </summary>

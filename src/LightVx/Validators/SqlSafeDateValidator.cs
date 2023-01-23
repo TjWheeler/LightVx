@@ -9,9 +9,9 @@ namespace LightVx.Validators
     /// Ensures a date value is within valid SQL range
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class SqlSafeDateValidatorAttribute : AttributeValidator
+    public class SqlSafeDateAttribute : AttributeValidator
     {
-        public SqlSafeDateValidatorAttribute() : base(new SqlSafeDateValidator()) { }
+        public SqlSafeDateAttribute() : base(new SqlSafeDateValidator()) { }
     }
     /// <summary>
     /// Ensures a date value is within valid SQL range

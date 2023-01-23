@@ -1,9 +1,9 @@
 ﻿namespace LightVx.Validators
 {
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class BoolValidatorAttribute : AttributeValidator
+    public class BoolAttribute : AttributeValidator
     {
-        public BoolValidatorAttribute() : base(new BoolValidator()) { }
+        public BoolAttribute() : base(new BoolValidator()) { }
     }
     public class BoolValidator : ValidatorBase
     {

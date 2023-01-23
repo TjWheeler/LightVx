@@ -4,9 +4,9 @@ namespace LightVx.Validators
     ///     Validate phone numbers.  Allows ( ) 0-9 and hyphen
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class PhoneNumberValidatorAttribute : AttributeValidator
+    public class PhoneNumberAttribute : AttributeValidator
     {
-        public PhoneNumberValidatorAttribute() : base(new PhoneNumberValidator()) { }
+        public PhoneNumberAttribute() : base(new PhoneNumberValidator()) { }
     }
     /// <summary>
     ///     Validate phone numbers.  Allows ( ) 0-9 and hyphen

@@ -1,9 +1,9 @@
 ﻿namespace LightVx.Validators
 {
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class DoubleValidatorAttribute : AttributeValidator
+    public class DoubleAttribute : AttributeValidator
     {
-        public DoubleValidatorAttribute() : base(new DoubleValidator()) { }
+        public DoubleAttribute() : base(new DoubleValidator()) { }
     }
     public class DoubleValidator : ValidatorBase
     {

@@ -56,5 +56,33 @@ namespace LightVx.Tests
             result = Validator.Validate(person);
             Assert.IsFalse(result.IsValid);
         }
+
+        [TestMethod]
+        public void DateAttributeTest()
+        {
+            var person = new Person()
+            {
+                Id = string.Empty,
+                FirstName = "Joe",
+                LastName = "Smith",
+                DOB = DateTime.Now.AddDays(-2),
+                ActivityDate = DateTime.Now
+            };
+            var result = Validator.Validate(person);
+            Assert.IsTrue(result.IsValid);
+            
+            person.DOB = DateTime.Now.AddDays(1);
+            result = Validator.Validate(person);
+            Assert.IsFalse(result.IsValid);
+
+            person.DOB = DateTime.Now.AddDays(-2);
+            person.ActivityDate = DateTime.Now;
+            result = Validator.Validate(person);
+            Assert.IsTrue(result.IsValid);
+
+            person.ActivityDate = DateTime.Now.AddDays(10);
+            result = Validator.Validate(person);
+            Assert.IsFalse(result.IsValid);
+        }
     }
 }

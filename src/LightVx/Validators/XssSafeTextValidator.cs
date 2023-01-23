@@ -5,9 +5,9 @@
     /// Warning: Ensure other defence factors are in use to protect your system.
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class XssSafeTextValidatorAttribute : AttributeValidator
+    public class XssSafeTextAttribute : AttributeValidator
     {
-        public XssSafeTextValidatorAttribute() : base(new XssSafeTextValidator()) { }
+        public XssSafeTextAttribute() : base(new XssSafeTextValidator()) { }
     }
     /// <summary>
     /// Blacklist approach to detects the use of characters or escaped values used in XSS.

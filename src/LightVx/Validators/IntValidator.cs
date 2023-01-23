@@ -1,9 +1,9 @@
 ﻿namespace LightVx.Validators
 {
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class IntValidatorAttribute : AttributeValidator
+    public class IntAttribute : AttributeValidator
     {
-        public IntValidatorAttribute() : base(new IntValidator()) { }
+        public IntAttribute() : base(new IntValidator()) { }
     }
     public class IntValidator : ValidatorBase
     {

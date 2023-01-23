@@ -4,11 +4,11 @@ using System.Collections;
 namespace LightVx.Validators
 {
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class MinValidatorAttribute : AttributeValidator
+    public class MinAttribute : AttributeValidator
     {
-        public MinValidatorAttribute(int min) : base(new MinValidator(min)) { }
-        public MinValidatorAttribute(decimal min) : base(new MinValidator(min)) { }
-        public MinValidatorAttribute(double min) : base(new MinValidator(min)) { }
+        public MinAttribute(int min) : base(new MinValidator(min)) { }
+        public MinAttribute(decimal min) : base(new MinValidator(min)) { }
+        public MinAttribute(double min) : base(new MinValidator(min)) { }
     }
     public class MinValidator : ValidatorBase
     {

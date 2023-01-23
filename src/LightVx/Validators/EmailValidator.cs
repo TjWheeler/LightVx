@@ -4,9 +4,9 @@ namespace LightVx.Validators
     ///     Validate Email Addresses
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class EmailValidatorAttribute : AttributeValidator
+    public class EmailAttribute : AttributeValidator
     {
-        public EmailValidatorAttribute() : base(new EmailValidator()) { }
+        public EmailAttribute() : base(new EmailValidator()) { }
     }
     /// <summary>
     ///     Validate Email Addresses

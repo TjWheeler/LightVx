@@ -1,9 +1,9 @@
 namespace LightVx.Validators
 {
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class PhoneAndLengthValidatorAttribute : AttributeValidator
+    public class PhoneAndLengthAttribute : AttributeValidator
     {
-        public PhoneAndLengthValidatorAttribute(int minOccurance, int maxOccurance) : base(new PhoneAndLengthValidator(minOccurance, maxOccurance)) { }
+        public PhoneAndLengthAttribute(int minOccurance, int maxOccurance) : base(new PhoneAndLengthValidator(minOccurance, maxOccurance)) { }
     }
     public class PhoneAndLengthValidator : AggregatedValidator
     {

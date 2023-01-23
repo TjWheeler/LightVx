@@ -5,9 +5,9 @@ using System.Text;
 namespace LightVx.Validators
 {
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class MinLengthValidatorAttribute : AttributeValidator
+    public class MinLengthAttribute : AttributeValidator
     {
-        public MinLengthValidatorAttribute(int minLength) : base(new MinLengthValidator(minLength)) { }
+        public MinLengthAttribute(int minLength) : base(new MinLengthValidator(minLength)) { }
     }
     public class MinLengthValidator : ValidatorBase
     {

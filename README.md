@@ -48,17 +48,17 @@ Tim Wheeler - https://www.linkedin.com/in/timwheeler/
 
 ### Property Attribute Validators - new in Version 4
 You can use Attributes on your class properties to define validation requirements.
-(Currently Date Validators are not implemented as Attributes)
+
 
 Example:
 ```C#
     public class Person
     {
-        [GuidValidator]
+        [Guid]
         public string Id { get; set; }
-        [RequiredValidator, MaxLengthValidator(10), NameTextValidator]
+        [Required, MaxLength(10), NameText]
         public string FirstName { get; set; }
-        [RequiredValidator, MaxLengthValidator(15), NameTextValidator]
+        [Required, MaxLength(15), NameText]
         public string LastName { get; set; }
     }
 ```

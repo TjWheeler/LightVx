@@ -5,9 +5,9 @@ using System.Text;
 namespace LightVx.Validators
 {
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class MaxLengthValidatorAttribute : AttributeValidator
+    public class MaxLengthAttribute : AttributeValidator
     {
-        public MaxLengthValidatorAttribute(int maxLength) : base(new MaxLengthValidator(maxLength)) { }
+        public MaxLengthAttribute(int maxLength) : base(new MaxLengthValidator(maxLength)) { }
     }
 
     public class MaxLengthValidator : ValidatorBase

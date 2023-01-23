@@ -4,9 +4,9 @@
     ///     Validate text with alpha, numeric, hyphen and spaces.
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class AlphaNumericHyphenValidatorAttribute : AttributeValidator
+    public class AlphaNumericHyphenAttribute : AttributeValidator
     {
-        public AlphaNumericHyphenValidatorAttribute() : base(new AlphaNumericHyphenValidator()) { }
+        public AlphaNumericHyphenAttribute() : base(new AlphaNumericHyphenValidator()) { }
     }
 
     /// <summary>
