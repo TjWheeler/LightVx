@@ -20,7 +20,9 @@ namespace LightVx.Tests
             {
                 Id = string.Empty,
                 FirstName = "Joe",
-                LastName = "Smith"
+                LastName = "Smith",
+                DOB = DateTime.Now.AddDays(-2),
+                ActivityDate = DateTime.Now
             };
             Assert.IsTrue(Validator.Validate(person).IsValid);
             person.FirstName = new string('X', 11);
@@ -29,7 +31,7 @@ namespace LightVx.Tests
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.GetFieldResult(nameof(Person.FirstName)));
             Assert.AreEqual(nameof(Person.FirstName), result.GetFieldResult(nameof(Person.FirstName)).FieldName);
-            Assert.AreEqual(2, result.ValidatorResults.Count);
+            Assert.AreEqual(4, result.ValidatorResults.Count);
             Assert.AreEqual(1, result.ValidatorResults.Count(t => t.FieldName == nameof(Person.FirstName)));
             var firstNameResult = result.GetFieldResult(nameof(Person.FirstName));
             Assert.IsFalse(firstNameResult.IsValid);
