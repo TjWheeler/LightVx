@@ -110,6 +110,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Xml.Schema;
 
 namespace LightVx
@@ -204,14 +205,6 @@ namespace LightVx
                     result.Add(member.Name);
                 }
             }
-            //foreach (var navigationProperty in selectedProperties.Body)
-            //{
-            //    var member = navigationProperty.Body as NewExpression;
-            //    if (member != null)
-            //    {
-            //        //result.Add(member.Members.Member.Name);
-            //    }
-            //}
             return result;
         }
         public static bool IsValid<T>(string input, string fieldName) where T : IValidator
@@ -262,14 +255,14 @@ namespace LightVx
                         IValidator validator = ((IAttributeValidator)attr).Validator;
                         validator.FieldName = prop.Name;
                         validator.Input = value;
-                        validator.FieldDisplayName = GetDisplayNameFromAttribute(prop) ?? prop.Name;
+                        validator.FieldDisplayName = GetDisplayNameFromAttribute(prop);
                         validators.Add(validator);
                     }
                 }
             }
             return validators;
         }
-
+        
         private static string GetDisplayNameFromAttribute(PropertyInfo pInfo)
         {
             object[] attrs = pInfo.GetCustomAttributes(true);
@@ -280,7 +273,8 @@ namespace LightVx
                     return ((DisplayNameAttribute)attr).DisplayName;
                 }
             }
-            return null;
+            //No display name, so lets assume pascal case and add spaces.
+            return Regex.Replace(pInfo.Name, @"((?<=\p{Ll})\p{Lu})|((?!\A)\p{Lu}(?>\p{Ll}))", " $0");
         }
     }
 }

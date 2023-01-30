@@ -39,11 +39,11 @@ namespace LightVx
                     if(result.IsValid) continue;
                     if (dictionary.ContainsKey(result.FieldName))
                     {
-                        dictionary[result.FieldName].AddRange(result.ErrorMessages);
+                        dictionary[result.FieldName].AddRange(result.ErrorMessages.Where(t => !string.IsNullOrEmpty(t)).ToArray());
                     }
                     else
                     {
-                        dictionary.Add(result.FieldName, result.ErrorMessages);
+                        dictionary.Add(result.FieldName, result.ErrorMessages.Where(t => !string.IsNullOrEmpty(t)).ToList());
                     }
                 }
                 return dictionary;
