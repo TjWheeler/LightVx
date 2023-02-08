@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using LightVx.Tests.CustomValidator;
+using LightVx.Tests.Files;
 using LightVx.Validators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -629,5 +630,37 @@ namespace LightVx.Tests
             ExpectFailure(Validator.Eval("Joe#Smith").ValidateWith(nameValidationSet));
             ExpectFailure(Validator.Eval(new string('A',16)).ValidateWith(nameValidationSet));
         }
+
+        [TestMethod]
+        public void ImageSignatureTests()
+        {
+            using (var stream = FileProvider.GetFile(TestFileEnum.SmallGif))
+            {
+                ExpectSuccess(Validator.Eval(stream).HasGifImageSignature());
+            }
+            using (var stream = FileProvider.GetFile(TestFileEnum.SmallJpg))
+            {
+                ExpectSuccess(Validator.Eval(stream).HasJpgImageSignature());
+            }
+            using (var stream = FileProvider.GetFile(TestFileEnum.SmallPng))
+            {
+                ExpectSuccess(Validator.Eval(stream).HasPngImageSignature());
+            }
+            
+            //Failures
+            using (var stream = FileProvider.GetFile(TestFileEnum.SmallGif))
+            {
+                ExpectFailure(Validator.Eval(stream).HasPngImageSignature());
+            }
+            using (var stream = FileProvider.GetFile(TestFileEnum.SmallJpg))
+            {
+                ExpectFailure(Validator.Eval(stream).HasGifImageSignature());
+            }
+            using (var stream = FileProvider.GetFile(TestFileEnum.SmallPng))
+            {
+                ExpectFailure(Validator.Eval(stream).HasJpgImageSignature());
+            }
+        }
+
     }
 }

@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using LightVx.Validators;
+using LightVx.Validators.File;
 
 namespace LightVx
 {
@@ -140,6 +142,7 @@ namespace LightVx
         {
             return DoesNotContain(new[] { "..", "/", "%2f", "\\", "%5c", "%2e%2e", "%2e%2e", "%2e%2e", "%c1%1c", "%c0%af" }, true);
         }
+
         /// <summary>
         /// Checks to ensure the specified content exists within the input
         /// </summary>
@@ -485,6 +488,31 @@ namespace LightVx
         {
             _validators = new List<IValidator>(validationDefintion._validators);
             return Validate();
+        }
+        /// <summary>
+        /// Checks starting and end bytes to see if the stream contains the JPG magic numbers.
+        /// Note: The Input must be a Seekable Stream.
+        /// </summary>
+        public ValidatorFluent HasJpgImageSignature()
+        {
+            _validators.Add(new JpgSignatureValidator());
+            return this;
+        }
+        /// <summary>
+        /// Checks starting bytes to see if the stream contains the PNG magic numbers.
+        /// </summary>
+        public ValidatorFluent HasPngImageSignature()
+        {
+            _validators.Add(new PngSignatureValidator());
+            return this;
+        }
+        /// <summary>
+        /// Checks starting bytes to see if the stream contains the GIF (Gif87a/Gif89a) magic numbers.
+        /// </summary>
+        public ValidatorFluent HasGifImageSignature()
+        {
+            _validators.Add(new GifSignatureValidator());
+            return this;
         }
     }
 }
