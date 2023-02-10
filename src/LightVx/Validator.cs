@@ -106,41 +106,51 @@
 //       This allows for validators like the length validator to be used or combined if the field
 //       is required.  
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Xml.Schema;
 
 namespace LightVx
 {
     /// <summary>
     /// Primary access to validation functions.
     /// </summary>
-    [DebuggerStepThrough]
+    //[DebuggerStepThrough]
     public static class Validator
     {
-        public static ValidatorFluent Eval(this object input, string fieldName)
+        /// <summary>
+        /// Evaluate values directly
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="input"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="validationDefinition"></param>
+        /// <returns></returns>
+        public static ValidatorFluent Eval<T>(T input, string fieldName, ValidatorFluent validationDefinition = null)
         {
-            return new ValidatorFluent(input, fieldName);
+            return new ValidatorFluent(input, fieldName, validationDefinition);
         }
-        public static ValidatorFluent Eval(this object input, string fieldName, string fieldDisplayName)
+        /// <summary>
+        /// Evaluate values directly
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="input"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="fieldDisplayName"></param>
+        /// <param name="validationDefinition"></param>
+        /// <returns></returns>
+        public static ValidatorFluent Eval<T>(T input, string fieldName, string fieldDisplayName, ValidatorFluent validationDefinition = null)
         {
-            return new ValidatorFluent(input, fieldName, fieldDisplayName);
+            return new ValidatorFluent(input, fieldName, fieldDisplayName, validationDefinition);
         }
-        public static ValidatorFluent Eval(this object input)
+        public static ValidatorFluent Eval<T>(T input)
         {
             return new ValidatorFluent(input);
         }
 
-        public static ValidatorFluent Eval(this object input, string fieldName, ValidatorFluent validationSet)
-        {
-            return new ValidatorFluent(input, fieldName, validationSet);
-        }
-        public static ValidatorFluent Eval(this object input, string fieldName, string fieldDisplayName, ValidatorFluent validationSet)
-        {
-            return new ValidatorFluent(input, fieldName, fieldDisplayName, validationSet);
-        }
-        public static ValidatorFluent Eval(this object input, ValidatorFluent validationSet)
-        {
-            return new ValidatorFluent(input, validationSet);
-        }
         /// <summary>
         /// Create a Validation Definition which can be supplied later and reused
         /// </summary>
@@ -149,10 +159,57 @@ namespace LightVx
         {
             return new ValidatorFluent();
         }
-        
+        /// <summary>
+        /// Validates an Object based on its Property Attributes.
+        /// Attributes must be of type <see cref="IAttributeValidator"/>.
+        /// Optionally restrict validation to a subset of fields
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="input"></param>
+        /// <param name="validateFields">t => new { t.FirstName, t.LastName } will restrict validation to specified fields only</param>
+        /// <returns></returns>
+        public static ValidationResult Validate<T>(T input, Expression<Func<T, object>> validateFields = null) where T : class
+        {
+            var validators = GetAttributeValidators(input);
+            var result = new ValidationResult();
+            var propNames = validateFields != null ? GetPropNames(validateFields) : new List<string>();
+            foreach (var validator in validators)
+            {
+                if(propNames.Count > 0 && !propNames.Contains(validator.FieldName)) continue;
+                validator.Validate();
+                if (result.FieldResults.ContainsKey(validator.FieldName))
+                {
+                    var fieldResult = result.FieldResults[validator.FieldName];
+                    fieldResult.Validators.Add(validator);
+                }
+                else
+                {
+                    result.FieldResults.Add(validator.FieldName, new ValidatorResult()
+                    {
+                        FieldName = validator.FieldName,
+                        FieldDisplayName = validator.FieldDisplayName,
+                        Validators = new List<IValidator>(new []{validator}),
+                    });
+                }
+            }
+            return result;
+        }
+        private static List<string> GetPropNames<T>(Expression<Func<T, object>> selectedProperties)
+        {
+            var result = new List<string>();
+            var expression = selectedProperties.Body as NewExpression;
+            if (expression != null)
+            {
+                foreach (var member in expression.Members)
+                {
+                    result.Add(member.Name);
+                }
+            }
+            return result;
+        }
         public static bool IsValid<T>(string input, string fieldName) where T : IValidator
         {
-            var validator = (IValidator) Activator.CreateInstance(typeof(T));
+            var validator = (IValidator)Activator.CreateInstance(typeof(T));
             validator.Validate(input, fieldName);
             return validator.IsValid;
         }
@@ -170,10 +227,54 @@ namespace LightVx
 
         public static bool IsValid<T>(string input, string fieldName, out string errorMessage) where T : IValidator
         {
-            var validator = (IValidator) Activator.CreateInstance(typeof(T));
+            var validator = (IValidator)Activator.CreateInstance(typeof(T));
             validator.Validate(input, fieldName);
             errorMessage = validator.IsValid ? string.Empty : validator.ErrorMessage;
             return validator.IsValid;
+        }
+        private static void AddCustomAttributeValidators<T>(T o, ValidatorFluent fluent)
+        {
+            var validators = GetAttributeValidators(o);
+            if (validators.Count > 0)
+            {
+                fluent.Validators.AddRange(validators);
+            }
+        }
+        private static List<IValidator> GetAttributeValidators<T>(T o)
+        {
+            var validators = new List<IValidator>();
+            PropertyInfo[] props = typeof(T).GetProperties();
+            foreach (PropertyInfo prop in props)
+            {
+                object[] attrs = prop.GetCustomAttributes(true);
+                foreach (object attr in attrs)
+                {
+                    if (attr is IAttributeValidator)
+                    {
+                        object value = prop.GetValue(o, null);
+                        IValidator validator = ((IAttributeValidator)attr).Validator;
+                        validator.FieldName = prop.Name;
+                        validator.Input = value;
+                        validator.FieldDisplayName = GetDisplayNameFromAttribute(prop);
+                        validators.Add(validator);
+                    }
+                }
+            }
+            return validators;
+        }
+        
+        private static string GetDisplayNameFromAttribute(PropertyInfo pInfo)
+        {
+            object[] attrs = pInfo.GetCustomAttributes(true);
+            foreach (object attr in attrs)
+            {
+                if (attr is DisplayNameAttribute)
+                {
+                    return ((DisplayNameAttribute)attr).DisplayName;
+                }
+            }
+            //No display name, so lets assume pascal case and add spaces.
+            return Regex.Replace(pInfo.Name, @"((?<=\p{Ll})\p{Lu})|((?!\A)\p{Lu}(?>\p{Ll}))", " $0");
         }
     }
 }

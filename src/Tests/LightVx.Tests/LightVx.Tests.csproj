@@ -49,7 +49,12 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeValidation\Person.cs" />
+    <Compile Include="AttributeValidatorTests.cs" />
     <Compile Include="CustomValidator\PostCodeValidator.cs" />
+    <Compile Include="Files\FileProvider.cs" />
+    <Compile Include="Files\TestFileEnum.cs" />
+    <Compile Include="FileValidator\SignatureValidatorTests.cs" />
     <Compile Include="ObjectValidatorTests.cs" />
     <Compile Include="ObjectValidator\Customer.cs" />
     <Compile Include="ExampleMethodTests.cs" />
@@ -70,7 +75,14 @@
       <Name>LightVx</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Files\file_example_GIF_500kB.gif" />
+    <EmbeddedResource Include="Files\file_example_JPG_100kB.jpg" />
+    <EmbeddedResource Include="Files\file_example_PNG_500kB.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Files\file_example_SVG_20kB.svg" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

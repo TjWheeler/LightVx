@@ -4,6 +4,11 @@ using System.Text;
 
 namespace LightVx.Validators
 {
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class MinLengthAttribute : AttributeValidator
+    {
+        public MinLengthAttribute(int minLength) : base(new MinLengthValidator(minLength)) { }
+    }
     public class MinLengthValidator : ValidatorBase
     {
         private readonly int _minLength;
@@ -12,7 +17,7 @@ namespace LightVx.Validators
         {
             _minLength = minLength;
         }
-        protected override void Validate()
+        public override void Validate()
         {
             if (_Input == null)
             {

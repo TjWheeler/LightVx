@@ -89,7 +89,7 @@ namespace LightVx
             foreach (var validator in FluentValidators)
             {
                 var valid = validator.IsValid;
-                if (!valid.Value)
+                if (!valid)
                 {
                     errors.AddRange(validator.ErrorMessages);
                 }

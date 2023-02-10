@@ -3,6 +3,15 @@ namespace LightVx.Validators
     /// <summary>
     ///     Validate Url
     /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class UrlAttribute : AttributeValidator
+    {
+        public UrlAttribute() : base(new UrlValidator()) { }
+    }
+
+    /// <summary>
+    ///     Validate Url
+    /// </summary>
     public class UrlValidator : ValidatorBase
     {
         private const string RegExpression =
@@ -15,7 +24,7 @@ namespace LightVx.Validators
 
         #endregion
 
-        protected override void Validate()
+        public override void Validate()
         {
             if (_Input == null || (string) _Input == string.Empty)
             {

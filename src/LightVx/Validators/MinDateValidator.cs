@@ -1,9 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LightVx.Attribute;
 
 namespace LightVx.Validators
 {
+    /// <summary>
+    /// Verify that the input is a datetime and greater than or equal to the datetime specified in the constructor.
+    /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class MinDateAttribute : DateAttributeValidator
+    {
+        public MinDateAttribute(DateTypeEnum dateType, DateOffsetEnum offsetType = DateOffsetEnum.None, int offset = 0)
+        {
+            DateTime date = CalculateDateOffset(dateType, offsetType, offset);
+            Validator = new MinDateValidator(date);
+        }
+    }
     /// <summary>
     /// Verify that the input is a datetime and greater than or equal to the datetime specified in the constructor.
     /// </summary>
@@ -19,7 +32,7 @@ namespace LightVx.Validators
         {
             _minDate = minDate;
         }
-        protected override void Validate()
+        public override void Validate()
         {
             if (_Input == null)
             {

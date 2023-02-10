@@ -3,6 +3,13 @@ using System.Collections;
 
 namespace LightVx.Validators
 {
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class MinAttribute : AttributeValidator
+    {
+        public MinAttribute(int min) : base(new MinValidator(min)) { }
+        public MinAttribute(decimal min) : base(new MinValidator(min)) { }
+        public MinAttribute(double min) : base(new MinValidator(min)) { }
+    }
     public class MinValidator : ValidatorBase
     {
         private decimal? _decimalMin;
@@ -24,7 +31,7 @@ namespace LightVx.Validators
             _doubleMin = doubleMin;
         }
 
-        protected override void Validate()
+        public override void Validate()
         {
             if (Input == null || Input.ToString() == string.Empty)
             {

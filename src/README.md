@@ -2,9 +2,15 @@
 LightVx is a light, easy and extensible validation framework for .Net which includes a Fluent API.  
 It's intended to help validating user input in apps, or service requests in Web Services or Web API's, or anywhere you need to validate data.
 
-## Breaking Changes in Version 3
-The validation framework now supports a user friendly name `FieldDisplayName` property on all validators and the FuentAPI.
-If you are creating your own validators and implementing IValidator, you must add the FieldDisplayName string property.
+## Breaking Changes in Version 4
+
+The IsValid method on ValidatorFluent is no longer nullable.
+ValidatorBase.Validate is now public
+Eval is no longer an Extension method on object, you must call Validator.Eval instead.
+
+## Key updates in Version 4
+- New Attribute Based Validators
+- New File Signature Validators for JPG, PNG, GIF
 
 ## Author
 Tim Wheeler - https://www.linkedin.com/in/timwheeler/
@@ -45,6 +51,61 @@ Tim Wheeler - https://www.linkedin.com/in/timwheeler/
 * ContainsValidator - Checks to ensure the specified content exists within the input
 * NotContainsValidator - Checks to ensure the specified content does not exist within the input
 * RegExValidator - Validates against a supplied Regular Expression
+* JpgSignatureValidator - Validates the image signature magic numbers, accepts a stream, must not be null
+* GifSignatureValidator - Validates the image signature magic numbers, accepts a stream, must not be null
+* PngSignatureValidator - Validates the image signature magic numbers, accepts a stream, must not be null
+
+### Property Attribute Validators - new in Version 4
+You can use Attributes on your class properties to define validation requirements.
+
+
+
+Example:
+```C#
+    public class Person
+    {
+        [Guid]
+        public string Id { get; set; }
+        [Required, MaxLength(10), NameText]
+        public string FirstName { get; set; }
+        [Required, MaxLength(15), NameText]
+        public string LastName { get; set; }
+    }
+```
+
+To validate:
+```C#
+    var person = new Person()
+    {
+        Id = string.Empty,
+        FirstName = "Joe",
+        LastName = "Smith"
+    };
+    var result = Validator.Validate(person);
+    Assert.IsTrue(result.IsValid);
+    //Get all error messags
+    List<string> errorMessages = result.ErrorMessages;
+    //Get error messages for each Property
+    Dictionary<string, List<string>> fieldErrorMessages = result.FieldErrorMessages;
+
+```
+
+Example 2:
+```c#
+  public class Product : ModelBase
+    {
+        [Required, Guid]
+        public string Id { get; set; }
+
+        [SafeText, Required, MaxLength(50)]
+        public string Title { get; set; } = string.Empty;
+
+        [Max(5), NotNull]
+        public ImageReference[] Images { get; set; } = Array.Empty<ImageReference>();
+        
+    }
+```
+
 
 ### Object Validation Feature
 
@@ -109,7 +170,7 @@ Example
 Example 2
 ```
     var input = "123ABC";
-    if(!Validator.Eval(input, "Customer ID").Required().IsGuid().Apply()) {
+    if(!Validator.Eval(input, "Customer ID").Required().IsGuid().IsValid) {
         //... validation failed 
     }
 ```

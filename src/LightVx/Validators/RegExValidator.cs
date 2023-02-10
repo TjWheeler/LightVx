@@ -5,6 +5,11 @@ using System.Text.RegularExpressions;
 
 namespace LightVx.Validators
 {
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class RegExAttribute : AttributeValidator
+    {
+        public RegExAttribute(string expression) : base(new RegExValidator(expression)) { }
+    }
     public class RegExValidator : ValidatorBase
     {
         private string _expression;
@@ -14,7 +19,7 @@ namespace LightVx.Validators
             _expression = expression;
         }
 
-        protected override void Validate()
+        public override void Validate()
         {
             if (_Input == null || (string)_Input == string.Empty)
             {

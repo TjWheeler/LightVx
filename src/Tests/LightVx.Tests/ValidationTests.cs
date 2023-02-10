@@ -341,23 +341,6 @@ namespace Validation.LightVx.Tests
             TestValidatorForSuccess(validator, null);
         }
 
-        /// <summary>
-        ///     Credit card validator is not currently working.
-        /// </summary>
-        //[TestMethod]
-        public void CreditCardValidatorTests()
-        {
-            //This tests dont' work.  need to check CC formats.
-            var validator = new CreditCardValidator();
-            TestValidatorForSuccess(validator, "1234 5789 3214 4567");
-            TestValidatorForSuccess(validator, "1234-5789-3214-4567");
-            TestValidatorForSuccess(validator, "1234578932144567");
-            TestValidatorForFailure(validator, "12345789a2144567");
-            TestValidatorForFailure(validator, "1234578932144567234324");
-            TestValidatorForSuccess(validator, null);
-            TestValidatorForSuccess(validator, "");
-        }
-
         [TestMethod]
         public void DecimalValidatorTests()
         {

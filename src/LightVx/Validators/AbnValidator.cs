@@ -5,6 +5,14 @@ namespace LightVx.Validators
     /// <summary>
     ///     Validate Australian Business Numbers
     /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class AbnAttribute : AttributeValidator
+    {
+        public AbnAttribute(): base(new AbnValidator()) { }
+    }
+    /// <summary>
+    ///     Validate Australian Business Numbers
+    /// </summary>
     public class AbnValidator : AggregatedValidator
     {
         public AbnValidator()
@@ -21,7 +29,7 @@ namespace LightVx.Validators
 
             #endregion
 
-            protected override void Validate()
+            public override void Validate()
             {
                 if (_Input == null || _Input is string && (string)_Input == string.Empty)
                 {

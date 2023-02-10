@@ -1,13 +1,22 @@
 namespace LightVx.Validators
 {
     /// <summary>
-    ///     Validate decimal numbers.  digits and 1 period.  Also has maxium decimal
+    ///     Validate decimal numbers.  digits and 1 period.  Also has maximum decimal
+    ///     places restriction.
+    /// </summary>
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class DecimalAttribute : AttributeValidator
+    {
+        public DecimalAttribute() : base(new DecimalValidator()) { }
+    }
+    /// <summary>
+    ///     Validate decimal numbers.  digits and 1 period.  Also has maximum decimal
     ///     places restriction.
     /// </summary>
     public class DecimalValidator : ValidatorBase
     {
 
-        protected override void Validate()
+        public override void Validate()
         {
             if (_Input == null || _Input is string && (string)_Input == string.Empty)
             {
