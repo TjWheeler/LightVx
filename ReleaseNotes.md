@@ -2,12 +2,17 @@
 Version 4
 
 Breaking changes in Version 4
+The IsValid method on ValidatorFluent is no longer nullable.
 ValidatorBase.Validate is now public
 Eval is no longer an Extension method on object, you must call Validator.Eval instead.
 
-## New Features
+
+# Version 4 New Features 
 Attribute Validators for Class Properties.
 Call Validator.Validate(myClassInstance)
+
+10/02/2023 - Version 4.0.0
+
 
 
 22/01/2023 - Version 3.1.0
