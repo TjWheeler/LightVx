@@ -170,7 +170,7 @@ Example
 Example 2
 ```
     var input = "123ABC";
-    if(!Validator.Eval(input, "Customer ID").Required().IsGuid().Apply()) {
+    if(!Validator.Eval(input, "Customer ID").Required().IsGuid().IsValid) {
         //... validation failed 
     }
 ```
