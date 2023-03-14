@@ -661,6 +661,12 @@ namespace LightVx.Tests
                 ExpectFailure(Validator.Eval(stream).HasJpgImageSignature());
             }
         }
+        [TestMethod]
+        public void ErrorMessagesCountTest()
+        {
+            var result = Validator.Eval("abcdef").Contains("abc", false).DoesNotContain("zxy");
+            Assert.IsTrue(result.ErrorMessages.Count == 0, "Error messages should be 0");
+        }
 
     }
 }

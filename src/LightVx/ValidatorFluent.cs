@@ -56,14 +56,13 @@ namespace LightVx
                 return _isValid.HasValue && _isValid.Value;
             }
         }
-        public List<string> ErrorMessages { get; private set; }
+        public List<string> ErrorMessages { get; private set; } = new List<string>();
 
         public ValidatorFluent()
         {
-
         }
 
-        public ValidatorFluent(ValidatorFluent validationDefinition)
+        public ValidatorFluent(ValidatorFluent validationDefinition) 
         {
             _validators = new List<IValidator>(validationDefinition._validators);
         }
@@ -471,7 +470,7 @@ namespace LightVx
                 validator.Validate(_input, _fieldName, _fieldDisplayName);
             }
             IsValid = _validators.All(t => t.IsValid);
-            ErrorMessages = _validators.Where(t => !t.IsValid).Select(t => t.ErrorMessage).ToList();
+            ErrorMessages = _validators.Where(t => !t.IsValid).Select(t => t.ErrorMessage).Where(t => t != string.Empty).ToList();
             return this;
         }
         /// <summary>
