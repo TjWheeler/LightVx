@@ -24,7 +24,10 @@ namespace LightVx
                 var errors = new List<string>();
                 foreach (ValidatorResult result in ValidatorResults)
                 {
-                    errors.AddRange(result.ErrorMessages);
+                    if (!result.IsValid)
+                    {
+                        errors.AddRange(result.ErrorMessages.Where(t => !string.IsNullOrEmpty(t)));
+                    }
                 }
                 return errors;
             }
