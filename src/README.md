@@ -55,10 +55,13 @@ Tim Wheeler - https://www.linkedin.com/in/timwheeler/
 * GifSignatureValidator - Validates the image signature magic numbers, accepts a stream, must not be null
 * PngSignatureValidator - Validates the image signature magic numbers, accepts a stream, must not be null
 
+### File Signature Validators
+You can validate a Stream containing an image.  Supports Jpg, Png, Gif.
+See: JpgSignatureValidator, PngSignatureValidator, GifSignatureValidator
+Note: Stream should be at position 0 before validating.
+
 ### Property Attribute Validators - new in Version 4
 You can use Attributes on your class properties to define validation requirements.
-
-
 
 Example:
 ```C#
