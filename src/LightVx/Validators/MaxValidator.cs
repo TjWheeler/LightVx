@@ -41,19 +41,19 @@ namespace LightVx.Validators
 
             if (Input is decimal)
             {
-                ValidateAsDecimal((decimal) Input, $"is not less than {_decimalMax}");
+                ValidateAsDecimal((decimal) Input, $"is more than {_decimalMax}");
                 return;
             }
 
             if (Input is double)
             {
-                ValidateAsDouble((double) Input, $"is not less than {_doubleMax}");
+                ValidateAsDouble((double) Input, $"is more than {_doubleMax}");
                 return;
             }
 
             if (Input is int)
             {
-                ValidateAsInt((int) Input, $"is not less than {_intMax}");
+                ValidateAsInt((int) Input, $"is more than {_intMax}");
                 return;
             }
 
@@ -63,14 +63,14 @@ namespace LightVx.Validators
                 return;
             }
 
-            Fail($"does not contain at least {_intMax} items");
+            Fail($"contains more than {_intMax} items");
             if (Input is Array)
             {
-                ValidateAsInt(((Array) Input).Length, $"does not contain at least {_intMax} items");
+                ValidateAsInt(((Array) Input).Length, $"contains more than {_intMax} items");
             }
             else if (Input is ICollection)
             {
-                ValidateAsInt(((ICollection) Input).Count, $"does not contain at least {_intMax} items");
+                ValidateAsInt(((ICollection) Input).Count, $"contains more than {_intMax} items");
             }
             else
             {
