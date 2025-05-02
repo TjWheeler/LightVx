@@ -1,5 +1,7 @@
 # LightVx - Release Notes
 
+03/05/2025 - Version 4.0.2
+
 20/04/2023 - Version 4.0.1
 Added Image Signature Validators for Jpg, Png and Gif.
 .Net Framework Support changed to .Net 4.8 (may break for .net 4 and 4.5)

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using LightVx;
@@ -11,6 +11,34 @@ namespace Validation.LightVx.Tests
     [TestClass]
     public class ValidationTests : ValidatorUnitTestBase
     {
+        [TestMethod]
+        public void IsCurrency_Ok()
+        {
+            string[] testValues = { "$1.00","$1", "$1,234.56", "€1.234,56", "£1234.56", "¥1234", "₹1,234.56", "$1,000,000.00" };
+
+            var validator = new CurrencyValidator();
+            foreach (var value in testValues)
+            {
+                TestValidatorForSuccess(validator, value);
+            }
+            validator = new CurrencyValidator(requireCurrencySymbol: false);
+            TestValidatorForSuccess(validator, 1D);
+            TestValidatorForSuccess(validator, "1.1");
+            TestValidatorForSuccess(validator, 1.1);
+            TestValidatorForSuccess(validator, 1.1M);
+            TestValidatorForSuccess(validator, 1.1D);
+        }
+
+        [TestMethod]
+        public void IsCurrency_Fail()
+        {
+            var validator = new CurrencyValidator();
+            TestValidatorForFailure(validator, "ABC");
+            TestValidatorForFailure(validator, 1D);
+            TestValidatorForFailure(validator, "1.1");
+            TestValidatorForFailure(validator, 1.1);
+        }
+
         [TestMethod]
         public void MinDate()
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
+using System.Net.NetworkInformation;
 using LightVx.Tests.CustomValidator;
 using LightVx.Tests.Files;
 using LightVx.Validators;
@@ -109,6 +110,32 @@ namespace LightVx.Tests
         public void IsDoubleTest_Fail()
         {
             ExpectFailure(Validator.Eval("ABC").IsDouble());
+        }
+        [TestMethod]
+        public void IsCurrencyTest_Ok()
+        {
+            string[] testValues = { "$1.00", "$1", "$1,234.56", "€1.234,56", "£1234.56", "¥1234", "₹1,234.56", "$1,000,000.00" };
+            foreach (var value in testValues)
+            {
+                ExpectSuccess(Validator.Eval(value).IsCurrency());
+            }
+            ExpectSuccess(Validator.Eval((string)null).IsCurrency(false));
+            ExpectSuccess(Validator.Eval(string.Empty).IsCurrency(false));
+            ExpectSuccess(Validator.Eval("1").IsCurrency(false));
+            ExpectSuccess(Validator.Eval(1).IsCurrency(false));
+            ExpectSuccess(Validator.Eval(1D).IsCurrency(false));
+            ExpectSuccess(Validator.Eval(1M).IsCurrency(false));
+        }
+
+        [TestMethod]
+        public void IsCurrencyTest_Fail()
+        {
+            ExpectFailure(Validator.Eval("ABC").IsCurrency());
+            ExpectFailure(Validator.Eval("ABC").IsCurrency());
+            ExpectFailure(Validator.Eval("1").IsCurrency());
+            ExpectFailure(Validator.Eval(1).IsCurrency());
+            ExpectFailure(Validator.Eval(1D).IsCurrency());
+            ExpectFailure(Validator.Eval(1M).IsCurrency());
         }
 
         [TestMethod]

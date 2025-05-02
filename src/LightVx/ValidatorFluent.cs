@@ -449,6 +449,17 @@ namespace LightVx
             _validators.Add(new MaxLengthValidator(maxLength));
             return this;
         }
+
+        /// <summary>
+        /// Validates input can be parsed to a currency or optionally a double
+        /// </summary>
+        /// <returns></returns>
+        public ValidatorFluent IsCurrency(bool requireCurrencySymbol = true)
+        {
+            _validators.Add(new CurrencyValidator(requireCurrencySymbol));
+            return this;
+        }
+
         /// <summary>
         /// Looks for a Single Match
         /// </summary>

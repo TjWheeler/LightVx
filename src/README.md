@@ -54,6 +54,7 @@ Tim Wheeler - https://www.linkedin.com/in/timwheeler/
 * JpgSignatureValidator - Validates the image signature magic numbers, accepts a stream, must not be null
 * GifSignatureValidator - Validates the image signature magic numbers, accepts a stream, must not be null
 * PngSignatureValidator - Validates the image signature magic numbers, accepts a stream, must not be null
+* CurrencyValidator - Validates a string is a valid currency format.  Optionally can fallback to a double validation.
 
 ### File Signature Validators
 You can validate a Stream containing an image.  Supports Jpg, Png, Gif.
@@ -200,6 +201,8 @@ Available Methods
 * IsAlphaNumeric()
 * IsAlphaText()
 * IsDecimal()
+* IsDouble()
+* IsCurrency()
 * IsEmailAddress()
 * IsNumeric()
 * IsPhoneNumber()
