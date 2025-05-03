@@ -1,6 +1,9 @@
 # LightVx - Release Notes
 
 03/05/2025 - Version 4.0.2
+Added CurrencyValidator, Attribute and Fluent API call.
+Added Validator.Eval().IsCurrency for currency validation.
+Upgraded projects to .NET 8 (still keeping .NET Standard 2.0 for backward compatibility)
 
 20/04/2023 - Version 4.0.1
 Added Image Signature Validators for Jpg, Png and Gif.
