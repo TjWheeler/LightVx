@@ -10,6 +10,7 @@ namespace LightVx.Validators
     public class CurrencyAttribute : AttributeValidator
     {
         public CurrencyAttribute() : base(new CurrencyValidator()) { }
+        public CurrencyAttribute(bool requireCurrencySymbol) : base(new CurrencyValidator(requireCurrencySymbol)) { }
     }
     /// <summary>
     /// Validates if the input is a valid currency value based on at least 1 culture matching.
