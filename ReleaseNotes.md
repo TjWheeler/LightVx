@@ -4,6 +4,10 @@
 Added CurrencyValidator, Attribute and Fluent API call.
 Added Validator.Eval().IsCurrency for currency validation.
 Upgraded projects to .NET 8 (still keeping .NET Standard 2.0 for backward compatibility)
+Added IsoDateValidator, Attribute and Fluent API call.
+Added IsoTimeValidator, Attribute and Fluent API call.
+Added IsoDateTimeValidator, Attribute and Fluent API call.
+Added DateTimeValidator, Attribute and Fluent API call.
 
 20/04/2023 - Version 4.0.1
 Added Image Signature Validators for Jpg, Png and Gif.

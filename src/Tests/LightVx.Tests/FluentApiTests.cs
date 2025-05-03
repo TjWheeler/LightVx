@@ -137,6 +137,111 @@ namespace LightVx.Tests
             ExpectFailure(Validator.Eval(1D).IsCurrency());
             ExpectFailure(Validator.Eval(1M).IsCurrency());
         }
+        [TestMethod]
+        public void IsIsoTimeTest_Ok()
+        {
+            string[] testValues = { "23:59:59Z",
+                "15:30:45.123+02:00",
+                "08:15:00-05:00",
+            };
+            foreach (var value in testValues)
+            {
+                ExpectSuccess(Validator.Eval(value).IsIsoTime());
+            }
+        }
+
+        [TestMethod]
+        public void IsIsoTimeTest_Fail()
+        {
+            object[] testValues = {
+                "2025-02-30", // Invalid (Feb 30 doesn't exist)
+                "2025-13-01", // Invalid (Month 13)
+                "2025-04-31",  // Invalid (April has only 30 days)
+                "25:30:45.123+02:00",
+                "24:00:00",
+                "12:60:00",
+                "ABC",
+                "12pm",
+                "13:00",
+                1,
+                new object(),
+                DateTime.Now
+            };
+            foreach (var value in testValues)
+            {
+                ExpectFailure(Validator.Eval(value).IsIsoTime());
+            }
+        }
+        [TestMethod]
+        public void IsIsoDateTest_Ok()
+        {
+            string[] testValues = {
+                "2025-05-03",
+                "1999-12-31",
+                "0001-01-01",
+            };
+            foreach (var value in testValues)
+            {
+                ExpectSuccess(Validator.Eval(value).IsIsoDate());
+            }
+        }
+
+        [TestMethod]
+        public void IsIsoDateTest_Fail()
+        {
+            object[] testValues = {
+                "2025-02-30", // Invalid (Feb 30 doesn't exist)
+                "2025-13-01", // Invalid (Month 13)
+                "2025-04-31",  // Invalid (April has only 30 days)
+                "25:30:45.123+02:00",
+                "24:00:00",
+                "12:60:00",
+                "ABC",
+                "12pm",
+                "13:00",
+                1,
+                new object(),
+                DateTime.Now,
+            };
+            foreach (var value in testValues)
+            {
+                ExpectFailure(Validator.Eval(value).IsIsoDate());
+            }
+        }
+        [TestMethod]
+        public void IsIsoDateTimeTest_Ok()
+        {
+            string[] testValues = {
+                "2025-05-03T14:30:15Z",        // Valid UTC time
+                "1999-12-31T23:59:59.999+02:00", // Valid with milliseconds and offset
+            };
+            foreach (var value in testValues)
+            {
+                ExpectSuccess(Validator.Eval(value).IsIsoDateTime());
+            }
+        }
+
+        [TestMethod]
+        public void IsIsoDateTimeTest_Fail()
+        {
+            object[] testValues = {
+                "2025-02-30T12:00:00Z",        // Invalid (Feb 30 doesn't exist)
+                "2025-13-01T08:15:00-05:00",   // Invalid (Month 13)
+                "2025-04-31T10:20:45",         // Invalid (April only has 30 days, missing time zone)
+                "24:00:00",
+                "12:60:00",
+                "ABC",
+                "12pm",
+                "13:00",
+                1,
+                new object(),
+                DateTime.Now,
+            };
+            foreach (var value in testValues)
+            {
+                ExpectFailure(Validator.Eval(value).IsIsoDateTime());
+            }
+        }
 
         [TestMethod]
         public void IsDecimalTest_Ok()

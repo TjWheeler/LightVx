@@ -461,6 +461,39 @@ namespace LightVx
         }
 
         /// <summary>
+        /// Validates input is a valid ISO 8601 time component only. Eg; "15:30:45.123+02:00" or "23:59:59Z"
+        /// If the value is an ISO 8601 date and time component then this validator will fail it.
+        /// </summary>
+        /// <returns></returns>
+        public ValidatorFluent IsIsoTime()
+        {
+            _validators.Add(new IsoTimeValidator());
+            return this;
+        }
+
+        /// <summary>
+        /// Validates input is a valid ISO 8601 date component only. Eg; "2025-05-03" 
+        /// If the value is an ISO 8601 date and time component then this validator will fail it.
+        /// </summary>
+        /// <returns></returns>
+        public ValidatorFluent IsIsoDate()
+        {
+            _validators.Add(new IsoDateValidator());
+            return this;
+        }
+
+        /// <summary>
+        /// Validates input is a valid ISO 8601 date time. Eg; "1999-12-31T23:59:59.999+02:00" 
+        /// If the value must match the ISO 8601 date and convert to a DateTime.
+        /// </summary>
+        /// <returns></returns>
+        public ValidatorFluent IsIsoDateTime()
+        {
+            _validators.Add(new IsoDateTimeValidator());
+            return this;
+        }
+
+        /// <summary>
         /// Looks for a Single Match
         /// </summary>
         /// <param name="regularExpression"></param>
