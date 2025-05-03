@@ -9,9 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightVx.Tests", "Tests\Ligh
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{44D103ED-6A0C-45D9-B680-A8211EBDA299}"
 	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
+		..\README.md = ..\README.md
 		..\ReleaseNotes.md = ..\ReleaseNotes.md
-		..\README.v3.md = ..\README.v3.md
 	EndProjectSection
 EndProject
 Global
