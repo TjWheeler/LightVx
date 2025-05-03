@@ -492,6 +492,16 @@ namespace LightVx
             _validators.Add(new IsoDateTimeValidator());
             return this;
         }
+        /// <summary>
+        /// Validates that the input is a DateTime or a string can be parsed as a DateTime.
+        /// </summary>
+        /// <returns></returns>
+        public ValidatorFluent IsDateTime()
+        {
+            _validators.Add(new DateTimeValidator());
+            return this;
+        }
+
 
         /// <summary>
         /// Looks for a Single Match

@@ -55,6 +55,10 @@ Tim Wheeler - https://www.linkedin.com/in/timwheeler/
 * GifSignatureValidator - Validates the image signature magic numbers, accepts a stream, must not be null
 * PngSignatureValidator - Validates the image signature magic numbers, accepts a stream, must not be null
 * CurrencyValidator - Validates a string is a valid currency format.  Optionally can fallback to a double validation.
+* IsoDateValidator - Validate the input is a string, matches the Iso 8601 date format using the date component only.
+* IsoTimeValidator - Validate input is matches a Iso 8601 string format for the time component only
+* IsoDateTimeValidator - Validate the input is a string, matches the Iso 8601 format and can be converted to a DateTime.
+* DateValidator - Validates that a string can be parsed as a DateTime
 
 ### File Signature Validators
 You can validate a Stream containing an image.  Supports Jpg, Png, Gif.

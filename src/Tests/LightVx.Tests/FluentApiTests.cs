@@ -96,6 +96,24 @@ namespace LightVx.Tests
         }
 
         [TestMethod]
+        public void DateTimeTest_Ok()
+        {
+            var date = new DateTime(2020, 1, 1);
+            ExpectSuccess(Validator.Eval((string)null).IsDateTime());
+            ExpectSuccess(Validator.Eval(date).IsDateTime());
+        }
+
+        [TestMethod]
+        public void DateTimeTest_Fail()
+        {
+            ExpectFailure(Validator.Eval(string.Empty).Required());
+            ExpectFailure(Validator.Eval("ABC").IsDateTime());
+            ExpectFailure(Validator.Eval(new object()).IsDateTime());
+            ExpectFailure(Validator.Eval("01--02-1999").IsDateTime());
+            ExpectFailure(Validator.Eval(123).IsDateTime());
+        }
+
+        [TestMethod]
         public void IsDoubleTest_Ok()
         {
             ExpectSuccess(Validator.Eval((string) null).IsDouble());

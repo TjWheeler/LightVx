@@ -5,7 +5,7 @@ using System.Text;
 namespace LightVx.Validators
 {
     /// <summary>
-    /// Validates that a string can be parsed as a DateTime.
+    /// Validates that the input is a DateTime or a string can be parsed as a DateTime.
     /// Note: No specific format is enforced and relies on DateTime.TryParse.
     /// </summary>
     public class DateTimeValidator : ValidatorBase
