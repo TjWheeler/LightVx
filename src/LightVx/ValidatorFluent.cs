@@ -322,6 +322,18 @@ namespace LightVx
             _validators.Add(new SqlSafeTextValidator());
             return this;
         }
+
+        public ValidatorFluent IsStringEqualTo(string expectedString, bool ignoreCase = false)
+        {
+            _validators.Add(new StringEqualsValidator(expectedString, ignoreCase));
+            return this;
+        }
+        public ValidatorFluent IsStringNotEqualTo(string expectedString, bool ignoreCase = false)
+        {
+            _validators.Add(new StringNotEqualsValidator(expectedString, ignoreCase));
+            return this;
+        }
+
         /// <summary>
         /// Checks if a datetime or datetime? is within the valid SQL date range
         /// </summary>

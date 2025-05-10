@@ -1,5 +1,9 @@
 # LightVx - Release Notes
 
+10/05/2025 - Version 4.0.4
+Added IsStringEqualToValidator, Attribute and Fluent API call.
+Added IsStringNotEqualToValidator, Attribute and Fluent API call.
+
 03/05/2025 - Version 4.0.2
 Added CurrencyValidator, Attribute and Fluent API call.
 Added Validator.Eval().IsCurrency for currency validation.

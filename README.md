@@ -59,6 +59,8 @@ Tim Wheeler - https://www.linkedin.com/in/timwheeler/
 * IsoTimeValidator - Validate input is matches a Iso 8601 string format for the time component only
 * IsoDateTimeValidator - Validate the input is a string, matches the Iso 8601 format and can be converted to a DateTime.
 * DateValidator - Validates that a string can be parsed as a DateTime
+* IsStringEqualToValidator - Validates that the input is equal to another string, optionally ignoring case
+* IsStringNotEqualToValidator - Validates that the input is not equal to another string, optionally ignoring case
 
 ### File Signature Validators
 You can validate a Stream containing an image.  Supports Jpg, Png, Gif.

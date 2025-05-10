@@ -13,6 +13,40 @@ namespace LightVx.Tests
     public class FluentApiTests : ValidatorUnitTestBase
     {
         [TestMethod]
+        public void IsStringEqualToTest_Ok()
+        {
+            ExpectSuccess(Validator.Eval("abc-!@#$").IsStringEqualTo("abc-!@#$"));
+            ExpectSuccess(Validator.Eval("ABC-!@#$").IsStringEqualTo("abc-!@#$", ignoreCase:true));
+            ExpectSuccess(Validator.Eval("").IsStringEqualTo("abc-!@#$"));
+            ExpectSuccess(Validator.Eval("").IsStringEqualTo(""));
+        }
+
+        [TestMethod]
+        public void IsStringEqualToTest_Fail()
+        {
+            ExpectFailure(Validator.Eval("abc-!@#$\"").IsStringEqualTo("bc-!@#$\""));
+            ExpectFailure(Validator.Eval("abc-!@#$\"").IsStringEqualTo("ABC-!@#$\"", false));
+            ExpectFailure(Validator.Eval("abc").IsStringEqualTo("bca"));
+            ExpectFailure(Validator.Eval("").Required().IsStringEqualTo(""));
+        }
+
+        [TestMethod]
+        public void IsStringNotEqualToTest_Ok()
+        {
+            ExpectSuccess(Validator.Eval("abc-!@#$\"").IsStringNotEqualTo("bc-!@#$\""));
+            ExpectSuccess(Validator.Eval("abc-!@#$\"").IsStringNotEqualTo("ABC-!@#$\"", false));
+            ExpectSuccess(Validator.Eval("abc").IsStringNotEqualTo("bca"));
+        }
+
+        [TestMethod]
+        public void IsStringNotEqualToTest_Fail()
+        {
+            ExpectFailure(Validator.Eval("abc-!@#$").IsStringNotEqualTo("abc-!@#$"));
+            ExpectFailure(Validator.Eval("ABC-!@#$").IsStringNotEqualTo("abc-!@#$", ignoreCase: true));
+        }
+
+
+        [TestMethod]
         public void IsAfterDateTests()
         {
             var date = new DateTime(2020, 1, 1);

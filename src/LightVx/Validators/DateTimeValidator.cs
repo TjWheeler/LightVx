@@ -4,6 +4,11 @@ using System.Text;
 
 namespace LightVx.Validators
 {
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class DateTimeAttribute : AttributeValidator
+    {
+        public DateTimeAttribute() : base(new DateTimeValidator()) { }
+    }
     /// <summary>
     /// Validates that the input is a DateTime or a string can be parsed as a DateTime.
     /// Note: No specific format is enforced and relies on DateTime.TryParse.
