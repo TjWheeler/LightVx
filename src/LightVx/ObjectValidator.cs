@@ -45,6 +45,8 @@ namespace LightVx
                 _isValid = value;
             }
         }
+
+        public string ErrorMessage => string.Join(".", ErrorMessages ?? Array.Empty<string>());
         public string[] ErrorMessages { get; set; }
         public override string ToString()
         {

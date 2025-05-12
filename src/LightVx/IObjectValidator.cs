@@ -2,6 +2,10 @@
 {
     public interface IObjectValidator<T>
     {
+        /// <summary>
+        /// List of error messages, joined with a comma.
+        /// </summary>
+        string ErrorMessage { get; }
         string[] ErrorMessages { get; set; }
         T Input { get; set; }
         bool IsValid { get; }
