@@ -246,6 +246,29 @@ namespace LightVx
             return this;
         }
         /// <summary>
+        /// Validates the input is a boolean value (true/false).  Can be a bool or string.
+        /// Note: Yes/No does not validate as a boolean.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public ValidatorFluent IsBool()
+        {
+            _validators.Add(new BoolValidator());
+            return this;
+        }
+        /// <summary>
+        /// Validates the input is a boolean value (true/false) and it matches the requested value.  Can be a bool or string.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="expected"></param>
+        /// <returns></returns>
+        public ValidatorFluent IsBoolEqual(bool expected = true)
+        {
+            _validators.Add(new BoolEqualsValidator(expected));
+            return this;
+        }
+
+        /// <summary>
         /// Validates input is numberic
         /// </summary>
         /// <returns></returns>

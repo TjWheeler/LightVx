@@ -146,6 +146,54 @@ namespace LightVx.Tests
             ExpectFailure(Validator.Eval("01--02-1999").IsDateTime());
             ExpectFailure(Validator.Eval(123).IsDateTime());
         }
+        [TestMethod]
+        public void IsBoolTest_Ok()
+        {
+            object[] testValues = { "True", "TRUE", "true", "False", "FALSE", "false", true, false };
+            foreach (var value in testValues)
+            {
+                ExpectSuccess(Validator.Eval(value).IsBool());
+            }
+        }
+
+        [TestMethod]
+        public void IsBoolTest_Fail()
+        {
+            object[] testValues = { new object(), 1, 1d, 1m, 0, DateTime.Now, "ABC", "abc" };
+            foreach (var value in testValues)
+            {
+                ExpectFailure(Validator.Eval(value).IsBool());
+            }
+        }
+        [TestMethod]
+        public void IsBoolEqualTest_Ok()
+        {
+            object[] trueValues = { "True", "TRUE", "true", true };
+            foreach (var value in trueValues)
+            {
+                ExpectSuccess(Validator.Eval(value).IsBoolEqual());
+            }
+            object[] falseValues = { "False", "FALSE", "false", false};
+            foreach (var value in falseValues)
+            {
+                ExpectSuccess(Validator.Eval(value).IsBoolEqual(false));
+            }
+        }
+
+        [TestMethod]
+        public void IsBoolEqualTest_Fail()
+        {
+            object[] falseValues = { "True", "TRUE", "true", new object(), 1, 1d, 1m, 0, DateTime.Now, "ABC", "abc" };
+            foreach (var value in falseValues)
+            {
+                ExpectFailure(Validator.Eval(value).IsBoolEqual(false));
+            }
+            object[] trueValues = { "False", "FALSE", "false", new object(), 1, 1d, 1m, 0, DateTime.Now, "ABC", "abc" };
+            foreach (var value in trueValues)
+            {
+                ExpectFailure(Validator.Eval(value).IsBoolEqual());
+            }
+        }
 
         [TestMethod]
         public void IsDoubleTest_Ok()

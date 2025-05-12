@@ -226,6 +226,39 @@ namespace Validation.LightVx.Tests
         }
 
         [TestMethod]
+        public void IsBoolEqual_Ok()
+        {
+            var validator = new BoolEqualsValidator(true);
+            TestValidatorForSuccess(validator, "true");
+            TestValidatorForSuccess(validator, "True");
+            TestValidatorForSuccess(validator, "TRUE");
+            TestValidatorForSuccess(validator, true);
+            validator = new BoolEqualsValidator(false);
+            TestValidatorForSuccess(validator, "false");
+            TestValidatorForSuccess(validator, "False");
+            TestValidatorForSuccess(validator, "FALSE");
+            TestValidatorForSuccess(validator, false);
+        }
+
+        [TestMethod]
+        public void IsBoolEqual_Fail()
+        {
+            var validator = new BoolEqualsValidator(true);
+            TestValidatorForFailure(validator, "false");
+            TestValidatorForFailure(validator, "False");
+            TestValidatorForFailure(validator, "FALSE");
+            TestValidatorForFailure(validator, false);
+            TestValidatorForFailure(validator, 1D);
+            TestValidatorForFailure(validator, 1M);
+            TestValidatorForFailure(validator, "Yes");
+            TestValidatorForFailure(validator, "No");
+            validator = new BoolEqualsValidator(false);
+            TestValidatorForFailure(validator, "true");
+            TestValidatorForFailure(validator, "True");
+            TestValidatorForFailure(validator, "TRUE");
+        }
+
+        [TestMethod]
         public void IsDouble_Ok()
         {
             var validator = new DoubleValidator();

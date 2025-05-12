@@ -1,16 +1,17 @@
 # Light Vx
+
 LightVx is a light, easy and extensible validation framework for .Net which includes a Fluent API.  
 It's intended to help validating user input in apps, or service requests in Web Services or Web API's, or anywhere you need to validate data.
 
-## Breaking Changes in Version 4
+## Breaking Changes in Version 5
 
-The IsValid method on ValidatorFluent is no longer nullable.
-ValidatorBase.Validate is now public
-Eval is no longer an Extension method on object, you must call Validator.Eval instead.
+ObjectValidator.AddValidator is no longer virtual.  This is to improve the design and prevent virtual method calls in constructors.  
 
-## Key updates in Version 4
-- New Attribute Based Validators
-- New File Signature Validators for JPG, PNG, GIF
+## Key updates in Version 5
+
+- AddValidator no longer virtual in ObjectValidator.
+- IObjectValidator<T> now implements new IObjectValidator interface.
+- ObjectValidators can now have other ObjectValidators added to itself.
 
 ## Author
 Tim Wheeler - https://www.linkedin.com/in/timwheeler/
@@ -61,6 +62,8 @@ Tim Wheeler - https://www.linkedin.com/in/timwheeler/
 * DateValidator - Validates that a string can be parsed as a DateTime
 * IsStringEqualToValidator - Validates that the input is equal to another string, optionally ignoring case
 * IsStringNotEqualToValidator - Validates that the input is not equal to another string, optionally ignoring case
+* BoolEqualsValidator - Validates that the input is equal to a boolean value
+* BoolValidator - Validates that the input is a boolean value
 
 ### File Signature Validators
 You can validate a Stream containing an image.  Supports Jpg, Png, Gif.
@@ -206,6 +209,8 @@ Available Methods
 * HasLength(int min, int? max)
 * IsAlphaNumeric()
 * IsAlphaText()
+* IsBool()
+* IsBoolEqual(bool value)
 * IsDecimal()
 * IsDouble()
 * IsCurrency()
@@ -236,6 +241,12 @@ Available Methods
 * Contains(string content, bool ignoreCase = false)
 * DoesNotContain(string content, bool ignoreCase = false)
 * MatchesExpression(string)
+* IsStringEqual(string value, bool ignoreCase = false)
+* IsStringNotEqual(string value, bool ignoreCase = false)
+* IsGuid()
+* HasJpgImageSignature()
+* HasPngImageSignature()
+* HasGifImageSignature()
 
 US Validation Extensions
 

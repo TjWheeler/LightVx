@@ -24,6 +24,7 @@ namespace LightVx
             Name = name;
         }
 
+        protected IList<IObjectValidator> ObjectValidators = new List<IObjectValidator>();
         protected IList<IValidator> Validators = new List<IValidator>();
         protected IList<ValidatorFluent> FluentValidators = new List<ValidatorFluent>();
         protected bool RequiresRevalidation = true;
@@ -102,12 +103,21 @@ namespace LightVx
             RequiresRevalidation = false;
             return IsValid;
         }
-        public virtual void AddValidator(IValidator validator)
+        public void AddValidator(IObjectValidator validator)
+        {
+            if (this == validator)
+            {
+                throw new InvalidOperationException("Cannot add self as a validator.");
+            }
+            RequiresRevalidation = true;
+            ObjectValidators.Add(validator);
+        }
+        public void AddValidator(IValidator validator)
         {
             RequiresRevalidation = true;
             Validators.Add(validator);
         }
-        public virtual void AddValidator(ValidatorFluent fluentValidator)
+        public void AddValidator(ValidatorFluent fluentValidator)
         {
             RequiresRevalidation = true;
             FluentValidators.Add(fluentValidator);
