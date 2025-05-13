@@ -118,7 +118,6 @@ namespace LightVx
     /// <summary>
     /// Primary access to validation functions.
     /// </summary>
-    //[DebuggerStepThrough]
     public static class Validator
     {
         /// <summary>

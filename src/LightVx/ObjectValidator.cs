@@ -66,6 +66,7 @@ namespace LightVx
             ErrorMessages = new string[] { };
             Validators.Clear();
             FluentValidators.Clear();
+            ObjectValidators.Clear();
             IsValid = false;
         }
         /// <summary>
@@ -74,8 +75,7 @@ namespace LightVx
         /// <returns></returns>
         public virtual bool Validate()
         {
-            Console.WriteLine("LightVx:Running Validation Method");
-            if (Validators.Count == 0 && FluentValidators.Count == 0)
+            if (Validators.Count == 0 && FluentValidators.Count == 0 && ObjectValidators.Count == 0)
             {
                 throw new InvalidOperationException("No validators have been added.  Validation is invalid.");
             }
@@ -97,7 +97,14 @@ namespace LightVx
                     errors.AddRange(validator.ErrorMessages);
                 }
             }
-            
+            foreach (var validator in ObjectValidators)
+            {
+                var valid = validator.IsValid;
+                if (!valid)
+                {
+                    errors.AddRange(validator.ErrorMessages);
+                }
+            }
             ErrorMessages = errors.ToArray();
             IsValid = ErrorMessages.Length == 0;
             RequiresRevalidation = false;
